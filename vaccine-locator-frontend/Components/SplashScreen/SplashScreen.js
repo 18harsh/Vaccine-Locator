@@ -1,7 +1,7 @@
 import {StatusBar} from 'expo-status-bar';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import * as colors from '../../Color'
+import * as planted_colors from '../Color'
 export default class SplashScreen extends Component {
 
 
@@ -13,7 +13,7 @@ export default class SplashScreen extends Component {
                         source={require('../Images/vaccine.png')}
                     />
                     <Text style={{
-                        color:colors.BLUEISH_GREEN
+                        color:planted_colors.BLUEISH_GREEN
                     }}>Get you Vaccine</Text>
                 </View>
             </View>)
@@ -37,7 +37,7 @@ const styles = StyleSheet.create(
             {
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: colors.OFF_WHITE,
+                backgroundColor: planted_colors.OFF_WHITE,
                 flex: 1,
             },
     });

@@ -1,7 +1,7 @@
 import React from "react";
 import {Text, View, Button, Alert, StyleSheet} from "react-native";
 import {DefaultTheme, TextInput} from 'react-native-paper'
-import * as planted_colors from "../../Color";
+import * as planted_colors from "../Color";
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
@@ -52,7 +52,7 @@ const MyReactNativeForm = props => (
                 }}>
                     <Text style={{
 
-                        color: colors.STRONG_YELLOW,
+                        color: planted_colors.STRONG_YELLOW,
                     }}>Fill The Form Up </Text>
                     <TextInput
                         theme={theme}

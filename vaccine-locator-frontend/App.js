@@ -1,59 +1,48 @@
-import {StatusBar} from 'expo-status-bar';
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
-import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import Homepage from "./Components/HomePage/Homepage";
-import Authentication from './Components/Authentication/Authentication'
 import Signup from "./Components/Authentication/Signup/Signup";
-
-
+import Login from "./Components/Authentication/Login/Login";
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import * as colors from './Components/Color'
+import UserDisplayScreen from "./Components/UserPage/UserDisplayScreen";
 export default class App extends Component {
-    state = {
-        isVisible: false
-    }
-
-    Hide_Splash_Screen = () => {
-        this.setState({
-            isVisible: false
-        });
-    }
-
-    componentDidMount() {
-        var that = this;
-        setTimeout(function () {
-            that.Hide_Splash_Screen()
-        }, 5000);
-    }
 
     render() {
-        let Splash_Screen = <SplashScreen/>
+        const Stack = createStackNavigator();
         return (
-            <View style={styles.MainContainer}>
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{
+                    headerShown: false
+                }} >
+                    <Stack.Screen name="Home" component={Homepage} options={{
+                        title: '',
+                        headerStyle: {
+                            backgroundColor: colors.OFF_WHITE
+                        },
+                        headerTintColor: colors.OFF_WHITE
+                    }}/>
+                    <Stack.Screen name="SignUp" component={UserDisplayScreen} options={{
+                        title: '',
+                        headerStyle: {
+                            backgroundColor: colors.OFF_WHITE
+                        },
+                        headerTintColor: colors.OFF_WHITE
+                    }}/>
+                    <Stack.Screen name="Login" component={Login} options={{
+                        title: '',
+                        headerStyle: {
+                            backgroundColor: colors.OFF_WHITE
+                        },
+                        headerTintColor: colors.OFF_WHITE
+                    }}/>
+                </Stack.Navigator>
 
-                {
-                    (this.state.isVisible === true) ? Splash_Screen : <Signup/>
-                }
-            </View>
+            </NavigationContainer>
         );
 
     };
 
 }
 
-const styles = StyleSheet.create(
-    {
-        MainContainer: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
 
-        },
-
-
-        SplashScreen_ChildView:
-            {
-                justifyContent: 'center',
-                alignItems: 'center',
-                flex: 1
-
-    }});
