@@ -2,7 +2,7 @@ import {StatusBar} from 'expo-status-bar';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {Appbar} from 'react-native-paper';
-import MapView,{Marker} from "react-native-maps";
+
 import Authentication from "../Authentication/Authentication";
 import {NavigationContainer} from "@react-navigation/native";
 import SplashScreen from "../SplashScreen/SplashScreen";

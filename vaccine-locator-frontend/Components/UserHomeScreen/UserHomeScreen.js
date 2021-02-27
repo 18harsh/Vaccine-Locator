@@ -1,9 +1,9 @@
-import React from "react";
+import React, {Component} from "react";
 import {Text, View, Button, Alert, StyleSheet} from "react-native";
 import {DefaultTheme, TextInput} from 'react-native-paper'
 import * as planted_colors from "../Color";
-import {Formik} from 'formik';
-import * as yup from 'yup';
+import * as Location from 'expo-location';
+import MapView, {Marker} from "react-native-maps";
 
 const theme = {
     ...DefaultTheme,
@@ -16,77 +16,66 @@ const theme = {
 };
 
 
-const loginValidationSchema = yup.object().shape({
-    email: yup
-        .string()
-        .email("Please enter valid email")
-        .required('Email Address is Required'),
-    password: yup
-        .string()
-        .min(8, ({min}) => `Password must be at least ${min} characters`)
-        .required('Password is required'),
+class MyReactNativeForm extends Component {
 
-})
+    state = {
+        latitude: 0,
+        longitude: 0,
+        errorMessage: "",
+        loading: true
+    }
+    // const [getlocation, setLocation] = useState(null);
+    // const [errorMsg, setErrorMsg] = useState(null);
 
-const MyReactNativeForm = props => (
-    <View style={styles.MainContainer}>
+    async componentDidMount() {
+        let {status} = await Location.requestPermissionsAsync();
+        if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+            return;
+        }
 
-        <Formik
-            validationSchema={loginValidationSchema}
-            initialValues={{email: '', password: '', aadharCardNo: '', firstName: '', lastName: ''}}
-            onSubmit={values => {
-                console.log(values)
-            }}
 
-        >
-            {({
-                  handleChange, handleBlur, handleSubmit, values, errors,
-                  touched,
-                  isValid,
-              }) => (
-                <View style={{
-                    height: "100%",
-                    width: "90%",
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <Text style={{
+        let reclocation = await Location.getCurrentPositionAsync({enableHighAccuracy: false});
 
-                        color: planted_colors.STRONG_YELLOW,
-                    }}>Fill The Form Up </Text>
-                    <TextInput
-                        theme={theme}
-                        style={styles.input}
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        value={values.email}
-                        placeholder={"Email ID"}
-                        keyboardType="email-address"
-                    />
-                    {(errors.email && touched.email) &&
-                    <Text style={styles.errorText}>{errors.email}</Text>
-                    }
-                    <TextInput
-                        theme={theme}
-                        style={styles.input}
-                        onChangeText={handleChange('password')}
-                        onBlur={handleBlur('password')}
-                        value={values.password}
-                        placeholder={"Password"}
-                        secureTextEntry
-                    />
-                    {(errors.password && touched.password) &&
-                    <Text style={styles.errorText}>{errors.password}</Text>
-                    }
+        this.setState({
+            latitude: reclocation.coords.latitude,
+            longitude:reclocation.coords.longitude
+        })
+        // setLocation(JSON.stringify(location));
+        console.log("This Printed", this.latitude)
 
-                    <Button theme={theme} style={{
-                        marginTop: 20
-                    }} onPress={handleSubmit} title="Submit"/>
-                </View>
-            )}
-        </Formik>
-    </View>
-);
+        this.setState({
+            loading: false
+        })
+
+    }
+
+    render() {
+        return (
+            <View style={styles.MainContainer}>
+                <MapView
+                    // remove if not using Google Maps
+                    style={{
+                        width: 400,
+                        height: 500
+                    }}
+                    loadingEnabled={true}
+                    region={{
+                        latitude: 22.3,
+                        longitude: 22.4,
+                        latitudeDelta: 0.1,
+                        longitudeDelta: 0.0121,
+                    }}
+                >
+                    {/*<Marker coordinate={{*/}
+                    {/*    latitude: this.location.latitude,*/}
+                    {/*    longitude: this.location.longitude,*/}
+                    {/*}}/>*/}
+                </MapView>
+            </View>);
+    }
+
+}
 
 
 const styles = StyleSheet.create({

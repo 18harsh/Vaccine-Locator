@@ -35,8 +35,31 @@ const MyReactNativeForm = props => (
             validationSchema={loginValidationSchema}
             initialValues={{email: '', password: '', aadharCardNo: '', firstName: '', lastName: ''}}
             onSubmit={values => {
-                console.log(values)
+                console.log(JSON.stringify({
+                    "Fname": values.firstName,
+                    "Lname": values.lastName,
+                    "Email": values.email,
+                    "Password": values.password,
+                    "Phoneno": values.phoneNo,
+                    "AadharNo": values.aadharCardNo
+
+                }))
+
+                fetch('http://10.0.2.2:3000/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "Email": values.email,
+                        "Password": values.password
+
+                    })
+                }).then(res => res.json()).then(data => {
+                    console.log("DATA RECEIVED IS", data)
+                }).catch(err=>console.log(err))
             }}
+
 
         >
             {({

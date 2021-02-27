@@ -3,8 +3,7 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import * as planted_colors from "../Color";
 import {Button} from 'react-native-paper';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+
 import { useNavigation } from '@react-navigation/native';
 const theme = {
     ...DefaultTheme,

@@ -90,7 +90,7 @@ userSchema.pre('save', async function (next) {
     const user = this
 
     if (user.isModified('Password')) {
-        
+
         // user.AadharNo = await bcrypt.hash(user.AadharNo, 8);
         user.Password = await bcrypt.hash(user.Password, 8);
     }

@@ -7,6 +7,13 @@ const userRouter = require('./routers/user')
 const Clinic = require('./models/clinicCenter')
 
 const app = express()
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+
 const port = process.env.PORT
 
 app.use(express.json())
@@ -25,6 +32,6 @@ app.post('/center', async (req, res) => {
     }
 })
 
-app.listen(port, () => {
-    console.log('Server is on port '+port)
+app.listen(3000, () => {
+    console.log('Server is on port '+3000)
 })
