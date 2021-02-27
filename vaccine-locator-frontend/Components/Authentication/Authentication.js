@@ -10,8 +10,8 @@ const theme = {
     roundness: 4,
     colors: {
         ...DefaultTheme.colors,
-        primary: colors.STRONG_BLUE,
-        accent: colors.BLUEISH_GREEN,
+        primary: colors.BLUEISH_GREEN,
+        accent: colors.OFF_WHITE,
     },
 };
 
@@ -32,19 +32,26 @@ export default class Authentication extends Component {
                     />
                     <Text style={{
                         color:colors.BLUEISH_GREEN
-                    }}>Get you Vaccine</Text>
+                    }}>Get your Vaccination</Text>
                 </View>
                 <View style={styles.SplashScreen_ChildView2}>
-                    <Button theme={theme} mode="outlined" onPress={()=>{
+                    <Button theme={theme} style={styles.Button_css} mode="contained" onPress={()=>{
                         console.log("Hello World 123")
                     }}> Sign Up</Button>
                     <Text  style={{
+                        marginTop:10,
+                        marginBottom:10,
+                        fontSize:20
 
-
-                    }} >or</Text>
-                    <Button theme={theme}  mode="outlined" onPress={()=>{
+                    }} > </Text>
+                    <Text style={{
+                        marginTop:10,
+                        marginBottom:10,
+                        fontSize:15,
+                        color:colors.BLUEISH_GREEN
+                    }} mode="contained" onPress={()=>{
                     console.log("Hello World 123")
-                }}> Log In</Button>
+                }}>Signed Up Already, Try Logging In</Text>
                 </View>
 
             </View>
@@ -81,13 +88,10 @@ const styles = StyleSheet.create({
             flex: 1,
         },
     Button_css: {
-        backgroundColor: colors.STRONG_BLUE,
-        color:'white',
-        width:100,
+
+        width:"80%",
         height:50,
-        borderColor: colors.BLUEISH_GREEN,
-        borderStyle: 'solid',
-        paddingTop: 5,
+        paddingTop:6,
 
     }
 });
