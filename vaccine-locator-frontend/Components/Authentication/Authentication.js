@@ -31,24 +31,20 @@ export default class Authentication extends Component {
                         source={require('../Images/vaccine.png')}
                     />
                     <Text style={{
-                        color:colors.BLUEISH_GREEN
+                        color:colors.STRONG_RED,
+                        fontSize:15
                     }}>Get your Vaccination</Text>
                 </View>
                 <View style={styles.SplashScreen_ChildView2}>
                     <Button theme={theme} style={styles.Button_css} mode="contained" onPress={()=>{
                         console.log("Hello World 123")
                     }}> Sign Up</Button>
-                    <Text  style={{
-                        marginTop:10,
-                        marginBottom:10,
-                        fontSize:20
 
-                    }} > </Text>
                     <Text style={{
                         marginTop:10,
                         marginBottom:10,
                         fontSize:15,
-                        color:colors.BLUEISH_GREEN
+                        color:colors.STRONG_RED
                     }} mode="contained" onPress={()=>{
                     console.log("Hello World 123")
                 }}>Signed Up Already, Try Logging In</Text>

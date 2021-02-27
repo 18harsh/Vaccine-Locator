@@ -1,38 +1,167 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
-import {Appbar} from 'react-native-paper';
+import React from "react";
+import {Text, View, Button, Alert, StyleSheet} from "react-native";
+import {DefaultTheme, TextInput} from 'react-native-paper'
+import * as colors from "../../../Color";
+import {Formik} from 'formik';
+import * as yup from 'yup';
 
-export default class Homepage extends Component {
-    state = {
-        isVisible: true
-    }
-
-
-    render() {
-
-        return (
-            <Appbar style={styles.top}>
-                <Appbar.Action
-                    icon="archive"
-                    onPress={() => console.log('Pressed archive')}
-                />
-                <Appbar.Action icon="mail" onPress={() => console.log('Pressed mail')}/>
-                <Appbar.Action icon="label" onPress={() => console.log('Pressed label')}/>
-                <Appbar.Action
-                    icon="delete"
-                    onPress={() => console.log('Pressed delete')}
-                />
-            </Appbar>
-
-        );
-
-    };
-
-}
-
-const styles = StyleSheet.create({
-    top: {
-        position: 'absolute',
-
+const theme = {
+    ...DefaultTheme,
+    roundness: 4,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: colors.BLUEISH_GREEN,
+        accent: colors.OFF_WHITE,
     },
-});
+};
+
+
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+const loginValidationSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email("Please enter valid email")
+        .required('Email Address is Required'),
+    password: yup
+        .string()
+        .min(8, ({min}) => `Password must be at least ${min} characters`)
+        .required('Password is required'),
+    aadharCardNo: yup
+        .string()
+        .min(12, ({min}) => `Aadhar Number must only ${min} numbers`)
+        .required('Aadhar Number is required'),
+    firstName: yup
+        .string()
+        .required('First Name is required'),
+    lastName: yup
+        .string()
+        .required('Last Name is required'),
+    phoneNo: yup.string().matches(phoneRegExp, 'Phone number is not valid')
+})
+
+const MyReactNativeForm = props => (
+    <Formik
+        validationSchema={loginValidationSchema}
+        initialValues={{email: '', password: '', aadharCardNo: '', firstName: '', lastName: '', phoneNo: ''}}
+        onSubmit={values => {
+            console.log(values)
+        }}
+
+    >
+        {({
+              handleChange, handleBlur, handleSubmit, values, errors,
+              touched,
+              isValid,
+          }) => (
+            <View style={{
+                height: "100%",
+                width: "90%",
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <Text style={{
+
+                    color: colors.STRONG_YELLOW,
+                }}>Fill The Form Up </Text>
+                <TextInput
+                    theme={theme}
+                    style={styles.input}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                    placeholder={"Email ID"}
+                    keyboardType="email-address"
+                />
+                {(errors.email && touched.email) &&
+                <Text style={styles.errorText}>{errors.email}</Text>
+                }
+                <TextInput
+                    theme={theme}
+                    style={styles.input}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    placeholder={"Password"}
+                    secureTextEntry
+                />
+                {(errors.password && touched.password) &&
+                <Text style={styles.errorText}>{errors.password}</Text>
+                }
+                <TextInput
+                    theme={theme}
+                    style={styles.input}
+                    onChangeText={handleChange('aadharCardNo')}
+                    onBlur={handleBlur('aadharCardNo')}
+                    value={values.aadharCard}
+                    placeholder={"Aadhar Card"}
+                />
+                {(errors.aadharCard && touched.aadharCard) &&
+                <Text style={styles.errorText}>{errors.aadharCard}</Text>}
+                    <TextInput
+                    theme={theme}
+                    style={styles.input}
+                    onChangeText={handleChange('firstName')}
+                    onBlur={handleBlur('firstName')}
+                    value={values.firstName}
+                    placeholder={"First Name"}
+                    />
+                {(errors.firstName && touched.firstName) &&
+                    <Text style={styles.errorText}>{errors.firstName}</Text>}
+                    <TextInput
+                    theme={theme}
+                    style={styles.input}
+                    onChangeText={handleChange('lastName')}
+                    onBlur={handleBlur('lastName')}
+                    value={values.lastName}
+                    placeholder={"Last Name"}
+                    />
+                {(errors.lastName && touched.lastName) &&
+                    <Text style={styles.errorText}>{errors.lastName}</Text>}
+                    <TextInput
+                    theme={theme}
+                    style={styles.input}
+                    onChangeText={handleChange('phoneNo')}
+                    onBlur={handleBlur('phoneNo')}
+                    value={values.phoneNo}
+                    placeholder={"Phone No."}
+                    />
+                {(errors.phoneNo && touched.phoneNo) &&
+                    <Text style={styles.errorText}>{errors.phoneNo}</Text>}
+                    <Button theme={theme} style={{
+                    marginTop:20
+                }} onPress={handleSubmit} title="Submit"/>
+                    </View>
+                    )}
+                    </Formik>
+                    );
+
+
+                    const styles = StyleSheet.create({
+                    input:
+                {
+                    backgroundColor: colors.LIGHT_BLUE,
+                    color: colors.OFF_WHITE,
+                    width: "90%",
+                    height: 25,
+                    margin: 10,
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    borderRadius: 5,
+                    paddingLeft: 5,
+                    paddingRight: 5,
+                    fontSize: 18
+
+
+                },
+                    errorText: {
+                    color: colors.STRONG_RED,
+                    fontSize: 15,
+                    marginLeft: 20
+
+                }
+
+
+                });
+
+                    export default MyReactNativeForm;

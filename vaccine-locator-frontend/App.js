@@ -4,7 +4,7 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import Homepage from "./Components/HomePage/Homepage";
 import Authentication from './Components/Authentication/Authentication'
-
+import Signup from "./Components/Authentication/Signup/Signup";
 
 
 export default class App extends Component {
@@ -31,7 +31,7 @@ export default class App extends Component {
             <View style={styles.MainContainer}>
 
                 {
-                    (this.state.isVisible === true) ? Splash_Screen : <Authentication/>
+                    (this.state.isVisible === true) ? Splash_Screen : <Signup/>
                 }
             </View>
         );
