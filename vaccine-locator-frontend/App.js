@@ -1,10 +1,15 @@
 import {StatusBar} from 'expo-status-bar';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
+import SplashScreen from "./Components/SplashScreen/SplashScreen";
+import Homepage from "./Components/HomePage/Homepage";
+import Authentication from './Components/Authentication/Authentication'
+
+
 
 export default class App extends Component {
     state = {
-        isVisible: true
+        isVisible: false
     }
 
     Hide_Splash_Screen = () => {
@@ -16,27 +21,17 @@ export default class App extends Component {
     componentDidMount() {
         var that = this;
         setTimeout(function () {
-            that.Hide_Splash_Screen();
+            that.Hide_Splash_Screen()
         }, 5000);
     }
 
     render() {
-        let Splash_Screen = (
-            <View style={styles.SplashScreen_RootView}>
-                <View style={styles.SplashScreen_ChildView}>
-                    <Image
-                        source={{uri: 'https://static.javatpoint.com/tutorial/react-native/images/react-native-tutorial.png'}}
-                        style={{width: '100%', height: '100%', resizeMode: 'contain'}}/>
-                </View>
-            </View>)
+        let Splash_Screen = <SplashScreen/>
         return (
             <View style={styles.MainContainer}>
 
                 {
-                    (this.state.isVisible === true) ? Splash_Screen : <View style={styles.MainContainer}>
-                        <Text>Successful Splash Screen!</Text>
-                        <StatusBar style="auto"/>
-                    </View>
+                    (this.state.isVisible === true) ? Splash_Screen : <Authentication/>
                 }
             </View>
         );
@@ -47,29 +42,18 @@ export default class App extends Component {
 
 const styles = StyleSheet.create(
     {
-        MainContainer:
-            {
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingTop: 20
-            },
+        MainContainer: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
 
-        SplashScreen_RootView:
-            {
-                justifyContent: 'center',
-                flex: 1,
-                margin: 10,
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-            },
+        },
+
 
         SplashScreen_ChildView:
             {
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#00BCD4',
-                flex: 1,
-            },
-    });
+                flex: 1
+
+    }});
