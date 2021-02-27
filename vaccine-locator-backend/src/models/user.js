@@ -53,6 +53,10 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    Vaccine: {
+        type: Boolean,
+        default: false
+    },
     tokens: [{
         token: {
             type: String,
@@ -85,9 +89,9 @@ userSchema.statics.findByCredentials = async (Email,Password) => {
 userSchema.pre('save', async function (next) {
     const user = this
 
-    if (user.isModified('Password') && user.isModified('AadharNo')) {
+    if (user.isModified('Password')) {
         
-        user.AadharNo = await bcrypt.hash(user.AadharNo, 8);
+        // user.AadharNo = await bcrypt.hash(user.AadharNo, 8);
         user.Password = await bcrypt.hash(user.Password, 8);
     }
     next()
