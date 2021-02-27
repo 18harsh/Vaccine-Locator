@@ -2,4 +2,4 @@ node_modules
 build
 npm-debug.log
 .env
-.DS_Storesendgrid.env
+./config/dev.env
