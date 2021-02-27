@@ -3,16 +3,39 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {Appbar} from 'react-native-paper';
 import MapView,{Marker} from "react-native-maps";
+import Authentication from "../Authentication/Authentication";
+import {NavigationContainer} from "@react-navigation/native";
+import SplashScreen from "../SplashScreen/SplashScreen";
 export default class Homepage extends Component {
     state = {
-        isVisible: true
+        isVisible: false
+    }
+
+    Hide_Splash_Screen = () => {
+        this.setState({
+            isVisible: false
+        });
+    }
+
+    componentDidMount() {
+        var that = this;
+        setTimeout(function () {
+            that.Hide_Splash_Screen()
+        }, 5000);
     }
 
 
-    render() {
 
+    render() {
+        let Splash_Screen = <SplashScreen/>
         return (
-            <View style={styles.container}>
+
+                <View style={styles.MainContainer}>
+
+                    {
+                        (this.state.isVisible === true) ? Splash_Screen : <Authentication/>
+                    }
+
                 {/*<MapView*/}
                 {/*    // remove if not using Google Maps*/}
                 {/*    style={styles.map}*/}
@@ -29,21 +52,28 @@ export default class Homepage extends Component {
                 {/*        longitude:72.8518,*/}
                 {/*    }}/>*/}
                 {/*</MapView>*/}
-            </View>
+                </View>
         );
 
     };
 
 }
 
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-        flex:1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-    },
-    map: {
-        ...StyleSheet.absoluteFillObject,
-    },
-});
+const styles = StyleSheet.create(
+    {
+        MainContainer: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+
+        },
+
+
+        SplashScreen_ChildView:
+            {
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1
+
+            }
+    });
