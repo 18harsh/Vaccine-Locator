@@ -14,7 +14,7 @@ export default class SplashScreen extends Component {
                     />
                     <Text style={{
                         color:colors.BLUEISH_GREEN
-                    }}>Get your Vaccination</Text>
+                    }}>Get you Vaccine</Text>
                 </View>
             </View>)
 
