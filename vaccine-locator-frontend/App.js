@@ -2,9 +2,14 @@ import {StatusBar} from 'expo-status-bar';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import SplashScreen from "./Components/SplashScreen/SplashScreen";
+import Homepage from "./Components/HomePage/Homepage";
+import Authentication from './Components/Authentication/Authentication'
+
+
+
 export default class App extends Component {
     state = {
-        isVisible: true
+        isVisible: false
     }
 
     Hide_Splash_Screen = () => {
@@ -26,10 +31,7 @@ export default class App extends Component {
             <View style={styles.MainContainer}>
 
                 {
-                    (this.state.isVisible === true) ? Splash_Screen : <View style={styles.MainContainer}>
-                        <Text>Successful Splash Screen!</Text>
-                        <StatusBar style="auto"/>
-                    </View>
+                    (this.state.isVisible === true) ? Splash_Screen : <Authentication/>
                 }
             </View>
         );
