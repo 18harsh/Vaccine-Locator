@@ -1,7 +1,9 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import * as planted_colors from "../../Components/Color";
-import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import { Button, DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
 
 import { useNavigation } from '@react-navigation/native';
 const theme = {
@@ -23,25 +25,24 @@ const Authentication = () => {
     <View style={styles.SplashScreen_RootView}>
       <View style={styles.SplashScreen_ChildView}>
         <Image
-          source={require('../Images/vaccine.png')}
+          source={require('../../Components/Images/clinic.png')}
         />
         <Text style={{
           color: planted_colors.STRONG_RED,
           fontSize: 15
-        }}>Get your Vaccination</Text>
+        }}>Get your Vaccine</Text>
       </View>
       <View style={styles.SplashScreen_ChildView2}>
         <Button theme={theme} style={styles.Button_css} mode="contained"
-                onPress={() => navigation.navigate('VaccineSignUp')}> Sign Up</Button>
+                onPress={() => navigation.navigate('VaccinationClinicSignUp')}> Add Your Clinic</Button>
 
         <Text style={{
           marginTop: 10,
           marginBottom: 10,
           fontSize: 15,
           color: planted_colors.STRONG_RED
-        }} mode="contained" onPress={() => navigation.navigate('VaccineLogin')}>
-          Signed Up Already, Try Logging
-          In</Text>
+        }} mode="contained" onPress={() => navigation.navigate('VaccinationClinicLogin')}>
+          Added Clinic, Login with Clinic ID</Text>
       </View>
 
     </View>

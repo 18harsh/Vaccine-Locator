@@ -8,6 +8,7 @@ import Authentication from "./Components/Authentication/Authentication";
 import * as colors from './Components/Color'
 import UserDisplayScreen from "./Components/UserPage/UserDisplayScreen";
 
+import VaccinationClinic from "./Pages/VacinationClinic/VaccinationClinic";
 import VaccinationClinicSignUp from './Pages/VacinationClinic/Signup/Signup';
 import VaccinationClinicLogin from './Pages/VacinationClinic/Login/Login';
 
@@ -42,6 +43,13 @@ export default class App extends Component {
             headerTintColor: colors.OFF_WHITE
           }}/>
           <Stack.Screen name="Login" component={Login} options={{
+            title: '',
+            headerStyle: {
+              backgroundColor: colors.OFF_WHITE
+            },
+            headerTintColor: colors.OFF_WHITE
+          }}/>
+          <Stack.Screen name="VaccinationClinic" component={VaccinationClinic} options={{
             title: '',
             headerStyle: {
               backgroundColor: colors.OFF_WHITE

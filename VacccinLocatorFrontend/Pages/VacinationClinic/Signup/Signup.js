@@ -4,7 +4,7 @@ import { DefaultTheme, TextInput } from "react-native-paper";
 import * as planted_colors from "../../../Components/Color";
 import { Formik } from "formik";
 import * as yup from "yup";
-
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const theme = {
   ...DefaultTheme,
   roundness: 4,
@@ -72,6 +72,38 @@ const MyReactNativeForm = props => (
           {(errors.clinicName && touched.clinicName) &&
           <Text style={styles.errorText}>{errors.clinicName}</Text>
           }
+          <GooglePlacesAutocomplete
+            onPress={(data, details = null) => {
+              // 'details' is provided when fetchDetails = true
+              console.log(data, details);
+            }}
+            placeholder='Enter Location'
+            minLength={2}
+            autoFocus={false}
+            returnKeyType={'default'}
+            fetchDetails={true}
+            styles={{
+              textInputContainer: {
+                backgroundColor: planted_colors.OFF_WHITE,
+                width:"90%",
+                height:"100%"
+              },
+              textInput: {
+                height: 34,
+                width:"100%",
+                color: 'black',
+                fontSize: 16,
+              },
+              predefinedPlacesDescription: {
+                color: '#1faadb',
+              },
+            }}
+            query={{
+              key: 'AIzaSyD09ZcG7fHZltsAOsKjxq5Eww4xEIfXZNc',
+              language: 'en',
+              types:`(cities)`
+            }}
+          />
           <TextInput
             theme={theme}
             style={styles.input}

@@ -13,7 +13,7 @@ const UserClinicPage =()=> {
 
       <View style={styles.MainContainer}>
         <TouchableOpacity style={styles.SplashScreen_ChildView}  onPress={()=>{
-          navigation.navigate('Authentication')
+          navigation.navigate('VaccinationClinic')
         }}>
         <View style={styles.view_box} >
           <Image source={require("../../Components/Images/clinic.png")} style={{
