@@ -6,6 +6,7 @@ import {Appbar} from 'react-native-paper';
 import Authentication from "../Authentication/Authentication";
 import {NavigationContainer} from "@react-navigation/native";
 import SplashScreen from "../SplashScreen/SplashScreen";
+import MapView,{Marker} from "react-native-maps";
 export default class Homepage extends Component {
     state = {
         isVisible: false
@@ -36,22 +37,22 @@ export default class Homepage extends Component {
                         (this.state.isVisible === true) ? Splash_Screen : <Authentication/>
                     }
 
-                {/*<MapView*/}
-                {/*    // remove if not using Google Maps*/}
-                {/*    style={styles.map}*/}
-                {/*    loadingEnabled={true}*/}
-                {/*    region={{*/}
-                {/*        latitude: 19.2029,*/}
-                {/*        longitude:72.8518,*/}
-                {/*        latitudeDelta: 0.1,*/}
-                {/*        longitudeDelta: 0.0121,*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*    <Marker coordinate={{*/}
-                {/*        latitude: 19.2029,*/}
-                {/*        longitude:72.8518,*/}
-                {/*    }}/>*/}
-                {/*</MapView>*/}
+                <MapView
+                    // remove if not using Google Maps
+                    style={styles.map}
+                    loadingEnabled={true}
+                    region={{
+                        latitude: 19.2029,
+                        longitude:72.8518,
+                        latitudeDelta: 0.1,
+                        longitudeDelta: 0.0121,
+                    }}
+                >
+                    <Marker coordinate={{
+                        latitude: 19.2029,
+                        longitude:72.8518,
+                    }}/>
+                </MapView>
                 </View>
         );
 
