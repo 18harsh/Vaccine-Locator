@@ -28,27 +28,28 @@ const Authentication = () => {
             <Tab.Navigator
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {
-                        if (route.name === 'Home') {
+                        if (route.name === 'Location') {
                             return (
-                              <Button icon="camera">
-                                Press me
-                              </Button>
+                              <Image resizeMode="contain" style={{
+                                width:"10%"
+                              }} source={require('../Images/location.png')}/>
                             );
                         } else if (route.name === 'Settings') {
                             return (
-                              <Button icon={{ uri: 'https://avatars0.githubusercontent.com/u/17571969?v=3&s=400' }}>
-                                Press me
-                              </Button>
+                              <Image resizeMode="contain" style={{
+                                width:"10%"
+                              }} source={require('../Images/location.png')}/>
+
                             );
                         }
                     },
                 })}
                 tabBarOptions={{
-                    activeTintColor: 'tomato',
+                    activeTintColor: planted_colors.STRONG_RED,
                     inactiveTintColor: 'gray',
                 }}
             >
-                <Tab.Screen name="Home" component={UserHomeScreen} options={{tabBarBadge: 3}}/>
+                <Tab.Screen name="Location" component={UserHomeScreen} options={{tabBarBadge: 3}}/>
                 <Tab.Screen name="Settings" component={VaccineTrack}/>
             </Tab.Navigator>
 

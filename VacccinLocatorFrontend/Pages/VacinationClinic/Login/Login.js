@@ -33,7 +33,7 @@ const MyReactNativeForm = props => (
 
         <Formik
             validationSchema={loginValidationSchema}
-            initialValues={{email: '', password: '', aadharCardNo: '', firstName: '', lastName: ''}}
+            initialValues={{email: '', password: ''}}
             onSubmit={values => {
                 console.log(JSON.stringify({
                     "Fname": values.firstName,
@@ -75,16 +75,16 @@ const MyReactNativeForm = props => (
                 }}>
                     <Text style={{
 
-                        color: colors.STRONG_YELLOW,
+                        color: planted_colors.STRONG_YELLOW,
                     }}>Fill The Form Up </Text>
                     <TextInput
                         theme={theme}
                         style={styles.input}
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        value={values.email}
-                        placeholder={"Email ID"}
-                        keyboardType="email-address"
+                        onChangeText={handleChange('clinicId')}
+                        onBlur={handleBlur('clinicId')}
+                        value={values.clinicId}
+                        placeholder={"Clinic ID"}
+
                     />
                     {(errors.email && touched.email) &&
                     <Text style={styles.errorText}>{errors.email}</Text>

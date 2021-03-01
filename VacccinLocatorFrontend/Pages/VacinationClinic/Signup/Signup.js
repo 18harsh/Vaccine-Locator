@@ -60,8 +60,9 @@ const MyReactNativeForm = props => {
             validationSchema={loginValidationSchema}
             initialValues={{
               clinicName: "",
-              ClinicId:'',
+              ClinicId: "",
               phoneNo: "",
+              password: "",
             }}
             onSubmit={values => {
               const address_string = addressData.description;
@@ -71,12 +72,13 @@ const MyReactNativeForm = props => {
               };
 
               const jsonData = JSON.stringify({
-                "ClinicName":values.clinicName,
-                "ClinicPhoneNo":values.phoneNo,
-                "ClinicAddress":String(address_string),
-                "ClinicCoordinates":clinic_coordinates
+                "ClinicName": values.clinicName,
+                "ClinicPhoneNo": values.phoneNo,
+                "ClinicPassword": values.password,
+                "ClinicAddress": String(address_string),
+                "ClinicCoordinates": clinic_coordinates,
               });
-              console.log(jsonData)
+              console.log(jsonData);
 
             }}
 
@@ -127,7 +129,18 @@ const MyReactNativeForm = props => {
                 {(errors.phoneNo && touched.phoneNo) &&
 
                 <Text style={styles.errorText}>{errors.phoneNo}</Text>}
-
+                <TextInput
+                  theme={theme}
+                  style={styles.input}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                  placeholder={"Password"}
+                  secureTextEntry
+                />
+                {(errors.password && touched.password) &&
+                <Text style={styles.errorText}>{errors.password}</Text>
+                }
                 <GooglePlacesAutocomplete
                   onPress={(data, details = null) => {
                     // 'details' is provided when fetchDetails = true
@@ -141,9 +154,9 @@ const MyReactNativeForm = props => {
                   returnKeyType={"default"}
                   fetchDetails={true}
                   renderDescription={row => row.description}
-                  listViewDisplayed="auto"                  onNotFound={(err) => {
-                    console.log("NOT_FOUND Google PLace", err);
-                  }}
+                  listViewDisplayed="auto" onNotFound={(err) => {
+                  console.log("NOT_FOUND Google PLace", err);
+                }}
                   onTimeout={() => {
                     console.log("Time OUT Google PLace");
                   }}
@@ -184,7 +197,8 @@ const MyReactNativeForm = props => {
         </View>
 
       </View>
-    </ScrollView>);
+    </ScrollView>
+  );
 };
 
 
@@ -195,7 +209,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: planted_colors.OFF_WHITE,
     paddingBottom: 100,
-  }, MainContainer2: {
+  },
+  MainContainer2: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
