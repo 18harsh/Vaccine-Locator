@@ -8,6 +8,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import UserHomeScreen from "../UserHomeScreen/UserHomeScreen";
 import VaccineTrack from "../VaccineTrack/UserHomeScreen";
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import EvilIcons from "react-native-vector-icons/EvilIcons";
 
 const theme = {
     ...DefaultTheme,
@@ -30,15 +32,11 @@ const Authentication = () => {
                     tabBarIcon: ({focused, color, size}) => {
                         if (route.name === 'Location') {
                             return (
-                              <Image resizeMode="contain" style={{
-                                width:"10%"
-                              }} source={require('../Images/location.png')}/>
+                              <FontAwesome5Icon name="search-location" size={30} color="#900" />
                             );
                         } else if (route.name === 'Settings') {
                             return (
-                              <Image resizeMode="contain" style={{
-                                width:"10%"
-                              }} source={require('../Images/location.png')}/>
+                              <EvilIcons name="user" size={30} color="#900" />
 
                             );
                         }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Appbar } from "react-native-paper";
-import Authentication from "../../Components/Authentication/Authentication";
 import { NavigationContainer } from "@react-navigation/native";
 import SplashScreen from "../../Components/SplashScreen/SplashScreen";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";

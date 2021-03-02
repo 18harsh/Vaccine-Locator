@@ -1,10 +1,13 @@
+const mongoose = require('mongoose')
 const express = require('express')
-require('./db/mongoose')
 
-const userRouter = require('./routers/user')
+
+const userRouter = require('./routers/patient')
 // const clinicRouter = require('./routers/clinicCenter')
 
 const Clinic = require('./models/clinicCenter')
+
+const MONGO_DB_URI = "mongodb+srv://reuben:reuben@mongodb.syifj.mongodb.net/vaccine_locator?retryWrites=true&w=majority"
 
 const app = express()
 app.use((req, res, next) => {
@@ -32,6 +35,16 @@ app.post('/center', async (req, res) => {
     }
 })
 
-app.listen(3000, () => {
-    console.log('Server is on port '+3000)
-})
+
+mongoose.connect(MONGO_DB_URI)
+  .then(res => {
+      app.listen(4000);
+      // app.listen(process.env.PORT || 5000)
+  }).catch(err => {
+    console.log(err);
+});
+
+
+// app.listen(3000, () => {
+//     console.log('Server is on port '+3000)
+// })

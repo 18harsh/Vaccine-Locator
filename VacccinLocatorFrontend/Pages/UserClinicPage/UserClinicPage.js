@@ -26,7 +26,7 @@ const UserClinicPage =()=> {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.SplashScreen_ChildView} onPress={()=>{
-          navigation.navigate('Authentication')
+          navigation.navigate('PatientAuthentication')
         }}
         >
           <View style={styles.view_box} >

@@ -3,18 +3,18 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const userSchema = new mongoose.Schema({
-    Fname: {
+const patientSchema = new mongoose.Schema({
+    firstName: {
         type: String,
         required: true,
         trim: true
     },
-    Lname: {
+    lastName: {
         type: String,
         required: true,
         trim: true
     },
-    Email: {
+    email: {
         type: String,
         required: true,
         lowercase: true,
@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    Password: {
+    password: {
         type: String,
         required: true,
         minlength: 8,
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    Phoneno: {
+    phoneNo: {
         type: Number,
         required: true,
         validate(value) {
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    AadharNo: {
+    aadharNo: {
         type: String,
         required: true,
         validate(value) {
@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
-userSchema.methods.generateAuthToken = async function () {
+patientSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({_id:user.id.toString()},'thisismyproject')
     user.tokens = user.tokens.concat({ token })
@@ -73,12 +73,12 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
-userSchema.statics.findByCredentials = async (Email,Password) => {
-    const user = await User.findOne({Email})
+patientSchema.statics.findByCredentials = async (Email,Password) => {
+    const user = await Patient.findOne({Email})
     if (!user) {
         throw new Error('Unable to login')
     }
-    const isMatch = await bcrypt.compare(Password, user.Password)
+    const isMatch = await bcrypt.compare(Password, patientSchema.Password)
     if (!isMatch) {
         throw new Error('Unable to login')
     }
@@ -86,7 +86,7 @@ userSchema.statics.findByCredentials = async (Email,Password) => {
 }
 
 // Hash the plain text password before saving
-userSchema.pre('save', async function (next) {
+patientSchema.pre('save', async function (next) {
     const user = this
 
     if (user.isModified('Password')) {
@@ -97,6 +97,6 @@ userSchema.pre('save', async function (next) {
     next()
 })
 
-const User = mongoose.model('User', userSchema)
+const Patient = mongoose.model('Patient', patientSchema)
 
-module.exports = User
+module.exports = Patient
