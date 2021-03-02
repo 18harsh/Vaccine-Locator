@@ -22,7 +22,7 @@ const theme = {
 };
 
 
-const Authentication = () => {
+const UserTabbedNavigation = () => {
     const navigation = useNavigation();
     const Tab = createBottomTabNavigator();
     return (
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Authentication;
+export default UserTabbedNavigation;

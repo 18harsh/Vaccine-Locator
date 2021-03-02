@@ -1,9 +1,9 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // export const SIGNUP = 'SIGNUP';
 // export const LOGIN = 'LOGIN';
-export const AUTHENTICATE = 'AUTHENTICATE';
-export const LOGOUT = 'LOGOUT';
+export const AUTHENTICATE = "AUTHENTICATE";
+export const LOGOUT = "LOGOUT";
 
 let timer;
 
@@ -14,32 +14,34 @@ export const authenticate = (userId, token, expiryTime) => {
   };
 };
 
-export const signup = (email, password) => {
+export const signup = (firstName,lastName, phoneNo, email, password, aadharCardNo) => {
   return async dispatch => {
-    const response = await fetch(
-      "http://10.0.2.2:3000/users",
-      {
-        method: 'POST',
+    const response = await fetch("http://10.0.2.2:4000/users", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: email,
-          password: password,
-          returnSecureToken: true
-        })
-      }
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+          "password": password,
+          "phoneNo": phoneNo,
+          "aadharNo": aadharCardNo,
+
+        }),
+      },
     );
 
-    if (!response.ok) {
-      const errorResData = await response.json();
-      const errorId = errorResData.error.message;
-      let message = 'Something went wrong!';
-      if (errorId === 'EMAIL_EXISTS') {
-        message = 'This email exists already!';
-      }
-      throw new Error(message);
-    }
+    // if (!response.ok) {
+    //   const errorResData = await response.json();
+    //   const errorId = errorResData.error.message;
+    //   let message = "Something went wrong!";
+    //   if (errorId === "EMAIL_EXISTS") {
+    //     message = "This email exists already!";
+    //   }
+    //   throw new Error(message);
+    // }
 
     const resData = await response.json();
     console.log(resData);
@@ -47,11 +49,11 @@ export const signup = (email, password) => {
       authenticate(
         resData.localId,
         resData.idToken,
-        parseInt(resData.expiresIn) * 1000
-      )
+        parseInt(resData.expiresIn) * 1000,
+      ),
     );
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000
+      new Date().getTime() + parseInt(resData.expiresIn) * 1000,
     );
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
@@ -60,28 +62,28 @@ export const signup = (email, password) => {
 export const login = (email, password) => {
   return async dispatch => {
     const response = await fetch(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBY8UJq_xLD0nEe1HZHuvEOUfYIS9gg4pA',
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBY8UJq_xLD0nEe1HZHuvEOUfYIS9gg4pA",
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: email,
           password: password,
-          returnSecureToken: true
-        })
-      }
+          returnSecureToken: true,
+        }),
+      },
     );
 
     if (!response.ok) {
       const errorResData = await response.json();
       const errorId = errorResData.error.message;
-      let message = 'Something went wrong!';
-      if (errorId === 'EMAIL_NOT_FOUND') {
-        message = 'This email could not be found!';
-      } else if (errorId === 'INVALID_PASSWORD') {
-        message = 'This password is not valid!';
+      let message = "Something went wrong!";
+      if (errorId === "EMAIL_NOT_FOUND") {
+        message = "This email could not be found!";
+      } else if (errorId === "INVALID_PASSWORD") {
+        message = "This password is not valid!";
       }
       throw new Error(message);
     }
@@ -92,11 +94,11 @@ export const login = (email, password) => {
       authenticate(
         resData.localId,
         resData.idToken,
-        parseInt(resData.expiresIn) * 1000
-      )
+        parseInt(resData.expiresIn) * 1000,
+      ),
     );
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000
+      new Date().getTime() + parseInt(resData.expiresIn) * 1000,
     );
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
@@ -104,7 +106,7 @@ export const login = (email, password) => {
 
 export const logout = () => {
   clearLogoutTimer();
-  AsyncStorage.removeItem('userData');
+  AsyncStorage.removeItem("userData");
   return { type: LOGOUT };
 };
 
@@ -124,11 +126,11 @@ const setLogoutTimer = expirationTime => {
 
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
-    'userData',
+    "userData",
     JSON.stringify({
       token: token,
       userId: userId,
-      expiryDate: expirationDate.toISOString()
-    })
+      expiryDate: expirationDate.toISOString(),
+    }),
   );
 };

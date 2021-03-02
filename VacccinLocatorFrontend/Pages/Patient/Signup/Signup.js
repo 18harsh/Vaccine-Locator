@@ -4,6 +4,9 @@ import { DefaultTheme, TextInput } from "react-native-paper";
 import * as planted_colors from "../../../Components/Color";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import * as authActions from "../../../store/actions/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const theme = {
   ...DefaultTheme,
@@ -40,132 +43,129 @@ const loginValidationSchema = yup.object().shape({
   phoneNo: yup.string().matches(phoneRegExp, "Phone number is not valid"),
 });
 
-const MyReactNativeForm = props => (
-  <View style={styles.MainContainer}>
+const MyReactNativeForm = props => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  return (
+    <View style={styles.MainContainer}>
 
 
-    <Formik
-      validationSchema={loginValidationSchema}
-      initialValues={{ email: "", password: "", aadharCardNo: "", firstName: "", lastName: "", phoneNo: "" }}
-      onSubmit={values => {
-        const jsonData = JSON.stringify(values);
-        console.log("Thsi Pronted",JSON.stringify({
-          "firstName": values.firstName,
-          "lastName": values.lastName,
-          "email": values.email,
-          "password": values.password,
-          "phoneNo": values.phoneNo,
-          "aadharNo": values.aadharCardNo,
-        }));
+      <Formik
+        validationSchema={loginValidationSchema}
+        initialValues={{ email: "", password: "", aadharCardNo: "", firstName: "", lastName: "", phoneNo: "" }}
+        onSubmit={async values => {
+          const jsonData = JSON.stringify(values);
 
-        fetch("http://10.0.2.2:4000/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            "firstName": values.firstName,
-            "lastName": values.lastName,
-            "email": values.email,
-            "password": values.password,
-            "phoneNo": values.phoneNo,
-            "aadharNo": values.aadharCardNo,
+          // let action;
+          //
+          // action = authActions.signup(
+          //   values.firstName,
+          //   values.lastName,
+          //   values.email,
+          //   values.password,
+          //   values.phoneNo,
+          //   values.aadharCardNo,
+          // );
+          //
+          // try {
+          //   await dispatch(action);
+            navigation.navigate("UserTabbedNavigation");
+          // } catch (err) {
+          //   console.log(err)
+          // }
+        }}
 
-          }),
-        }).then(res => res.json()).then(data => {
-          console.log("DATA RECEIVED IS", data);
-        }).catch(err => console.log(err));
-      }}
+      >
+        {
+          ({
+             handleChange, handleBlur, handleSubmit, values, errors,
+             touched,
+             isValid,
+           }) => (
+            <View style={{
+              height: "100%",
+              width: "90%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
+              <Text style={{
 
-    >
-      {({
-          handleChange, handleBlur, handleSubmit, values, errors,
-          touched,
-          isValid,
-        }) => (
-        <View style={{
-          height: "100%",
-          width: "90%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
-          <Text style={{
+                color: planted_colors.STRONG_YELLOW,
+              }}>Fill The Form Up </Text>
+              <TextInput
+                theme={theme}
+                style={styles.input}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+                placeholder={"Email ID"}
+                keyboardType="email-address"
+              />
+              {(errors.email && touched.email) &&
+              <Text style={styles.errorText}>{errors.email}</Text>
+              }
+              <TextInput
+                theme={theme}
+                style={styles.input}
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
+                value={values.password}
+                placeholder={"Password"}
+                secureTextEntry
+              />
+              {(errors.password && touched.password) &&
+              <Text style={styles.errorText}>{errors.password}</Text>
+              }
+              <TextInput
+                theme={theme}
+                style={styles.input}
+                onChangeText={handleChange("aadharCardNo")}
+                onBlur={handleBlur("aadharCardNo")}
+                value={values.aadharCard}
+                placeholder={"Aadhar Card"}
+              />
+              {(errors.aadharCard && touched.aadharCard) &&
+              <Text style={styles.errorText}>{errors.aadharCard}</Text>}
+              <TextInput
+                theme={theme}
+                style={styles.input}
+                onChangeText={handleChange("firstName")}
+                onBlur={handleBlur("firstName")}
+                value={values.firstName}
+                placeholder={"First Name"}
+              />
+              {(errors.firstName && touched.firstName) &&
+              <Text style={styles.errorText}>{errors.firstName}</Text>}
+              <TextInput
+                theme={theme}
+                style={styles.input}
+                onChangeText={handleChange("lastName")}
+                onBlur={handleBlur("lastName")}
+                value={values.lastName}
+                placeholder={"Last Name"}
+              />
+              {(errors.lastName && touched.lastName) &&
+              <Text style={styles.errorText}>{errors.lastName}</Text>}
+              <TextInput
+                theme={theme}
+                style={styles.input}
+                onChangeText={handleChange("phoneNo")}
+                onBlur={handleBlur("phoneNo")}
+                value={values.phoneNo}
+                placeholder={"Phone No."}
+              />
+              {(errors.phoneNo && touched.phoneNo) &&
+              <Text style={styles.errorText}>{errors.phoneNo}</Text>}
+              <Button theme={theme} style={{
+                marginTop: 20,
 
-            color: planted_colors.STRONG_YELLOW,
-          }}>Fill The Form Up </Text>
-          <TextInput
-            theme={theme}
-            style={styles.input}
-            onChangeText={handleChange("email")}
-            onBlur={handleBlur("email")}
-            value={values.email}
-            placeholder={"Email ID"}
-            keyboardType="email-address"
-          />
-          {(errors.email && touched.email) &&
-          <Text style={styles.errorText}>{errors.email}</Text>
-          }
-          <TextInput
-            theme={theme}
-            style={styles.input}
-            onChangeText={handleChange("password")}
-            onBlur={handleBlur("password")}
-            value={values.password}
-            placeholder={"Password"}
-            secureTextEntry
-          />
-          {(errors.password && touched.password) &&
-          <Text style={styles.errorText}>{errors.password}</Text>
-          }
-          <TextInput
-            theme={theme}
-            style={styles.input}
-            onChangeText={handleChange("aadharCardNo")}
-            onBlur={handleBlur("aadharCardNo")}
-            value={values.aadharCard}
-            placeholder={"Aadhar Card"}
-          />
-          {(errors.aadharCard && touched.aadharCard) &&
-          <Text style={styles.errorText}>{errors.aadharCard}</Text>}
-          <TextInput
-            theme={theme}
-            style={styles.input}
-            onChangeText={handleChange("firstName")}
-            onBlur={handleBlur("firstName")}
-            value={values.firstName}
-            placeholder={"First Name"}
-          />
-          {(errors.firstName && touched.firstName) &&
-          <Text style={styles.errorText}>{errors.firstName}</Text>}
-          <TextInput
-            theme={theme}
-            style={styles.input}
-            onChangeText={handleChange("lastName")}
-            onBlur={handleBlur("lastName")}
-            value={values.lastName}
-            placeholder={"Last Name"}
-          />
-          {(errors.lastName && touched.lastName) &&
-          <Text style={styles.errorText}>{errors.lastName}</Text>}
-          <TextInput
-            theme={theme}
-            style={styles.input}
-            onChangeText={handleChange("phoneNo")}
-            onBlur={handleBlur("phoneNo")}
-            value={values.phoneNo}
-            placeholder={"Phone No."}
-          />
-          {(errors.phoneNo && touched.phoneNo) &&
-          <Text style={styles.errorText}>{errors.phoneNo}</Text>}
-          <Button theme={theme} style={{
-            marginTop: 20,
-
-          }} onPress={handleSubmit} title="Submit" />
-        </View>
-      )}
-    </Formik>
-  </View>
-);
+              }} onPress={handleSubmit} title="Submit" />
+            </View>
+          )
+        }
+      </Formik>
+    </View>);
+};
 
 
 const styles = StyleSheet.create({
@@ -203,3 +203,6 @@ const styles = StyleSheet.create({
 });
 
 export default MyReactNativeForm;
+
+
+

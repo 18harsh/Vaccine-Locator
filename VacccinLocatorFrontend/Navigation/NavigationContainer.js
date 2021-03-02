@@ -9,6 +9,7 @@ import * as colors from "../Components/Color";
 import VaccinationClinic from "../Pages/VacinationClinic/VaccinationClinic";
 import VaccinationClinicSignUp from "../Pages/VacinationClinic/Signup/Signup";
 import VaccinationClinicLogin from "../Pages/VacinationClinic/Login/Login";
+import UserTabbedNavigation from "../Components/UserPage/UserTabNavigation";
 
 
 export default class App extends Component {
@@ -63,6 +64,13 @@ export default class App extends Component {
             headerTintColor: colors.OFF_WHITE,
           }} />
           <Stack.Screen name="VaccinationClinicLogin" component={VaccinationClinicLogin} options={{
+            title: "",
+            headerStyle: {
+              backgroundColor: colors.OFF_WHITE,
+            },
+            headerTintColor: colors.OFF_WHITE,
+          }} />
+          <Stack.Screen name="UserTabbedNavigation" component={UserTabbedNavigation} options={{
             title: "",
             headerStyle: {
               backgroundColor: colors.OFF_WHITE,
