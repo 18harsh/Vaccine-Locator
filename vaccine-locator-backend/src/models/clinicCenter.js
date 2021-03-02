@@ -6,16 +6,16 @@ const clinicSchema = new mongoose.Schema({
             required: true,
             trim: true
         },
-        clinicAddress: {
+        clinicId: {
             type: String,
             required: true,
         },
-        Area: {
+        clinicAddress: {
             type: String,
             required: true,
             trim: true
         },
-        City: {
+        clinicCoordinates: {
             type: String,
             required: true,
             trim: true

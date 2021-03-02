@@ -6,7 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Authentication from "./Components/Authentication/Authentication";
 import * as colors from './Components/Color'
-import UserDisplayScreen from "./Components/UserPage/UserDisplayScreen";
+import UserDisplayScreen from "./Components/UserPage/UserTabNavigation";
 
 import VaccinationClinic from "./Pages/VacinationClinic/VaccinationClinic";
 import VaccinationClinicSignUp from './Pages/VacinationClinic/Signup/Signup';
