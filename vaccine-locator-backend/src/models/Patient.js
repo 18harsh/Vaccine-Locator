@@ -92,7 +92,7 @@ patientSchema.pre('save', async function (next) {
     if (user.isModified('Password')) {
 
         // user.AadharNo = await bcrypt.hash(user.AadharNo, 8);
-        user.Password = await bcrypt.hash(user.Password, 8);
+        user.Password = await bcrypt.hash(patientSchema.Password, 8);
     }
     next()
 })

@@ -1,12 +1,14 @@
 import React from "react";
-import { Text, View, Button, Alert, StyleSheet } from "react-native";
-import { DefaultTheme, TextInput } from "react-native-paper";
+import { Text, View,  Alert, StyleSheet, Image } from "react-native";
+import { DefaultTheme,Button, TextInput } from "react-native-paper";
 import * as planted_colors from "../../../Components/Color";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import * as authActions from "../../../store/actions/auth";
 import { useNavigation } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const theme = {
   ...DefaultTheme,
@@ -14,7 +16,7 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: planted_colors.BLUEISH_GREEN,
-    accent: planted_colors.OFF_WHITE,
+    accent: planted_colors.STRONG_BLUE,
   },
 };
 
@@ -47,32 +49,41 @@ const MyReactNativeForm = props => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   return (
+    <ScrollView keyboardShouldPersistTaps={"handled"}>
     <View style={styles.MainContainer}>
-
-
+      <View style={styles.SplashScreen_ChildView}>
+        <Image
+          source={require("../../../Components/Images/user.png")}
+        />
+        <Text style={{
+          color: planted_colors.STRONG_RED,
+          fontSize: 15,
+        }}>Sign Up !!!</Text>
+      </View>
+      <View style={styles.MainContainer2}>
       <Formik
         validationSchema={loginValidationSchema}
         initialValues={{ email: "", password: "", aadharCardNo: "", firstName: "", lastName: "", phoneNo: "" }}
         onSubmit={async values => {
           const jsonData = JSON.stringify(values);
 
-          // let action;
-          //
-          // action = authActions.signup(
-          //   values.firstName,
-          //   values.lastName,
-          //   values.email,
-          //   values.password,
-          //   values.phoneNo,
-          //   values.aadharCardNo,
-          // );
-          //
-          // try {
-          //   await dispatch(action);
+          let action;
+
+          action = authActions.signup(
+            values.firstName,
+            values.lastName,
+            values.email,
+            values.password,
+            values.phoneNo,
+            values.aadharCardNo,
+          );
+
+          try {
+            await dispatch(action);
             navigation.navigate("UserTabbedNavigation");
-          // } catch (err) {
-          //   console.log(err)
-          // }
+          } catch (err) {
+            console.log(err)
+          }
         }}
 
       >
@@ -88,10 +99,7 @@ const MyReactNativeForm = props => {
               justifyContent: "center",
               alignItems: "center",
             }}>
-              <Text style={{
 
-                color: planted_colors.STRONG_YELLOW,
-              }}>Fill The Form Up </Text>
               <TextInput
                 theme={theme}
                 style={styles.input}
@@ -156,15 +164,24 @@ const MyReactNativeForm = props => {
               />
               {(errors.phoneNo && touched.phoneNo) &&
               <Text style={styles.errorText}>{errors.phoneNo}</Text>}
-              <Button theme={theme} style={{
-                marginTop: 20,
 
-              }} onPress={handleSubmit} title="Submit" />
+              <Button mode="contained"  theme={theme} colors={planted_colors.STRONG_BLUE} style={{
+                marginTop: 20,
+                color:planted_colors.OFF_WHITE
+              }}  onPress={handleSubmit}>
+
+
+                <Text >Submit</Text>
+                </Button>
+
             </View>
           )
         }
       </Formik>
-    </View>);
+      </View>
+    </View>
+    </ScrollView>
+      );
 };
 
 
@@ -173,8 +190,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-
+    paddingBottom: 100,
     backgroundColor: planted_colors.OFF_WHITE,
+  },
+  MainContainer2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: planted_colors.OFF_WHITE,
+
   },
   input:
     {
@@ -198,7 +223,14 @@ const styles = StyleSheet.create({
     marginLeft: 20,
 
   },
+  SplashScreen_ChildView:
+    {
+      width: "100%",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
 
+    },
 
 });
 

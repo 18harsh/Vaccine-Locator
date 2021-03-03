@@ -47,15 +47,15 @@ export const signup = (firstName,lastName, phoneNo, email, password, aadharCardN
     console.log(resData);
     dispatch(
       authenticate(
-        resData.localId,
-        resData.idToken,
-        parseInt(resData.expiresIn) * 1000,
+        resData.token,
+        resData._id,
+        parseInt(10) * 1000,
       ),
     );
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000,
+      new Date().getTime() + parseInt(10) * 1000,
     );
-    saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+    saveDataToStorage(resData.token, resData._id, expirationDate);
   };
 };
 
@@ -94,11 +94,11 @@ export const login = (email, password) => {
       authenticate(
         resData.localId,
         resData.idToken,
-        parseInt(resData.expiresIn) * 1000,
+        parseInt(10) * 1000,
       ),
     );
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000,
+      new Date().getTime() + parseInt(10) * 1000,
     );
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
