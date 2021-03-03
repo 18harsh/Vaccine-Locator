@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const express = require('express')
 
 
-const userRouter = require('./routers/patient')
+const userRouter = require('./src/routers/patient')
 // const clinicRouter = require('./routers/clinicCenter')
 
-const Clinic = require('./models/clinicCenter')
+const Clinic = require('./src/models/clinicCenter')
 
 const MONGO_DB_URI = "mongodb+srv://reuben:reuben@mongodb.syifj.mongodb.net/vaccine_locator?retryWrites=true&w=majority"
 
