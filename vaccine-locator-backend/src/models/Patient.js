@@ -21,7 +21,7 @@ const patientSchema = new mongoose.Schema({
         unique: true,
         validate(value) {
             if (!validator.isEmail(value)) {
-                throw new Error('Email is invalid')
+                console.log('Email is invalid')
             }
         }
     },
@@ -31,7 +31,8 @@ const patientSchema = new mongoose.Schema({
         minlength: 8,
         validate(value) {
             if (value.toLowerCase().includes('password')) {
-                throw new Error('Password cannot contain password or name')
+                console.log('Password cannot contain password or name')
+                res.status(500).send('Password cannot contain password or name.');
             }
         }
     },

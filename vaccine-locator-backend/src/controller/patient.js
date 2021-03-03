@@ -1,4 +1,5 @@
 const Patient = require("../models/Patient");
+const {validationResult} = require('express-validator');
 
 exports.signUp = async (req, res) => {
   firstName = req.body.Fname;
@@ -15,6 +16,13 @@ exports.signUp = async (req, res) => {
     phoneNo: phoneNo,
     aadharNo: AadharNo,
   }));
+  const errors = validationResult(req);
+  if (!errors.isEmpty()){
+
+    return res.status(422).send({
+        errorMessage: errors.array()[0].msg,
+    });
+}
   const patient = new Patient(req.body);
 
   try {
