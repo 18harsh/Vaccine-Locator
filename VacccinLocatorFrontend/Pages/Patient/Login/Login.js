@@ -1,9 +1,13 @@
 import React from "react";
-import { Text, View, Button, Alert, StyleSheet } from "react-native";
-import { DefaultTheme, TextInput } from "react-native-paper";
+import { Text, View, Alert, StyleSheet, Image } from "react-native";
+import { DefaultTheme, Button, TextInput } from "react-native-paper";
 import * as planted_colors from "../../../Components/Color";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { ScrollView } from "react-native-gesture-handler";
+import * as authActions from "../../../store/actions/auth";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 const theme = {
   ...DefaultTheme,
@@ -28,88 +32,107 @@ const loginValidationSchema = yup.object().shape({
 
 });
 
-const MyReactNativeForm = props => (
-  <View style={styles.MainContainer}>
+const MyReactNativeForm = props => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-    <Formik
-      validationSchema={loginValidationSchema}
-      initialValues={{ email: "", password: "", aadharCardNo: "", firstName: "", lastName: "" }}
-      onSubmit={values => {
-        console.log(JSON.stringify({
-          "firstName": values.firstName,
-          "lastName": values.lastName,
-          "email": values.email,
-          "password": values.password,
-          "phoneNo": values.phoneNo,
-          "aadharNo": values.aadharCardNo,
-
-        }));
-
-        fetch("http://10.0.2.2:3000/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            "Email": values.email,
-            "Password": values.password,
-
-          }),
-        }).then(res => res.json()).then(data => {
-          console.log("DATA RECEIVED IS", data);
-        }).catch(err => console.log(err));
-      }}
-
-
-    >
-      {({
-          handleChange, handleBlur, handleSubmit, values, errors,
-          touched,
-          isValid,
-        }) => (
-        <View style={{
-          height: "100%",
-          width: "90%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
+  return (
+    <ScrollView keyboardShouldPersistTaps={"handled"}>
+      <View style={styles.MainContainer}>
+        <View style={styles.SplashScreen_ChildView}>
+          <Image
+            source={require("../../../Components/Images/user.png")}
+          />
           <Text style={{
+            color: planted_colors.STRONG_RED,
+            fontSize: 15,
+            width: "80%",
 
-            color: colors.STRONG_YELLOW,
-          }}>Fill The Form Up </Text>
-          <TextInput
-            theme={theme}
-            style={styles.input}
-            onChangeText={handleChange("email")}
-            onBlur={handleBlur("email")}
-            value={values.email}
-            placeholder={"Email ID"}
-            keyboardType="email-address"
-          />
-          {(errors.email && touched.email) &&
-          <Text style={styles.errorText}>{errors.email}</Text>
-          }
-          <TextInput
-            theme={theme}
-            style={styles.input}
-            onChangeText={handleChange("password")}
-            onBlur={handleBlur("password")}
-            value={values.password}
-            placeholder={"Password"}
-            secureTextEntry
-          />
-          {(errors.password && touched.password) &&
-          <Text style={styles.errorText}>{errors.password}</Text>
-          }
+          }}>Login In and Find Your Nearest Vaccination Center !!!</Text>
 
-          <Button theme={theme} style={{
-            marginTop: 20,
-          }} onPress={handleSubmit} title="Submit" />
         </View>
-      )}
-    </Formik>
-  </View>
-);
+        <View style={styles.MainContainer2}>
+
+          <Formik
+            validationSchema={loginValidationSchema}
+            initialValues={{ email: "", password: "" }}
+            onSubmit={async values => {
+              console.log(JSON.stringify({
+
+                "email": values.email,
+                "password": values.password,
+
+
+              }));
+              let action;
+
+              action = authActions.signup(
+                values.email,
+                values.password,
+              );
+
+              try {
+                await dispatch(action);
+                navigation.navigate("UserTabbedNavigation");
+              } catch (err) {
+                console.log(err);
+              }
+            }}
+
+
+          >
+            {({
+                handleChange, handleBlur, handleSubmit, values, errors,
+                touched,
+                isValid,
+              }) => (
+              <View style={{
+                height: "100%",
+                width: "90%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+
+                <TextInput
+                  theme={theme}
+                  style={styles.input}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                  placeholder={"Email ID"}
+                  keyboardType="email-address"
+                />
+                {(errors.email && touched.email) &&
+                <Text style={styles.errorText}>{errors.email}</Text>
+                }
+                <TextInput
+                  theme={theme}
+                  style={styles.input}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                  placeholder={"Password"}
+                  secureTextEntry
+                />
+                {(errors.password && touched.password) &&
+                <Text style={styles.errorText}>{errors.password}</Text>
+                }
+
+                <Button mode="contained" theme={theme} colors={planted_colors.STRONG_BLUE} style={{
+                  marginTop: 20,
+                  color: planted_colors.OFF_WHITE,
+                }} onPress={handleSubmit}>
+
+
+                  <Text>Log In</Text>
+                </Button>
+              </View>
+            )}
+          </Formik>
+        </View>
+      </View>
+    </ScrollView>);
+};
 
 
 const styles = StyleSheet.create({
@@ -142,6 +165,23 @@ const styles = StyleSheet.create({
     marginLeft: 20,
 
   },
+  MainContainer2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: planted_colors.OFF_WHITE,
+    marginTop: 65,
+
+  },
+  SplashScreen_ChildView:
+    {
+      width: "100%",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+
+    },
 
 
 });

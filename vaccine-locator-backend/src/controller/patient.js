@@ -16,24 +16,25 @@ exports.signUp = async (req, res) => {
     aadharNo: AadharNo,
   }));
   const patient = new Patient(req.body);
-  console.log("Patient",patient);
+
   try {
     await patient.save();
     const token = await patient.generateAuthToken();
     res.status(201).send({ patient, token });
-    console.log("Hello");
+
   } catch (e) {
     res.status(400).send(e);
-    console.log("Hello", e);
+
   }
 };
 
 exports.signIn = async (req, res) => {
   try {
-    const user = await Patient.findByCredentials(req.body.Email, req.body.Password);
-    const token = await user.generateAuthToken();
-    res.send({ user, token });
+    const patient = await Patient.findByCredentials(req.body.email, req.body.password);
+    const token = await patient.generateAuthToken();
+    res.send({ patient, token });
   } catch (e) {
-    res.status(400).send();
+
+    res.status(400).send(e);
   }
 };

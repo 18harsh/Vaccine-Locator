@@ -66,33 +66,35 @@ const patientSchema = new mongoose.Schema({
 })
 
 patientSchema.methods.generateAuthToken = async function () {
-    const user = this
-    const token = jwt.sign({_id:user.id.toString()},'thisismyproject')
-    user.tokens = user.tokens.concat({ token })
-    await user.save()
+    const patient = this
+
+    const token = jwt.sign({_id:patient._id.toString()},'thisismyproject')
+    patient.tokens = patient.tokens.concat({ token })
+    await patient.save()
     return token
 }
 
 patientSchema.statics.findByCredentials = async (Email,Password) => {
-    const user = await Patient.findOne({Email})
-    if (!user) {
+    const patient = await Patient.findOne({email:Email})
+
+    if (!patient) {
         throw new Error('Unable to login')
     }
-    const isMatch = await bcrypt.compare(Password, patientSchema.Password)
+    const isMatch = await bcrypt.compare(Password, patient.password)
     if (!isMatch) {
         throw new Error('Unable to login')
     }
-    return user
+    return patient
 }
 
 // Hash the plain text password before saving
 patientSchema.pre('save', async function (next) {
-    const user = this
+    const patient = this
 
-    if (user.isModified('Password')) {
+    if (patient.isModified('password')) {
 
         // user.AadharNo = await bcrypt.hash(user.AadharNo, 8);
-        user.Password = await bcrypt.hash(patientSchema.Password, 8);
+        patient.password = await bcrypt.hash(patient.password, 8);
     }
     next()
 })

@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // export const SIGNUP = 'SIGNUP';
 // export const LOGIN = 'LOGIN';
@@ -14,7 +14,7 @@ export const authenticate = (userId, token, expiryTime) => {
   };
 };
 
-export const signup = (firstName,lastName, phoneNo, email, password, aadharCardNo) => {
+export const signup = (firstName, lastName, email, password, phoneNo, aadharCardNo) => {
   return async dispatch => {
     const response = await fetch("http://10.0.2.2:4000/users", {
         method: "POST",
@@ -33,17 +33,12 @@ export const signup = (firstName,lastName, phoneNo, email, password, aadharCardN
       },
     );
 
-    // if (!response.ok) {
-    //   const errorResData = await response.json();
-    //   const errorId = errorResData.error.message;
-    //   let message = "Something went wrong!";
-    //   if (errorId === "EMAIL_EXISTS") {
-    //     message = "This email exists already!";
-    //   }
-    //   throw new Error(message);
-    // }
 
     const resData = await response.json();
+    console.log(resData);
+    if (resData.errors.email !== undefined) {
+      return "Email Id Has Been used Already";
+    }
     console.log(resData);
     dispatch(
       authenticate(
@@ -62,7 +57,7 @@ export const signup = (firstName,lastName, phoneNo, email, password, aadharCardN
 export const login = (email, password) => {
   return async dispatch => {
     const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBY8UJq_xLD0nEe1HZHuvEOUfYIS9gg4pA",
+      "http://10.0.2.2:4000/users/login",
       {
         method: "POST",
         headers: {
@@ -71,22 +66,21 @@ export const login = (email, password) => {
         body: JSON.stringify({
           email: email,
           password: password,
-          returnSecureToken: true,
         }),
       },
     );
 
-    if (!response.ok) {
-      const errorResData = await response.json();
-      const errorId = errorResData.error.message;
-      let message = "Something went wrong!";
-      if (errorId === "EMAIL_NOT_FOUND") {
-        message = "This email could not be found!";
-      } else if (errorId === "INVALID_PASSWORD") {
-        message = "This password is not valid!";
-      }
-      throw new Error(message);
-    }
+    // if (!response.ok) {
+    //   const errorResData = await response.json();
+    //   const errorId = errorResData.error.message;
+    //   let message = "Something went wrong!";
+    //   if (errorId === "EMAIL_NOT_FOUND") {
+    //     message = "This email could not be found!";
+    //   } else if (errorId === "INVALID_PASSWORD") {
+    //     message = "This password is not valid!";
+    //   }
+    //   throw new Error(message);
+    // }
 
     const resData = await response.json();
     console.log(resData);
