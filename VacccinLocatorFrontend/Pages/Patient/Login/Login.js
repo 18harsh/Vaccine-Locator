@@ -55,7 +55,7 @@ const MyReactNativeForm = props => {
 
           <Formik
             validationSchema={loginValidationSchema}
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ email: "reuben21@gmail.com", password: "Reuben@21" }}
             onSubmit={async values => {
               console.log(JSON.stringify({
 
