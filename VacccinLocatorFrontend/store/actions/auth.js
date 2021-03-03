@@ -35,9 +35,9 @@ export const signup = (firstName, lastName, email, password, phoneNo, aadharCard
 
 
     const resData = await response.json();
-    console.log(resData);
-    if (resData.errors.email !== undefined) {
-      return "Email Id Has Been used Already";
+    console.log(resData.errorMessage);
+    if (resData.errorMessage !== undefined) {
+      return resData.errorMessage
     }
     console.log(resData);
     dispatch(

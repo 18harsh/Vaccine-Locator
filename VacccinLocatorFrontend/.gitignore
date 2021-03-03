@@ -2,6 +2,8 @@
 #
 .DS_Store
 
+node_modules
+node_modules\@babel\plugin-proposal-class-properties\node_modules\@babel\helper-create-class-features-plugin\node_modules\@babel\core\lib\config\validation
 # Xcode
 #
 build/

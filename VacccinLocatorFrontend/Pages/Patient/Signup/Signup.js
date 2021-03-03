@@ -69,7 +69,7 @@ const MyReactNativeForm = props => {
               aadharCardNo: "123412341234",
               firstName: "reuben",
               lastName: "coutinho",
-              phoneNo: "8888888888",
+              phoneNo: "8801744253089",
             }}
             onSubmit={async values => {
               const jsonData = JSON.stringify(values);
@@ -88,7 +88,7 @@ const MyReactNativeForm = props => {
               try {
                 const message = await dispatch(action);
                 console.log(message);
-                if (message === "Email Id Has Been used Already") {
+                if (message) {
                   Alert.alert(message);
                   return;
                 }
