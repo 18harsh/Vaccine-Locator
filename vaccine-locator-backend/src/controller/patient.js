@@ -38,11 +38,10 @@ exports.signIn = async (req, res) => {
     });
   }
   try {
-    const patient = await Patient.findByCredentials(req.body.email, req.body.password);
-    const token = await Patient.generateAuthToken();
-    res.send({ patient, token });
+    const patient = await Patient.findByCredentials(req.body.Email, req.body.Password);
+    // const token = await Patient.generateAuthToken();
+    res.status(200).send({ patient});
   } catch (e) {
-
     res.status(400).send({error:e});
   }
 };

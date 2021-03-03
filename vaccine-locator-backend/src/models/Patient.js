@@ -68,8 +68,8 @@ const patientSchema = new mongoose.Schema({
 
 patientSchema.methods.generateAuthToken = async function () {
     const patient = this
-
-    const token = jwt.sign({_id:patient._id.toString()},'thisismyproject')
+    console.log(patient)
+    const token = jwt.sign({_id:patient.id.toString()},'thisismyproject')
     patient.tokens = patient.tokens.concat({ token })
     await patient.save()
     return token
@@ -77,15 +77,16 @@ patientSchema.methods.generateAuthToken = async function () {
 
 patientSchema.statics.findByCredentials = async (Email,Password) => {
     const patient = await Patient.findOne({email:Email})
-    console.log(patient)
+    // console.log(patient.password)
     if (patient === null) {
         throw new Error('Unable to login')
     }
+    
     const isMatch = await bcrypt.compare(Password, patient.password)
     if (!isMatch) {
         throw new Error('Unable to login')
     }
-    return patient
+    return patient;
 }
 
 // Hash the plain text password before saving
