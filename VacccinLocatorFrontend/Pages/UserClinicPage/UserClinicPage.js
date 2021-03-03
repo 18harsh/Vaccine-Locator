@@ -1,21 +1,48 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, Image,TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import * as planted_colors from "../../Components/Color";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-const UserClinicPage =()=> {
-
+const UserClinicPage = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  useEffect(() => {
+    const tryLogin = async () => {
+      const userData = await AsyncStorage.getItem("userData");
+      console.log("User Data AsyncStorage",userData);
+      if (!userData) {
+        props.navigation.navigate("UserTabbedNavigation");
+        return;
+      }
+      const transformedData = JSON.parse(userData);
+      const { token, userId, expiryDate } = transformedData;
+      const expirationDate = new Date(expiryDate);
 
-    return (
+      if (expirationDate <= new Date() || !token || !userId) {
+        props.navigation.navigate("UserTabbedNavigation");
+        return;
+      }
 
-      <View style={styles.MainContainer}>
-        <TouchableOpacity style={styles.SplashScreen_ChildView}  onPress={()=>{
-          navigation.navigate('VaccinationClinic')
-        }}>
-        <View style={styles.view_box} >
+      const expirationTime = expirationDate.getTime() - new Date().getTime();
+
+      props.navigation.navigate("Shop");
+      dispatch(authActions.authenticate(userId, token, expirationTime));
+    };
+
+    tryLogin();
+  }, [dispatch]);
+
+  return (
+
+    <View style={styles.MainContainer}>
+      <TouchableOpacity style={styles.SplashScreen_ChildView} onPress={() => {
+        navigation.navigate("VaccinationClinic");
+      }}>
+        <View style={styles.view_box}>
           <Image source={require("../../Components/Images/clinic.png")} style={{
             width: 200,
             height: 200,
@@ -23,26 +50,26 @@ const UserClinicPage =()=> {
 
           <Text style={styles.text_css}>Vaccination Clinic</Text>
         </View>
-        </TouchableOpacity>
+      </TouchableOpacity>
 
-        <TouchableOpacity style={styles.SplashScreen_ChildView} onPress={()=>{
-          navigation.navigate('PatientAuthentication')
-        }}
-        >
-          <View style={styles.view_box} >
+      <TouchableOpacity style={styles.SplashScreen_ChildView} onPress={() => {
+        navigation.navigate("PatientAuthentication");
+      }}
+      >
+        <View style={styles.view_box}>
           <Image source={require("../../Components/Images/user.png")} style={{
             width: 200,
             height: 200,
           }} />
           <Text style={styles.text_css}>Patient</Text>
         </View>
-          </TouchableOpacity>
+      </TouchableOpacity>
 
-      </View>
-    );
+    </View>
+  );
 
 
-}
+};
 
 const styles = StyleSheet.create(
   {
@@ -75,18 +102,18 @@ const styles = StyleSheet.create(
       borderRightWidth: 1,
       borderRightColor: planted_colors.STRONG_BLUE,
     },
-    text_css:{
-      color:planted_colors.BLUEISH_GREEN,
-      fontSize:20
+    text_css: {
+      color: planted_colors.BLUEISH_GREEN,
+      fontSize: 20,
     },
 
 
     SplashScreen_ChildView:
       {
-        width:"100%",
+        width: "100%",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       },
 
   });

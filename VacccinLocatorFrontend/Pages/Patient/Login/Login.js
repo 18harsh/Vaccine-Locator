@@ -66,13 +66,18 @@ const MyReactNativeForm = props => {
               }));
               let action;
 
-              action = authActions.signup(
+              action = authActions.login(
                 values.email,
                 values.password,
               );
 
               try {
-                await dispatch(action);
+                const message = await dispatch(action);
+                console.log(message);
+                if (message) {
+                  Alert.alert(message);
+                  return;
+                }
                 navigation.navigate("UserTabbedNavigation");
               } catch (err) {
                 console.log(err);

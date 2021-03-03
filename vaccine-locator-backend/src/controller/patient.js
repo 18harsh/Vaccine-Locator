@@ -8,14 +8,7 @@ exports.signUp = async (req, res) => {
   password = req.body.Password;
   phoneNo = req.body.Phoneno;
   AadharNo = req.body.AadharNo;
-  console.log(JSON.stringify({
-    firstName: firstName,
-    lastName: lastName,
-    email: Email,
-    password: password,
-    phoneNo: phoneNo,
-    aadharNo: AadharNo,
-  }));
+
   const errors = validationResult(req);
   if (!errors.isEmpty()){
 
@@ -37,12 +30,19 @@ exports.signUp = async (req, res) => {
 };
 
 exports.signIn = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+
+    return res.status(422).send({
+      errorMessage: errors.array()[0].msg,
+    });
+  }
   try {
     const patient = await Patient.findByCredentials(req.body.email, req.body.password);
-    const token = await patient.generateAuthToken();
+    const token = await Patient.generateAuthToken();
     res.send({ patient, token });
   } catch (e) {
 
-    res.status(400).send(e);
+    res.status(400).send({error:e});
   }
 };
