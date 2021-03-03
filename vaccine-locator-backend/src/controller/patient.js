@@ -38,10 +38,19 @@ exports.signIn = async (req, res) => {
     });
   }
   try {
-    const patient = await Patient.findByCredentials(req.body.Email, req.body.Password);
+    console.log(req.body)
+    const patient = await Patient.findByCredentials(req.body.email, req.body.password);
     // const token = await Patient.generateAuthToken();
-    res.status(200).send({ patient});
+    if (!patient) {
+      return res.status(422).send({
+        errorMessage: "Unable to login",
+      });
+    }
+    console.log(patient)
+    
   } catch (e) {
-    res.status(400).send({error:e});
+    return res.status(422).send({
+      errorMessage: "Unable to login",
+    });
   }
 };

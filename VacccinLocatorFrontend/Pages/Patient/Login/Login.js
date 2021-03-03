@@ -73,9 +73,9 @@ const MyReactNativeForm = props => {
 
               try {
                 const message = await dispatch(action);
-                console.log(message);
-                if (message) {
-                  Alert.alert(message);
+                console.log("error "+message);
+                if (!message) {
+                  Alert.alert("Unable to Login");
                   return;
                 }
                 navigation.navigate("UserTabbedNavigation");
