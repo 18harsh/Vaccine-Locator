@@ -2,35 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/Images/loading.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserPage/UserTabNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserPage/UserTabNavigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/java/com/vacccinlocatorfrontend/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/java/com/vacccinlocatorfrontend/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/Podfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend-tvOS/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend-tvOSTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend.xcodeproj/project.pbxproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend.xcodeproj/xcshareddata/xcschemes/VacccinLocatorFrontend-tvOS.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend.xcodeproj/xcshareddata/xcschemes/VacccinLocatorFrontend.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend/AppDelegate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend/AppDelegate.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend/Images.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend/Images.xcassets/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend/LaunchScreen.storyboard" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontend/main.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontendTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/ios/VacccinLocatorFrontendTests/VacccinLocatorFrontendTests.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/package-lock.json" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controller/Booking.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routers/Booking.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -45,8 +34,9 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.15.5" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.14.31" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -71,7 +61,7 @@
       <workItem from="1614732691724" duration="3686000" />
       <workItem from="1614849095921" duration="614000" />
       <workItem from="1614851445069" duration="1960000" />
-      <workItem from="1614855728391" duration="2499000" />
+      <workItem from="1614855728391" duration="5667000" />
     </task>
     <servers />
   </component>

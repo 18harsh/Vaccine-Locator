@@ -15,11 +15,13 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
+    "google-distance-matrix": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.0",
     "mongoose": "^5.11.18",
     "multer": "^1.4.2",
     "sharp": "^0.25.4",
+    "util": "^0.12.3",
     "validate-phone-number-node-js": "0.0.1",
     "validator": "^13.1.1"
   },

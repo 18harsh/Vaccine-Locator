@@ -3,9 +3,11 @@ const express = require('express')
 
 
 const userRouter = require('./src/routers/patient')
+const bookingRouter = require('./src/routers/Booking')
 // const clinicRouter = require('./routers/clinicCenter')
 
 const Clinic = require('./src/models/clinicCenter')
+
 
 const MONGO_DB_URI = "mongodb+srv://reuben:reuben@mongodb.syifj.mongodb.net/vaccine_locator?retryWrites=true&w=majority"
 
@@ -21,7 +23,7 @@ const port = process.env.PORT
 
 app.use(express.json())
 app.use(userRouter)
-// app.use(clinicRouter)
+app.use(bookingRouter)
 
 
 app.post('/center', async (req, res) => {
