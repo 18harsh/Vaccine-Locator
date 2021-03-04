@@ -1,37 +1,36 @@
-import React, { useEffect,useState } from "react";
-import { Text, View, Alert, StyleSheet, Image } from "react-native";
-import { DefaultTheme, TextInput } from "react-native-paper";
+import React, { useEffect, useState } from "react";
+import { Text, View, StyleSheet, Image } from "react-native";
+import { TextInput } from "react-native-paper";
 import * as planted_colors from "../../Components/Color";
-import { Formik } from "formik";
-import * as yup from "yup";
+
 import { useDispatch } from "react-redux";
 import * as authActions from "../../store/actions/auth";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
-import Icon from "react-native-vector-icons/AntDesign";
+
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const theme = {
 
   roundness: 4,
   colors: {
-    placeholder: 'white', text: 'red', primary: 'red',
-    underlineColor: 'black', background: '#003489'
-  }
+    placeholder: "white", text: "red", primary: "red",
+    underlineColor: "black", background: "#003489",
+  },
 };
-
 
 
 const MyReactNativeForm = props => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [userDetails,setUserDetails] = useState({});
-  const [loading,setLoading]= useState(true);
+  const [userDetails, setUserDetails] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userData");
-      console.log("User Data AsyncStorage",userData);
+      console.log("User Data AsyncStorage", userData);
       if (!userData) {
         navigation.navigate("UserClinicPage");
         return;
@@ -54,7 +53,7 @@ const MyReactNativeForm = props => {
 
 
       const resData = await response.json();
-      setUserDetails(resData)
+      setUserDetails(resData);
       if (expirationDate <= new Date() || !token || !userId) {
         navigation.navigate("UserClinicPage");
         return;
@@ -63,25 +62,31 @@ const MyReactNativeForm = props => {
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
       dispatch(authActions.authenticate(userId, token, expirationTime));
-      setLoading(false)
+      setLoading(false);
     };
 
     tryLogin();
 
 
-
   }, [dispatch]);
 
 
-  console.log(userDetails)
-  if(loading) {
+  console.log(userDetails);
+  if (loading) {
     return (
-      <Image style={{
-        width:"50%",
-        resizeMode:"contain"
-      }}
-             source={require("../Images/user.png")}
-      />
+      <View style={{
+        flex:1,
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center"
+      }}>
+        <Image style={{
+          width: "50%",
+          resizeMode: "contain",
+        }}
+               source={require("../Images/user.png")}
+        />
+      </View>
     );
   }
   return (
@@ -89,10 +94,10 @@ const MyReactNativeForm = props => {
       <View style={styles.MainContainer}>
         <View style={styles.SplashScreen_ChildView}>
           <Image style={{
-            width:"50%",
-            resizeMode:"contain"
+            width: "50%",
+            resizeMode: "contain",
           }}
-            source={require("../Images/user.png")}
+                 source={require("../Images/user.png")}
           />
           <Text style={{
             color: planted_colors.STRONG_RED,
@@ -103,11 +108,11 @@ const MyReactNativeForm = props => {
 
           <View style={{
             flexDirection: "row",
-            width:"100%",
-            justifyContent:"center"
+            width: "100%",
+            justifyContent: "center",
           }}>
             <TextInput
-              underlineColorAndroid={'rgba(0,0,0,0)'}
+              underlineColorAndroid={"rgba(0,0,0,0)"}
               color={planted_colors.STRONG_RED}
               mode={"outlined"}
               style={styles.input2}
@@ -117,7 +122,7 @@ const MyReactNativeForm = props => {
               disabled={true}
             />
             <TextInput
-              underlineColorAndroid={'rgba(0,0,0,0)'}
+              underlineColorAndroid={"rgba(0,0,0,0)"}
               color={planted_colors.STRONG_RED}
               mode={"outlined"}
               style={styles.input2}
@@ -128,7 +133,7 @@ const MyReactNativeForm = props => {
             />
           </View>
           <TextInput
-            underlineColorAndroid={'rgba(0,0,0,0)'}
+            underlineColorAndroid={"rgba(0,0,0,0)"}
             color={planted_colors.STRONG_RED}
             mode={"outlined"}
             style={styles.input}
@@ -138,7 +143,7 @@ const MyReactNativeForm = props => {
             disabled={true}
           />
           <TextInput
-            underlineColorAndroid={'rgba(0,0,0,0)'}
+            underlineColorAndroid={"rgba(0,0,0,0)"}
             color={planted_colors.STRONG_RED}
             mode={"outlined"}
             style={styles.input}
@@ -148,7 +153,7 @@ const MyReactNativeForm = props => {
             disabled={true}
           />
           <TextInput
-            underlineColorAndroid={'rgba(0,0,0,0)'}
+            underlineColorAndroid={"rgba(0,0,0,0)"}
             color={planted_colors.STRONG_RED}
             mode={"outlined"}
             style={styles.input}
@@ -157,9 +162,6 @@ const MyReactNativeForm = props => {
             value={userDetails.phoneNo.toString()}
             disabled={true}
           />
-
-
-
 
 
         </View>
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    backgroundColor:planted_colors.LIGHT_BLUE,
+    backgroundColor: planted_colors.LIGHT_BLUE,
 
   },
   input:

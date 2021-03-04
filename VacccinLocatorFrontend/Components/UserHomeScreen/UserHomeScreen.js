@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, Button, Dimensions, Image, StyleSheet, Platform } from "react-native";
-import { DefaultTheme } from "react-native-paper";
+import { Text, View, TextInput,  Dimensions, Image, StyleSheet, Platform } from "react-native";
+import { DefaultTheme,Button } from "react-native-paper";
 import * as planted_colors from "../Color";
 import Geolocation from "react-native-geolocation-service";
 import { request, PERMISSIONS } from "react-native-permissions";
@@ -192,10 +192,16 @@ class MyReactNativeForm extends Component {
           width: "40%",
           justifyContent: "center",
           alignItems: "center",
+          flexDirection:"column"
         }}>
 
-          <Image style={{}} resizeMode="contain" source={item.image} />
-
+          <Image style={{ width:"50%",height:70}} resizeMode="contain" source={item.image} />
+          <Button mode={'contained'} style={{
+            color:planted_colors.STRONG_RED,
+            backgroundColor: planted_colors.STRONG_RED
+          }} onPress={()=>{
+            console.log("This is Clicking")
+          }}> Book</Button>
           <View>
 
           </View>
