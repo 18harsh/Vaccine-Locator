@@ -37,7 +37,7 @@ const MyReactNativeForm = props => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView keyboardShouldPersistTaps={"handled"}>
+    <ScrollView keyboardShouldPersistTaps={"handled"} vertical>
       <View style={styles.MainContainer}>
         <View style={styles.SplashScreen_ChildView}>
           <Image
@@ -57,13 +57,7 @@ const MyReactNativeForm = props => {
             validationSchema={loginValidationSchema}
             initialValues={{ email: "reuben21@gmail.com", password: "Reuben@21" }}
             onSubmit={async values => {
-              console.log(JSON.stringify({
 
-                "email": values.email,
-                "password": values.password,
-
-
-              }));
               let action;
 
               action = authActions.login(
@@ -71,17 +65,18 @@ const MyReactNativeForm = props => {
                 values.password,
               );
 
-              try {
+
                 const message = await dispatch(action);
-                console.log("error "+message);
-                if (!message) {
-                  Alert.alert("Unable to Login");
+                var new_message = JSON.stringify(message)
+                console.log("error " +new_message );
+                if (new_message.errorMessage) {
+                  console.log("Entered")
+                  Alert.alert(message);
                   return;
                 }
                 navigation.navigate("UserTabbedNavigation");
-              } catch (err) {
-                console.log(err);
-              }
+
+
             }}
 
 
@@ -142,7 +137,8 @@ const MyReactNativeForm = props => {
 
 const styles = StyleSheet.create({
   MainContainer: {
-    flex: 1,
+    width:"100%",
+    height:"100%",
     justifyContent: "center",
     alignItems: "center",
 

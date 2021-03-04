@@ -2,12 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03-03-2021_20_54__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Navigation/NavigationContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Navigation/NavigationContainer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Signup/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Signup/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/UserClinicPage/UserClinicPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/UserClinicPage/UserClinicPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/package-lock.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/patient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Patient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/patient.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +56,9 @@
       <option name="presentableId" value="Default" />
       <updated>1614732690565</updated>
       <workItem from="1614732691724" duration="3686000" />
+      <workItem from="1614849095921" duration="614000" />
+      <workItem from="1614851445069" duration="1960000" />
+      <workItem from="1614855728391" duration="2499000" />
     </task>
     <servers />
   </component>
@@ -67,5 +75,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -4,7 +4,7 @@ import * as planted_colors from "../../Components/Color";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import * as authActions from "../../store/actions/auth";
 
 const UserClinicPage = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const UserClinicPage = () => {
       const userData = await AsyncStorage.getItem("userData");
       console.log("User Data AsyncStorage",userData);
       if (!userData) {
-        props.navigation.navigate("UserTabbedNavigation");
+        navigation.navigate("UserClinicPage");
         return;
       }
       const transformedData = JSON.parse(userData);
@@ -23,13 +23,13 @@ const UserClinicPage = () => {
       const expirationDate = new Date(expiryDate);
 
       if (expirationDate <= new Date() || !token || !userId) {
-        props.navigation.navigate("UserTabbedNavigation");
+        navigation.navigate("UserClinicPage");
         return;
       }
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
-      props.navigation.navigate("Shop");
+      navigation.navigate("UserTabbedNavigation");
       dispatch(authActions.authenticate(userId, token, expirationTime));
     };
 

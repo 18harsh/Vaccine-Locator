@@ -10,7 +10,7 @@ import VaccinationClinic from "../Pages/VacinationClinic/VaccinationClinic";
 import VaccinationClinicSignUp from "../Pages/VacinationClinic/Signup/Signup";
 import VaccinationClinicLogin from "../Pages/VacinationClinic/Login/Login";
 import UserTabbedNavigation from "../Components/UserPage/UserTabNavigation";
-
+import UserClinicPage from "../Pages/UserClinicPage/UserClinicPage";
 
 export default class App extends Component {
 
@@ -22,6 +22,13 @@ export default class App extends Component {
           headerShown: false,
         }}>
           <Stack.Screen name="Home" component={Homepage} options={{
+            title: "",
+            headerStyle: {
+              backgroundColor: colors.OFF_WHITE,
+            },
+            headerTintColor: colors.OFF_WHITE,
+          }} />
+          <Stack.Screen name="UserClinicPage" component={UserClinicPage} options={{
             title: "",
             headerStyle: {
               backgroundColor: colors.OFF_WHITE,

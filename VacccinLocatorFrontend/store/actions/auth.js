@@ -42,15 +42,15 @@ export const signup = (firstName, lastName, email, password, phoneNo, aadharCard
     console.log(resData);
     dispatch(
       authenticate(
-        resData.token,
+        resData.tokens[0].token,
         resData._id,
-        parseInt(10) * 1000,
+        parseInt(3600) * 1000,
       ),
     );
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(10) * 1000,
+      new Date().getTime() + parseInt(3600) * 1000,
     );
-    saveDataToStorage(resData.token, resData._id, expirationDate);
+    saveDataToStorage(resData.tokens[0].token, resData._id, expirationDate);
   };
 };
 
@@ -70,31 +70,27 @@ export const login = (email, password) => {
       },
     );
 
-    // if (!response.ok) {
-    //   const errorResData = await response.json();
-    //   const errorId = errorResData.error.message;
-    //   let message = "Something went wrong!";
-    //   if (errorId === "EMAIL_NOT_FOUND") {
-    //     message = "This email could not be found!";
-    //   } else if (errorId === "INVALID_PASSWORD") {
-    //     message = "This password is not valid!";
-    //   }
-    //   throw new Error(message);
-    // }
-
     const resData = await response.json();
-    console.log(resData);
+    console.log("response",resData);
+    // console.log();
+    if (resData.errorMessage !== undefined) {
+      return resData
+    }
     dispatch(
       authenticate(
-        resData.localId,
-        resData.idToken,
-        parseInt(10) * 1000,
+        resData.tokens[0].token,
+        resData._id,
+        parseInt(3600) * 1000,
       ),
     );
     const expirationDate = new Date(
-      new Date().getTime() + parseInt(10) * 1000,
+      new Date().getTime() + parseInt(3600) * 1000,
     );
-    saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+    saveDataToStorage(  resData.tokens[0].token,   resData._id, expirationDate);
+
+
+    return resData
+
   };
 };
 

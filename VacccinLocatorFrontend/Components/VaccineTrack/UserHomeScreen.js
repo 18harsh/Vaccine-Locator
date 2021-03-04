@@ -1,126 +1,234 @@
-import React from "react";
-import {Text, View, Button, Alert, StyleSheet} from "react-native";
-import {DefaultTheme, TextInput} from 'react-native-paper'
-import * as planted_colors from "../Color";
-import {Formik} from 'formik';
-import * as yup from 'yup';
+import React, { useEffect,useState } from "react";
+import { Text, View, Alert, StyleSheet, Image } from "react-native";
+import { DefaultTheme, TextInput } from "react-native-paper";
+import * as planted_colors from "../../Components/Color";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import * as authActions from "../../store/actions/auth";
+import { useNavigation } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
+import Icon from "react-native-vector-icons/AntDesign";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const theme = {
-    ...DefaultTheme,
-    roundness: 4,
-    colors: {
-        ...DefaultTheme.colors,
-        primary: planted_colors.BLUEISH_GREEN,
-        accent: planted_colors.OFF_WHITE,
-    },
+
+  roundness: 4,
+  colors: {
+    placeholder: 'white', text: 'red', primary: 'red',
+    underlineColor: 'black', background: '#003489'
+  }
 };
 
 
-const loginValidationSchema = yup.object().shape({
-    email: yup
-        .string()
-        .email("Please enter valid email")
-        .required('Email Address is Required'),
-    password: yup
-        .string()
-        .min(8, ({min}) => `Password must be at least ${min} characters`)
-        .required('Password is required'),
 
-})
+const MyReactNativeForm = props => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const [userDetails,setUserDetails] = useState({});
+  const [loading,setLoading]= useState(true);
 
-const MyReactNativeForm = props => (
-    <View style={styles.MainContainer}>
+  useEffect(() => {
+    const tryLogin = async () => {
+      const userData = await AsyncStorage.getItem("userData");
+      console.log("User Data AsyncStorage",userData);
+      if (!userData) {
+        navigation.navigate("UserClinicPage");
+        return;
+      }
+      const transformedData = JSON.parse(userData);
+      const { token, userId, expiryDate } = transformedData;
+      const expirationDate = new Date(expiryDate);
 
-        <Formik
-            validationSchema={loginValidationSchema}
-            initialValues={{email: '', password: '', aadharCardNo: '', firstName: '', lastName: ''}}
-            onSubmit={values => {
-                console.log(values)
-            }}
+      const response = await fetch("http://10.0.2.2:4000/patient/single", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "patientId": userId,
 
-        >
-            {({
-                  handleChange, handleBlur, handleSubmit, values, errors,
-                  touched,
-                  isValid,
-              }) => (
-                <View style={{
-                    height: "100%",
-                    width: "90%",
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <Text style={{
+          }),
+        },
+      );
 
-                        color: planted_colors.STRONG_YELLOW,
-                    }}>Fill The Form Up </Text>
-                    <TextInput
-                        theme={theme}
-                        style={styles.input}
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        value={values.email}
-                        placeholder={"Email ID"}
-                        keyboardType="email-address"
-                    />
-                    {(errors.email && touched.email) &&
-                    <Text style={styles.errorText}>{errors.email}</Text>
-                    }
-                    <TextInput
-                        theme={theme}
-                        style={styles.input}
-                        onChangeText={handleChange('password')}
-                        onBlur={handleBlur('password')}
-                        value={values.password}
-                        placeholder={"Password"}
-                        secureTextEntry
-                    />
-                    {(errors.password && touched.password) &&
-                    <Text style={styles.errorText}>{errors.password}</Text>
-                    }
 
-                    <Button theme={theme} style={{
-                        marginTop: 20
-                    }} onPress={handleSubmit} title="Submit"/>
-                </View>
-            )}
-        </Formik>
-    </View>
-);
+      const resData = await response.json();
+      setUserDetails(resData)
+      if (expirationDate <= new Date() || !token || !userId) {
+        navigation.navigate("UserClinicPage");
+        return;
+      }
+
+      const expirationTime = expirationDate.getTime() - new Date().getTime();
+
+      dispatch(authActions.authenticate(userId, token, expirationTime));
+      setLoading(false)
+    };
+
+    tryLogin();
+
+
+
+  }, [dispatch]);
+
+
+  console.log(userDetails)
+  if(loading) {
+    return (
+      <Image style={{
+        width:"50%",
+        resizeMode:"contain"
+      }}
+             source={require("../Images/user.png")}
+      />
+    );
+  }
+  return (
+    <ScrollView keyboardShouldPersistTaps={"handled"}>
+      <View style={styles.MainContainer}>
+        <View style={styles.SplashScreen_ChildView}>
+          <Image style={{
+            width:"50%",
+            resizeMode:"contain"
+          }}
+            source={require("../Images/user.png")}
+          />
+          <Text style={{
+            color: planted_colors.STRONG_RED,
+            fontSize: 15,
+          }}>Patient Details !!!</Text>
+        </View>
+        <View style={styles.MainContainer2}>
+
+          <View style={{
+            flexDirection: "row",
+            width:"100%",
+            justifyContent:"center"
+          }}>
+            <TextInput
+              underlineColorAndroid={'rgba(0,0,0,0)'}
+              color={planted_colors.STRONG_RED}
+              mode={"outlined"}
+              style={styles.input2}
+              label={"First Name"}
+              theme={theme}
+              value={userDetails.firstName}
+              disabled={true}
+            />
+            <TextInput
+              underlineColorAndroid={'rgba(0,0,0,0)'}
+              color={planted_colors.STRONG_RED}
+              mode={"outlined"}
+              style={styles.input2}
+              label={"Last Name"}
+              theme={theme}
+              value={userDetails.lastName}
+              disabled={true}
+            />
+          </View>
+          <TextInput
+            underlineColorAndroid={'rgba(0,0,0,0)'}
+            color={planted_colors.STRONG_RED}
+            mode={"outlined"}
+            style={styles.input}
+            label={"Email ID"}
+            theme={theme}
+            value={userDetails.email}
+            disabled={true}
+          />
+          <TextInput
+            underlineColorAndroid={'rgba(0,0,0,0)'}
+            color={planted_colors.STRONG_RED}
+            mode={"outlined"}
+            style={styles.input}
+            label={"Aadhar No"}
+            theme={theme}
+            value={userDetails.aadharNo}
+            disabled={true}
+          />
+          <TextInput
+            underlineColorAndroid={'rgba(0,0,0,0)'}
+            color={planted_colors.STRONG_RED}
+            mode={"outlined"}
+            style={styles.input}
+            label={"Phone No"}
+            theme={theme}
+            value={userDetails.phoneNo.toString()}
+            disabled={true}
+          />
+
+
+
+
+
+        </View>
+
+      </View>
+    </ScrollView>
+  );
+};
 
 
 const styles = StyleSheet.create({
-    MainContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+  MainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 100,
+    backgroundColor: planted_colors.LIGHT_BLUE,
+  },
+  MainContainer2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor:planted_colors.LIGHT_BLUE,
 
-        backgroundColor: planted_colors.OFF_WHITE,
+  },
+  input:
+    {
+      backgroundColor: planted_colors.LIGHT_BLUE,
+      color: planted_colors.OFF_WHITE,
+      width: "90%",
+      height: 45,
+      margin: 10,
+
+
+      fontSize: 18,
+
+
     },
-    input:
-        {
-            backgroundColor: planted_colors.LIGHT_BLUE,
-            color: planted_colors.OFF_WHITE,
-            width: "90%",
-            height: 25,
-            margin: 10,
-            paddingTop: 10,
-            paddingBottom: 10,
-            borderRadius: 5,
-            paddingLeft: 5,
-            paddingRight: 5,
-            fontSize: 18
+  input2:
+    {
+      backgroundColor: planted_colors.LIGHT_BLUE,
+      color: planted_colors.OFF_WHITE,
+      width: "42%",
+      height: 45,
+      margin: 10,
+
+      fontSize: 18,
 
 
-        },
-    errorText: {
-        color: planted_colors.STRONG_RED,
-        fontSize: 15,
-        marginLeft: 20
+    },
+  errorText: {
+    color: planted_colors.STRONG_RED,
+    fontSize: 15,
+    marginLeft: 20,
 
-    }
+  },
+  SplashScreen_ChildView:
+    {
+      width: "100%",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
 
+    },
 
 });
 
 export default MyReactNativeForm;
+
+
+

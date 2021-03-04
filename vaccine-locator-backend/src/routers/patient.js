@@ -44,4 +44,7 @@ router.post("/users", [
 
 router.post("/users/login", patientControllers.signIn);
 
+
+router.post("/patient/single", patientControllers.getSinglePatient);
+
 module.exports = router;

@@ -1,0 +1,156 @@
+Index: src/models/Patient.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const mongoose = require('mongoose')\r\nconst validator = require('validator')\r\nconst bcrypt = require('bcryptjs')\r\nconst jwt = require('jsonwebtoken')\r\n\r\nconst patientSchema = new mongoose.Schema({\r\n    firstName: {\r\n        type: String,\r\n        required: true,\r\n        trim: true\r\n    },\r\n    lastName: {\r\n        type: String,\r\n        required: true,\r\n        trim: true\r\n    },\r\n    email: {\r\n        type: String,\r\n        required: true,\r\n        lowercase: true,\r\n        unique: true,\r\n        validate(value) {\r\n            if (!validator.isEmail(value)) {\r\n                throw new Error('Email is invalid')\r\n            }\r\n        }\r\n    },\r\n    password: {\r\n        type: String,\r\n        required: true,\r\n        minlength: 8,\r\n        validate(value) {\r\n            if (value.toLowerCase().includes('password')) {\r\n                throw new Error('Password cannot contain password or name')\r\n            }\r\n        }\r\n    },\r\n    phoneNo: {\r\n        type: Number,\r\n        required: true,\r\n        validate(value) {\r\n            if (value == 10) {\r\n                throw new Error('Invalid Phone Number')\r\n            }\r\n        }\r\n    },\r\n    aadharNo: {\r\n        type: String,\r\n        required: true,\r\n        validate(value) {\r\n            if (value == 12) {\r\n                throw new Error('Invalid Aadhar Number')\r\n            }\r\n        }\r\n    },\r\n    Vaccine: {\r\n        type: Boolean,\r\n        default: false\r\n    },\r\n    tokens: [{\r\n        token: {\r\n            type: String,\r\n            required: true\r\n        }\r\n    }]\r\n})\r\n\r\npatientSchema.methods.generateAuthToken = async function () {\r\n    const patient = this\r\n\r\n    const token = jwt.sign({_id:patient._id.toString()},'thisismyproject')\r\n    patient.tokens = patient.tokens.concat({ token })\r\n    await patient.save()\r\n    return token\r\n}\r\n\r\npatientSchema.statics.findByCredentials = async (Email,Password) => {\r\n    const patient = await Patient.findOne({email:Email})\r\n\r\n    if (!patient) {\r\n        throw new Error('Unable to login')\r\n    }\r\n    const isMatch = await bcrypt.compare(Password, patient.password)\r\n    if (!isMatch) {\r\n        throw new Error('Unable to login')\r\n    }\r\n    return patient\r\n}\r\n\r\n// Hash the plain text password before saving\r\npatientSchema.pre('save', async function (next) {\r\n    const patient = this\r\n\r\n    if (patient.isModified('password')) {\r\n\r\n        // user.AadharNo = await bcrypt.hash(user.AadharNo, 8);\r\n        patient.password = await bcrypt.hash(patient.password, 8);\r\n    }\r\n    next()\r\n})\r\n\r\nconst Patient = mongoose.model('Patient', patientSchema)\r\n\r\nmodule.exports = Patient\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/models/Patient.js b/src/models/Patient.js
+--- a/src/models/Patient.js	(revision 02be8ebdba5c355fcb96ed3645bd3a651ff34984)
++++ b/src/models/Patient.js	(date 1614748200544)
+@@ -76,8 +76,8 @@
+ 
+ patientSchema.statics.findByCredentials = async (Email,Password) => {
+     const patient = await Patient.findOne({email:Email})
+-
+-    if (!patient) {
++    console.log(patient)
++    if (patient === null) {
+         throw new Error('Unable to login')
+     }
+     const isMatch = await bcrypt.compare(Password, patient.password)
+Index: src/routers/patient.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const express = require(\"express\");\r\nconst patientControllers = require(\"../controller/patient\");\r\nconst router = new express.Router();\r\n\r\nrouter.post(\"/users\", patientControllers.signUp);\r\n\r\n\r\nrouter.post(\"/users/login\", patientControllers.signIn);\r\n\r\nmodule.exports = router;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/routers/patient.js b/src/routers/patient.js
+--- a/src/routers/patient.js	(revision 02be8ebdba5c355fcb96ed3645bd3a651ff34984)
++++ b/src/routers/patient.js	(date 1614781669838)
+@@ -1,8 +1,45 @@
+ const express = require("express");
+ const patientControllers = require("../controller/patient");
+ const router = new express.Router();
++const { check, body } = require('express-validator');
++const Patient = require("../models/Patient");
++const validatePhoneNumber = require('validate-phone-number-node-js');
+ 
+-router.post("/users", patientControllers.signUp);
++router.post("/users", [
++    check('firstName')
++            .isAlphanumeric()
++            .withMessage('Enter A Proper Firstname').trim(),
++    check('lastName')
++            .isAlphanumeric()
++        .withMessage('Enter A Proper Lastname').trim(),
++    check('phoneNo')
++        .isLength({ min: 10, max:10 })
++        .withMessage('Enter A Proper PhoneNo').trim(),
++        // .custom((value, { req }) => {
++            
++        //     const result = validatePhoneNumber.validate();
++        //     console.log(result)
++        //     if (!result) {
++        //         return Promise.reject("Invalid phone no.")
++        //     }
++            
++        // }),
++    check('email')
++        .isEmail()
++        .normalizeEmail()
++        .withMessage('Enter A Proper Email-ID')
++        .custom((value, { req }) => {
++            return Patient
++                .findOne({ email: value })
++                .then(userDoc => {
++                    console.log(userDoc)
++                    if (userDoc) {
++                        return Promise.reject("Email-Id is already Taken")
++                    }
++                })
++        })
++                
++],patientControllers.signUp);
+ 
+ 
+ router.post("/users/login", patientControllers.signIn);
+Index: src/controller/patient.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const Patient = require(\"../models/Patient\");\r\n\r\nexports.signUp = async (req, res) => {\r\n  firstName = req.body.Fname;\r\n  lastName = req.body.Lname;\r\n  Email = req.body.Email;\r\n  password = req.body.Password;\r\n  phoneNo = req.body.Phoneno;\r\n  AadharNo = req.body.AadharNo;\r\n  console.log(JSON.stringify({\r\n    firstName: firstName,\r\n    lastName: lastName,\r\n    email: Email,\r\n    password: password,\r\n    phoneNo: phoneNo,\r\n    aadharNo: AadharNo,\r\n  }));\r\n  const patient = new Patient(req.body);\r\n\r\n  try {\r\n    await patient.save();\r\n    const token = await patient.generateAuthToken();\r\n    res.status(201).send({ patient, token });\r\n\r\n  } catch (e) {\r\n    res.status(400).send(e);\r\n\r\n  }\r\n};\r\n\r\nexports.signIn = async (req, res) => {\r\n  try {\r\n    const patient = await Patient.findByCredentials(req.body.email, req.body.password);\r\n    const token = await patient.generateAuthToken();\r\n    res.send({ patient, token });\r\n  } catch (e) {\r\n\r\n    res.status(400).send(e);\r\n  }\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/controller/patient.js b/src/controller/patient.js
+--- a/src/controller/patient.js	(revision 02be8ebdba5c355fcb96ed3645bd3a651ff34984)
++++ b/src/controller/patient.js	(date 1614748362317)
+@@ -31,10 +31,10 @@
+ exports.signIn = async (req, res) => {
+   try {
+     const patient = await Patient.findByCredentials(req.body.email, req.body.password);
+-    const token = await patient.generateAuthToken();
++    const token = await Patient.generateAuthToken();
+     res.send({ patient, token });
+   } catch (e) {
+ 
+-    res.status(400).send(e);
++    res.status(400).send({error:e});
+   }
+ };
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"4d1e3239-16e2-400d-a43b-0def9548a557\" name=\"Default Changelist\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Login/Login.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Login/Login.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Signup/Signup.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Signup/Signup.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/auth.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/auth.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/controller/patient.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/controller/patient.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/models/Patient.js\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/models/Patient.js\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1pDzwynm848EEY7bn8TA03sFbfi\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\r\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\r\n    <property name=\"vue.rearranger.settings.migration\" value=\"true\" />\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"start\" type=\"js.build_tools.npm\" nameIsGenerated=\"true\">\r\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\r\n      <command value=\"start\" />\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"4d1e3239-16e2-400d-a43b-0def9548a557\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1614732690565</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1614732690565</updated>\r\n      <workItem from=\"1614732691724\" duration=\"3686000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 02be8ebdba5c355fcb96ed3645bd3a651ff34984)
++++ b/.idea/workspace.xml	(date 1614785080218)
+@@ -2,12 +2,10 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
+-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Login/Login.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Signup/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Signup/Signup.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/auth.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/controller/patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/patient.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/models/Patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Patient.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/routers/patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/patient.js" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -33,6 +31,11 @@
+     <property name="nodejs_package_manager_path" value="npm" />
+     <property name="vue.rearranger.settings.migration" value="true" />
+   </component>
++  <component name="RecentsManager">
++    <key name="MoveFile.RECENT_KEYS">
++      <recent name="C:\Users\reube\Documents\Projects\Hackthon Projects\Vaccine-Locator-Hacker-Bash-2021\vaccine-locator-backend\src\routers" />
++    </key>
++  </component>
+   <component name="RunManager">
+     <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
+       <package-json value="$PROJECT_DIR$/package.json" />
+@@ -50,7 +53,9 @@
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+       <updated>1614732690565</updated>
+-      <workItem from="1614732691724" duration="3686000" />
++      <workItem from="1614732691724" duration="4498000" />
++      <workItem from="1614750235850" duration="605000" />
++      <workItem from="1614781686205" duration="907000" />
+     </task>
+     <servers />
+   </component>
+@@ -67,5 +72,6 @@
+         </entry>
+       </map>
+     </option>
++    <option name="oldMeFiltersMigrated" value="true" />
+   </component>
+ </project>
+\ No newline at end of file
