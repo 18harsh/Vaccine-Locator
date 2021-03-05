@@ -3,8 +3,8 @@ const express = require('express')
 
 
 const userRouter = require('./src/routers/patient')
-const bookingRouter = require('./src/routers/Booking')
-// const clinicRouter = require('./routers/clinicCenter')
+const bookingRouter = require('./src/routers/booking')
+const clinicRouter = require('./src/routers/clinicCenter')
 
 const Clinic = require('./src/models/clinicCenter')
 
@@ -22,8 +22,9 @@ app.use((req, res, next) => {
 const port = process.env.PORT
 
 app.use(express.json())
-app.use(userRouter)
-app.use(bookingRouter)
+app.use(userRouter);
+app.use(clinicRouter);
+app.use(bookingRouter);
 
 
 app.post('/center', async (req, res) => {
@@ -39,10 +40,10 @@ app.post('/center', async (req, res) => {
 
 
 mongoose.connect(MONGO_DB_URI)
-  .then(res => {
-      app.listen(4000);
-      // app.listen(process.env.PORT || 5000)
-  }).catch(err => {
+    .then(res => {
+        app.listen(4000);
+        // app.listen(process.env.PORT || 5000)
+    }).catch(err => {
     console.log(err);
 });
 
