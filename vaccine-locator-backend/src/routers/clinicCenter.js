@@ -14,6 +14,6 @@ const clinicController = require('../controller/clinicController')
 
 router.post('/register/clinic',clinicController.registerClinic)
 
-router.get("/clinic/location", clinicController.getClinicCoordinates);
+router.post("/clinic/location", clinicController.getClinicCoordinates);
 
 module.exports = router;
