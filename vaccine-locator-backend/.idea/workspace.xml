@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/booking.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/clinicController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/clinicController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/clinicCenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/clinicCenter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +58,7 @@
       <workItem from="1614849095921" duration="614000" />
       <workItem from="1614851445069" duration="1960000" />
       <workItem from="1614855728391" duration="5831000" />
-      <workItem from="1614911670575" duration="8265000" />
+      <workItem from="1614911670575" duration="9408000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>
@@ -76,7 +74,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614919138158</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Updated Code Distance Calculation">
+      <created>1614921046857</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1614921046857</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -97,6 +102,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated Code" />
     <MESSAGE value="Updated Code of Backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Code of Backend" />
+    <MESSAGE value="Updated Code Distance Calculation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Code Distance Calculation" />
   </component>
 </project>

@@ -69,6 +69,7 @@ exports.getClinicCoordinates = (req, res, next) => {
         .then(result => {
             var distance_array = [];
             result.forEach(res => {
+
                 console.log(res.clinicCoordinates)
                 const destinationLatitude = res.clinicCoordinates.latitude;
                 const destinationLongitude = res.clinicCoordinates.longitude;
@@ -78,13 +79,14 @@ exports.getClinicCoordinates = (req, res, next) => {
                     originLongitude,
                     destinationLatitude,
                     destinationLongitude)
+                if (distance <= 5) {
+                    var object={}
+                    object["_id"] = res._id
+                    object["clinicCoordinates"] =res.clinicCoordinates
+                    object["distance"] =distance
+                    distance_array.push(object)
+                }
 
-                var object={}
-
-                object["_id"] = res._id
-                object["clinicCoordinates"] =res.clinicCoordinates
-                object["distance"] =distance
-                distance_array.push(object)
             })
             res.send(distance_array)
         })
