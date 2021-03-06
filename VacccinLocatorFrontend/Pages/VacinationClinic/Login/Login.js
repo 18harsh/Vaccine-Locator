@@ -1,147 +1,175 @@
-import React from "react";
-import {Text, View, Button, Alert, StyleSheet} from "react-native";
-import {DefaultTheme, TextInput} from 'react-native-paper'
+import React, { useState } from "react";
+import { Text, View, Button, Alert, StyleSheet, Image } from "react-native";
+import { DefaultTheme, TextInput } from "react-native-paper";
 import * as planted_colors from "../../../Components/Color";
-import {Formik} from 'formik';
-import * as yup from 'yup';
+import { Formik } from "formik";
+import { ScrollView } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import * as authActions from "../../../store/actions/clinicAuth";
 
+
+navigator.geolocation = require("@react-native-community/geolocation");
+navigator.geolocation = require("react-native-geolocation-service");
 const theme = {
-    ...DefaultTheme,
-    roundness: 4,
-    colors: {
-        ...DefaultTheme.colors,
-        primary: planted_colors.BLUEISH_GREEN,
-        accent: planted_colors.OFF_WHITE,
-    },
+  ...DefaultTheme,
+  roundness: 4,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: planted_colors.BLUEISH_GREEN,
+    accent: planted_colors.OFF_WHITE,
+  },
 };
 
 
-const loginValidationSchema = yup.object().shape({
-    email: yup
-        .string()
-        .email("Please enter valid email")
-        .required('Email Address is Required'),
-    password: yup
-        .string()
-        .min(8, ({min}) => `Password must be at least ${min} characters`)
-        .required('Password is required'),
+const MyReactNativeForm = props => {
 
-})
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-const MyReactNativeForm = props => (
-    <View style={styles.MainContainer}>
 
-        <Formik
-            validationSchema={loginValidationSchema}
-            initialValues={{email: '', password: ''}}
-            onSubmit={values => {
-                console.log(JSON.stringify({
-                    "Fname": values.firstName,
-                    "Lname": values.lastName,
-                    "Email": values.email,
-                    "Password": values.password,
-                    "Phoneno": values.phoneNo,
-                    "AadharNo": values.aadharCardNo
+  return (
+    <ScrollView keyboardShouldPersistTaps={"handled"}>
+      <View style={styles.MainContainer}>
+        <View style={styles.SplashScreen_ChildView}>
+          <Image
+            source={require("../../../Components/Images/clinic.png")}
+          />
+          <Text style={{
+            color: planted_colors.STRONG_RED,
+            fontSize: 15,
+          }}>Add your Clinic</Text>
+        </View>
+        <View style={styles.MainContainer2}>
+          <Formik
 
-                }))
+            initialValues={{
+              clinicId: "pheonixhospital@hospital.com",
+              password: "Reuben@21",
+            }}
+            onSubmit={async values => {
 
-                fetch('http://10.0.2.2:3000/users/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "Email": values.email,
-                        "Password": values.password
 
-                    })
-                }).then(res => res.json()).then(data => {
-                    console.log("DATA RECEIVED IS", data)
-                }).catch(err=>console.log(err))
+              let action;
+
+              action = authActions.login(
+                values.clinicId,
+                values.password,
+              );
+
+
+              const message = await dispatch(action);
+              var new_message = JSON.stringify(message);
+              console.log("error clinic" + new_message);
+              if (new_message.errorMessage) {
+                console.log("Entered");
+                Alert.alert(message);
+                return;
+              }
+
+              navigation.navigate("ClinicTabbedNavigation");
+
+
             }}
 
-
-        >
+          >
             {({
-                  handleChange, handleBlur, handleSubmit, values, errors,
-                  touched,
-                  isValid,
+                handleChange, handleBlur, handleSubmit, values, errors,
+                touched,
+                isValid,
               }) => (
-                <View style={{
-                    height: "100%",
-                    width: "90%",
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <Text style={{
+              <View style={{
+                height: "100%",
+                width: "90%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
 
-                        color: planted_colors.STRONG_YELLOW,
-                    }}>Fill The Form Up </Text>
-                    <TextInput
-                        theme={theme}
-                        style={styles.input}
-                        onChangeText={handleChange('clinicId')}
-                        onBlur={handleBlur('clinicId')}
-                        value={values.clinicId}
-                        placeholder={"Clinic ID"}
 
-                    />
-                    {(errors.email && touched.email) &&
-                    <Text style={styles.errorText}>{errors.email}</Text>
-                    }
-                    <TextInput
-                        theme={theme}
-                        style={styles.input}
-                        onChangeText={handleChange('password')}
-                        onBlur={handleBlur('password')}
-                        value={values.password}
-                        placeholder={"Password"}
-                        secureTextEntry
-                    />
-                    {(errors.password && touched.password) &&
-                    <Text style={styles.errorText}>{errors.password}</Text>
-                    }
+                <TextInput
+                  theme={theme}
+                  style={styles.input}
+                  onChangeText={handleChange("clinicId")}
+                  onBlur={handleBlur("clinicId")}
+                  value={values.clinicId}
+                  placeholder={"Clinic ID"}
+                />
+                {(errors.clinicId && touched.clinicId) &&
+                <Text style={styles.errorText}>{errors.clinicId}</Text>}
 
-                    <Button theme={theme} style={{
-                        marginTop: 20
-                    }} onPress={handleSubmit} title="Submit"/>
-                </View>
+                <TextInput
+                  theme={theme}
+                  style={styles.input}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                  placeholder={"Clinic Password"}
+                  secureTextEntry
+                />
+                {(errors.password && touched.password) &&
+                <Text style={styles.errorText}>{errors.password}</Text>
+                }
+                <Button theme={theme} style={{
+                  marginTop: 20,
+                  width: 200,
+                  backgroundColor: planted_colors.BLUEISH_GREEN,
+                }} colors={planted_colors.BLUEISH_GREEN} onPress={handleSubmit} title="Submit" />
+              </View>
             )}
-        </Formik>
-    </View>
-);
+          </Formik>
+        </View>
+
+      </View>
+    </ScrollView>
+  );
+};
 
 
 const styles = StyleSheet.create({
-    MainContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+  MainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: planted_colors.OFF_WHITE,
+    paddingBottom: 100,
+  },
+  MainContainer2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: planted_colors.OFF_WHITE,
 
-        backgroundColor: planted_colors.OFF_WHITE,
+  },
+  input:
+    {
+      backgroundColor: planted_colors.LIGHT_BLUE,
+      color: planted_colors.OFF_WHITE,
+      width: "90%",
+      height: 25,
+      margin: 10,
+      paddingTop: 10,
+      paddingBottom: 10,
+      borderRadius: 5,
+      paddingLeft: 5,
+      paddingRight: 5,
+      fontSize: 18,
+
+
     },
-    input:
-        {
-            backgroundColor: planted_colors.LIGHT_BLUE,
-            color: planted_colors.OFF_WHITE,
-            width: "90%",
-            height: 25,
-            margin: 10,
-            paddingTop: 10,
-            paddingBottom: 10,
-            borderRadius: 5,
-            paddingLeft: 5,
-            paddingRight: 5,
-            fontSize: 18
+  errorText: {
+    color: planted_colors.STRONG_RED,
+    fontSize: 15,
+    marginLeft: 20,
 
-
-        },
-    errorText: {
-        color: planted_colors.STRONG_RED,
-        fontSize: 15,
-        marginLeft: 20
-
-    }
+  },
+  SplashScreen_ChildView:
+    {
+      width: "100%",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
 
 
 });

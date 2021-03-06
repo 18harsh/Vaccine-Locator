@@ -11,6 +11,7 @@ import VaccinationClinicSignUp from "../Pages/VacinationClinic/Signup/Signup";
 import VaccinationClinicLogin from "../Pages/VacinationClinic/Login/Login";
 import UserTabbedNavigation from "../Components/UserPage/UserTabNavigation";
 import UserClinicPage from "../Pages/UserClinicPage/UserClinicPage";
+import ClinicTabNavigation from "../Pages/ClinicTabbedNavigation/ClinicTabNavigation";
 
 export default class App extends Component {
 
@@ -35,6 +36,7 @@ export default class App extends Component {
             },
             headerTintColor: colors.OFF_WHITE,
           }} />
+
           <Stack.Screen name="PatientAuthentication" component={PatientAuthentication} options={{
             title: "",
             headerStyle: {
@@ -63,6 +65,7 @@ export default class App extends Component {
             },
             headerTintColor: colors.OFF_WHITE,
           }} />
+
           <Stack.Screen name="VaccinationClinicSignUp" component={VaccinationClinicSignUp} options={{
             title: "",
             headerStyle: {
@@ -71,6 +74,13 @@ export default class App extends Component {
             headerTintColor: colors.OFF_WHITE,
           }} />
           <Stack.Screen name="VaccinationClinicLogin" component={VaccinationClinicLogin} options={{
+            title: "",
+            headerStyle: {
+              backgroundColor: colors.OFF_WHITE,
+            },
+            headerTintColor: colors.OFF_WHITE,
+          }} />
+          <Stack.Screen name="ClinicTabbedNavigation" component={ClinicTabNavigation} options={{
             title: "",
             headerStyle: {
               backgroundColor: colors.OFF_WHITE,

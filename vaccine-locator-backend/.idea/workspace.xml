@@ -2,8 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicDetails/ClinicDetails.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicHomeScreen/ClinicHomeScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicTabNavigation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/clinicAuth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/reducers/clinicReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Navigation/NavigationContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Navigation/NavigationContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/VacinationClinic/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/VacinationClinic/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/VacinationClinic/Signup/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/VacinationClinic/Signup/Signup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/clinicController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/clinicController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/clinicCenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/clinicCenter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +68,10 @@
       <workItem from="1614849095921" duration="614000" />
       <workItem from="1614851445069" duration="1960000" />
       <workItem from="1614855728391" duration="5831000" />
-      <workItem from="1614911670575" duration="9408000" />
+      <workItem from="1614911670575" duration="12244000" />
+      <workItem from="1614941044730" duration="5246000" />
+      <workItem from="1615005698516" duration="51000" />
+      <workItem from="1615014867510" duration="2741000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>
@@ -81,7 +94,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614921046857</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updated Code Distance Calculation">
+      <created>1614923110514</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1614923110514</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

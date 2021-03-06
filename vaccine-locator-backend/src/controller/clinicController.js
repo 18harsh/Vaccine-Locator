@@ -39,6 +39,43 @@ exports.registerClinic = (req, res, next) => {
         });
 };
 
+exports.loginClinic = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    let loadedUser;
+    clinicModel.findOne({ clinicId: email })
+        .then(clinic => {
+            if (!clinic) {
+                const error = new Error('A user with this email could not be found.');
+                error.statusCode = 401;
+                throw error;
+            }
+            loadedUser = clinic;
+            return bcrypt.compare(password, clinic.clinicPassword);
+        })
+        .then(isEqual => {
+            if (!isEqual) {
+                const error = new Error('Wrong password!');
+                error.statusCode = 401;
+                throw error;
+            }
+            const token = jwt.sign(
+                {
+                    email: loadedUser.email,
+                    userId: loadedUser._id.toString()
+                },
+                'somesupersecretsecret',
+                { expiresIn: '1h' }
+            );
+            res.status(200).json({ token: token, userId: loadedUser._id.toString() });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 
     var R = 6371; // Radius of the earth in km
@@ -65,7 +102,7 @@ exports.getClinicCoordinates = (req, res, next) => {
 
     clinicModel
         .find()
-        .select({"clinicCoordinates": 1, "_id": 1})
+        .select({"clinicCoordinates": 1, "_id": 1, "clinicAddress": 1,"clinicName":1})
         .then(result => {
             var distance_array = [];
             result.forEach(res => {
@@ -80,10 +117,12 @@ exports.getClinicCoordinates = (req, res, next) => {
                     destinationLatitude,
                     destinationLongitude)
                 if (distance <= 5) {
-                    var object={}
+                    var object = {}
                     object["_id"] = res._id
-                    object["clinicCoordinates"] =res.clinicCoordinates
-                    object["distance"] =distance
+                    object["clinicCoordinates"] = res.clinicCoordinates
+                    object["clinicAddress"] = res.clinicAddress
+                    object["clinicName"] = res.clinicName
+                    object["distance"] = distance
                     distance_array.push(object)
                 }
 

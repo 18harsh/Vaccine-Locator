@@ -6,6 +6,9 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { ScrollView } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import * as authActions from "../../../store/actions/clinicAuth";
 
 
 navigator.geolocation = require("@react-native-community/geolocation");
@@ -41,6 +44,8 @@ const loginValidationSchema = yup.object().shape({
 const MyReactNativeForm = props => {
   const [addressData, setAddressData] = useState({});
   const [addressDetails, setAddressDetails] = useState({});
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
 
   return (
@@ -59,27 +64,40 @@ const MyReactNativeForm = props => {
           <Formik
             validationSchema={loginValidationSchema}
             initialValues={{
-              clinicName: "",
-              ClinicId: "",
-              phoneNo: "",
-              password: "",
+              clinicName: "Pheonix Hospital",
+              clinicId: "pheonixhospital@hospital.com",
+              phoneNo: "7894561230",
+              password: "Reuben@21",
             }}
-            onSubmit={values => {
+            onSubmit={async values => {
               const address_string = addressData.description;
               const clinic_coordinates = {
-                "Latitude": addressDetails.geometry.location.lat,
-                "Longitude": addressDetails.geometry.location.lng,
+                "latitude": addressDetails.geometry.location.lat,
+                "longitude": addressDetails.geometry.location.lng,
               };
 
-              const jsonData = JSON.stringify({
-                "ClinicName": values.clinicName,
-                "ClinicPhoneNo": values.phoneNo,
-                "ClinicPassword": values.password,
-                "ClinicAddress": String(address_string),
-                "ClinicCoordinates": clinic_coordinates,
-              });
-              console.log(jsonData);
 
+
+              let action;
+
+              action = authActions.signup(
+                values.clinicName,
+                values.clinicId,
+                values.password,
+                String(address_string),
+                clinic_coordinates,
+              );
+
+
+              const message = await dispatch(action);
+              var new_message = JSON.stringify(message);
+              console.log("error clinic" + new_message);
+              if (new_message.errorMessage) {
+                console.log("Entered");
+                Alert.alert(message);
+                return;
+              }
+              navigation.navigate("ClinicTabbedNavigation");
             }}
 
           >
@@ -109,9 +127,9 @@ const MyReactNativeForm = props => {
                 <TextInput
                   theme={theme}
                   style={styles.input}
-                  onChangeText={handleChange("ClinicId")}
-                  onBlur={handleBlur("ClinicId")}
-                  value={values.ClinicId}
+                  onChangeText={handleChange("clinicId")}
+                  onBlur={handleBlur("clinicId")}
+                  value={values.clinicId}
                   placeholder={"Clinic ID"}
                 />
                 {(errors.ClinicCoordinates && touched.ClinicCoordinates) &&
