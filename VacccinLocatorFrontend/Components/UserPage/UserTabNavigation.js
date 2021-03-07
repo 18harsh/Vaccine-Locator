@@ -50,6 +50,7 @@ const UserTabbedNavigation = () => {
       <Tab.Screen name="Location" component={UserHomeScreen} />
 
       <Tab.Screen name="Settings" component={VaccineTrack} />
+
     </Tab.Navigator>
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
-import { TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import * as planted_colors from "../../Components/Color";
 
 import { useDispatch } from "react-redux";
@@ -162,6 +162,15 @@ const MyReactNativeForm = props => {
             value={userDetails.phoneNo.toString()}
             disabled={true}
           />
+          <Button style={{
+            backgroundColor:planted_colors.STRONG_BLUE,
+            marginTop:40
+          }} mode={"contained"} onPress={()=>{
+            dispatch(authActions.logout());
+            navigation.navigate("UserClinicPage");
+          }}>
+            Log Out
+          </Button>
 
 
         </View>

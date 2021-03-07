@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/clinicAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/clinicAuth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserPage/UserTabNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserPage/UserTabNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +64,7 @@
       <workItem from="1615005698516" duration="51000" />
       <workItem from="1615014867510" duration="2742000" />
       <workItem from="1615043012775" duration="1896000" />
-      <workItem from="1615088155662" duration="8486000" />
+      <workItem from="1615088155662" duration="10419000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>
