@@ -123,7 +123,7 @@ class MyReactNativeForm extends Component {
   }
 
   onMarkerPressed = (location, index) => {
-    console.log(this.state.clinicDetails[index]);
+
     let longitude = this.state.clinicDetails[index].location.coordinates[0];
     let latitude = this.state.clinicDetails[index].location.coordinates[1];
 
@@ -142,16 +142,16 @@ class MyReactNativeForm extends Component {
   };
 
   onCarouselItemChange = (index) => {
-    console.log(this.state.clinicDetails[index]);
+    // console.log(this.state.clinicDetails[index]);
     let longitude = this.state.clinicDetails[index].location.coordinates[0];
     let latitude = this.state.clinicDetails[index].location.coordinates[1];
 
 
 
-    this.setState({
-      mapDirectionLatitude: latitude,
-      mapDirectionLongitude: longitude,
-    });
+    // this.setState({
+    //   mapDirectionLatitude: latitude,
+    //   mapDirectionLongitude: longitude,
+    // });
 
     this._map.animateToRegion({
       latitude: latitude,
