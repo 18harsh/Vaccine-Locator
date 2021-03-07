@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, Dimensions, Image, StyleSheet, Platform } from "react-native";
+import { Text, View, TextInput, Dimensions,BackHandler, Image, StyleSheet, Platform } from "react-native";
 import { DefaultTheme, Button } from "react-native-paper";
 import * as planted_colors from "../Color";
 import Geolocation from "react-native-geolocation-service";
@@ -9,6 +9,10 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { ScrollView } from "react-native-gesture-handler";
 import MapViewDirections from "react-native-maps-directions";
 import Carousel from "react-native-snap-carousel";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as authActions from "../../store/actions/auth";
+import connect from "react-redux/lib/connect/connect";
+
 
 const theme = {
   ...DefaultTheme,
@@ -22,6 +26,7 @@ const theme = {
 
 navigator.geolocation = require("@react-native-community/geolocation");
 navigator.geolocation = require("react-native-geolocation-service");
+
 
 class MyReactNativeForm extends Component {
 
@@ -74,6 +79,45 @@ class MyReactNativeForm extends Component {
 
 
   async componentDidMount() {
+    const tryLogin = async () => {
+      const userData = await AsyncStorage.getItem("clinicData");
+      console.log("User Data AsyncStorage", userData);
+      if (!userData) {
+        this.props.navigation.navigate("UserClinicPage");
+        return;
+      }
+      const transformedData = JSON.parse(userData);
+      const { token, userId, expiryDate } = transformedData;
+      const expirationDate = new Date(expiryDate);
+
+      // const response = await fetch("http://10.0.2.2:4000/patient/single", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       "patientId": userId,
+      //
+      //     }),
+      //   },
+      // );
+
+
+      // const resData = await response.json();
+      // setUserDetails(resData);
+      if (expirationDate <= new Date() || !token || !userId) {
+        this.props.navigation.navigate("UserClinicPage");
+        return;
+      }
+
+      const expirationTime = expirationDate.getTime() - new Date().getTime();
+      this.props.dispatchingSession(userId, token, expirationTime)
+
+      // setLoading(false);
+    };
+
+    tryLogin();
+
     if (Platform.OS === "android") {
       var response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
       // console.log("Android Location REUBEN", response);
@@ -119,6 +163,11 @@ class MyReactNativeForm extends Component {
       }
 
     }
+
+    BackHandler.addEventListener('hardwareBackPress', () => true)
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => true)
+
 
   }
 
@@ -469,4 +518,11 @@ const styles = StyleSheet.create({
 
 });
 
-export default MyReactNativeForm;
+const mapDispatchToProps = dispatch => {
+  return {
+    // dispatching plain actions
+    dispatchingSession: (userId,token,expirationTime) =>dispatch(authActions.authenticate(userId, token, expirationTime))
+  }
+}
+
+export default connect(mapDispatchToProps)(MyReactNativeForm);

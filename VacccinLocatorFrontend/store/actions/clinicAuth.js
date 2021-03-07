@@ -14,6 +14,7 @@ export const authenticate = (userId, token, expiryTime) => {
   };
 };
 
+
 export const signup = (clinicName, phoneNo, password, address_string, clinic_coordinates ) => {
   return async dispatch => {
     const response = await fetch("http://10.0.2.2:4000/register/clinic", {
