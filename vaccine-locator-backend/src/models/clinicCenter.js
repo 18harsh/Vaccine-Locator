@@ -19,10 +19,16 @@ const clinicSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    clinicCoordinates: {
-        type: Object,
-        required: true,
-        trim: true
+    location: {
+        type: {
+            type: String,
+            enum: ['Point']
+        },
+        coordinates: {
+            type: [Number],
+            index: '2dsphere'
+        },
+        formattedAddress: String
     },
     Open: {
         type: Boolean,

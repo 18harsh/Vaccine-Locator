@@ -24,7 +24,7 @@ exports.registerClinic = (req, res, next) => {
                 clinicId: clinicId,
                 clinicPassword: hashedPw,
                 clinicAddress: clinicAddress,
-                clinicCoordinates: clinicCoordinates
+                location: clinicCoordinates
             });
             return clinic.save();
         })
@@ -43,7 +43,7 @@ exports.loginClinic = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     let loadedUser;
-    clinicModel.findOne({ clinicId: email })
+    clinicModel.findOne({clinicId: email})
         .then(clinic => {
             if (!clinic) {
                 const error = new Error('A user with this email could not be found.');
@@ -65,9 +65,9 @@ exports.loginClinic = (req, res, next) => {
                     userId: loadedUser._id.toString()
                 },
                 'somesupersecretsecret',
-                { expiresIn: '1h' }
+                {expiresIn: '1h'}
             );
-            res.status(200).json({ token: token, userId: loadedUser._id.toString() });
+            res.status(200).json({token: token, userId: loadedUser._id.toString()});
         })
         .catch(err => {
             if (!err.statusCode) {
@@ -76,6 +76,7 @@ exports.loginClinic = (req, res, next) => {
             next(err);
         });
 };
+
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 
     var R = 6371; // Radius of the earth in km
@@ -101,32 +102,18 @@ exports.getClinicCoordinates = (req, res, next) => {
 
 
     clinicModel
-        .find()
-        .select({"clinicCoordinates": 1, "_id": 1, "clinicAddress": 1,"clinicName":1})
-        .then(result => {
-            var distance_array = [];
-            result.forEach(res => {
-
-                console.log(res.clinicCoordinates)
-                const destinationLatitude = res.clinicCoordinates.latitude;
-                const destinationLongitude = res.clinicCoordinates.longitude;
-
-                const distance = getDistanceFromLatLonInKm(
-                    originLatitude,
-                    originLongitude,
-                    destinationLatitude,
-                    destinationLongitude)
-                if (distance <= 5) {
-                    var object = {}
-                    object["_id"] = res._id
-                    object["clinicCoordinates"] = res.clinicCoordinates
-                    object["clinicAddress"] = res.clinicAddress
-                    object["clinicName"] = res.clinicName
-                    object["distance"] = distance
-                    distance_array.push(object)
+        .find({
+            location: {
+                $near: {
+                    $maxDistance: 2000, $geometry: {
+                        type: "Point",
+                        coordinates: [originLongitude, originLatitude]
+                    }
                 }
+            }
+        })
 
-            })
-            res.send(distance_array)
+        .then(result => {
+            res.send(result)
         })
 };
