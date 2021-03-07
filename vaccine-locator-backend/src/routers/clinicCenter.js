@@ -16,6 +16,6 @@ router.post('/register/clinic',clinicController.registerClinic)
 
 router.post('/login/clinic',clinicController.loginClinic)
 
-router.post("/clinic/location", clinicController.getClinicCoordinates);
+router.post("/clinic/location", clinicController.getNearestClinics);
 
 module.exports = router;

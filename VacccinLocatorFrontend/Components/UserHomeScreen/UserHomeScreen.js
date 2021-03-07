@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Text, View, TextInput,  Dimensions, Image, StyleSheet, Platform } from "react-native";
-import { DefaultTheme,Button } from "react-native-paper";
+import { Text, View, TextInput, Dimensions, Image, StyleSheet, Platform } from "react-native";
+import { DefaultTheme, Button } from "react-native-paper";
 import * as planted_colors from "../Color";
 import Geolocation from "react-native-geolocation-service";
 import { request, PERMISSIONS } from "react-native-permissions";
@@ -36,6 +36,7 @@ class MyReactNativeForm extends Component {
     errorMessage: "",
     loading: true,
     markers: [],
+    clinicDetails: [],
     coordinates: [
       //19.213567050389614, 72.85285072119105
       {
@@ -98,6 +99,23 @@ class MyReactNativeForm extends Component {
         //   console.log(JSON.stringify(position.coords.latitude));
 
         // });
+        const response = await fetch("http://10.0.2.2:4000/clinic/location", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              "latitude": this.state.originLatitude,
+              "longitude": this.state.originLongitude,
+            }),
+          },
+        );
+
+
+        const resData = await response.json();
+        this.setState({
+          clinicDetails: resData,
+        });
       }
 
     }
@@ -105,37 +123,43 @@ class MyReactNativeForm extends Component {
   }
 
   onMarkerPressed = (location, index) => {
-    console.log(location);
+    console.log(this.state.clinicDetails[index]);
+    let longitude = this.state.clinicDetails[index].location.coordinates[0];
+    let latitude = this.state.clinicDetails[index].location.coordinates[1];
+
     this._map.animateToRegion({
-      latitude: location.latitude,
-      longitude: location.longitude,
+      latitude: latitude,
+      longitude: longitude,
       latitudeDelta: 0.01,
       longitudeDelta: 0.002,
     });
 
-
-
     this.setState({
-      mapDirectionLatitude:location.latitude,
-      mapDirectionLongitude:location.longitude,
-    })
+      mapDirectionLatitude: latitude,
+      mapDirectionLongitude: longitude,
+    });
     this._carousel.snapToItem(index);
   };
 
   onCarouselItemChange = (index) => {
-    let location = this.state.coordinates[index];
+    console.log(this.state.clinicDetails[index]);
+    let longitude = this.state.clinicDetails[index].location.coordinates[0];
+    let latitude = this.state.clinicDetails[index].location.coordinates[1];
+
+
+
+    this.setState({
+      mapDirectionLatitude: latitude,
+      mapDirectionLongitude: longitude,
+    });
 
     this._map.animateToRegion({
-      latitude: location.latitude,
-      longitude: location.longitude,
+      latitude: latitude,
+      longitude: longitude,
       latitudeDelta: 0.01,
       longitudeDelta: 0.002,
     });
 
-    this.setState({
-      mapDirectionLatitude:location.latitude,
-      mapDirectionLongitude:location.longitude,
-    })
     this.state.markers[index].showCallout();
   };
 
@@ -162,7 +186,7 @@ class MyReactNativeForm extends Component {
           fontSize: 20,
           alignSelf: "center",
         }
-        }>Clinic Title</Text>
+        }>{item.clinicName}</Text>
       </View>
       <View style={{
         width: "100%",
@@ -181,8 +205,7 @@ class MyReactNativeForm extends Component {
               width: "100%",
               padding: 5,
             }}>
-              Mayfair Greens, Ali Ibrahim Chawl, Fateh Baug, Mayfair Greens, Ali Ibrahim Chawl, Fateh Baug, Mayfair
-              Greens, Ali Ibrahim Chawl, Fateh Baug, Kandivali West, Mumbai, Maharashtra, India
+              {item.clinicAddress}
             </Text>
 
           </ScrollView>
@@ -192,15 +215,16 @@ class MyReactNativeForm extends Component {
           width: "40%",
           justifyContent: "center",
           alignItems: "center",
-          flexDirection:"column"
+          flexDirection: "column",
         }}>
 
-          <Image style={{ width:"50%",height:70}} resizeMode="contain" source={item.image} />
-          <Button mode={'contained'} style={{
-            color:planted_colors.STRONG_RED,
-            backgroundColor: planted_colors.STRONG_RED
-          }} onPress={()=>{
-            console.log("This is Clicking")
+          <Image style={{ width: "50%", height: 70 }} resizeMode="contain"
+                 source={require("../Images/ClinicLocation.png")} />
+          <Button mode={"contained"} style={{
+            color: planted_colors.STRONG_RED,
+            backgroundColor: planted_colors.STRONG_RED,
+          }} onPress={() => {
+            console.log("This is Clicking");
           }}> Book</Button>
           <View>
 
@@ -213,126 +237,134 @@ class MyReactNativeForm extends Component {
     return (
       <View style={styles.container}>
 
-        {/*<MapView*/}
-        {/*  provider={PROVIDER_GOOGLE}*/}
-        {/*  // remove if not using Google Maps*/}
-        {/*  ref={map => this._map = map}*/}
-        {/*  onPress={() => this.onMarkerPressed(marker, index)}*/}
-        {/*  style={styles.map}*/}
-        {/*  loadingEnabled={true}*/}
-        {/*  region={{*/}
-        {/*    latitude: parseFloat(this.state.latitude),*/}
-        {/*    longitude: parseFloat(this.state.longitude),*/}
-        {/*    latitudeDelta: 0.01,*/}
-        {/*    longitudeDelta: 0.002,*/}
-        {/*  }}*/}
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          // remove if not using Google Maps
+          ref={map => this._map = map}
+          // onPress={() => this.onMarkerPressed(marker, index)}
+          style={styles.map}
+          loadingEnabled={true}
+          region={{
+            latitude: parseFloat(this.state.latitude),
+            longitude: parseFloat(this.state.longitude),
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.005,
+          }}
 
-        {/*>*/}
-        {/*  <Marker coordinate={{*/}
-        {/*    latitude: parseFloat(this.state.originLatitude),*/}
-        {/*    longitude: parseFloat(this.state.originLongitude),*/}
-        {/*  }}*/}
-
-
-        {/*          image={require("../Images/bluelocation.png")}*/}
-
-        {/*  >*/}
-        {/*    <Callout>*/}
-        {/*      <Text>You are Here</Text>*/}
-        {/*    </Callout>*/}
+        >
+          <Marker coordinate={{
+            latitude: parseFloat(this.state.originLatitude),
+            longitude: parseFloat(this.state.originLongitude),
+          }}
 
 
-        {/*  </Marker>*/}
+                  image={require("../Images/bluelocation.png")}
 
-        {/*  {*/}
-        {/*    this.state.coordinates.map((marker, index) => (*/}
-        {/*      <Marker*/}
-        {/*        key={marker.name}*/}
-        {/*        ref={ref => this.state.markers[index] = ref}*/}
-        {/*        onPress={() => this.onMarkerPressed(marker, index)}*/}
-        {/*        image={require("../Images/ClinicLocation.png")}*/}
-        {/*        coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}*/}
-        {/*      >*/}
-        {/*        <Callout>*/}
-        {/*          <Text>{marker.name}</Text>*/}
-        {/*        </Callout>*/}
-
-        {/*      </Marker>*/}
-        {/*    ))*/}
-        {/*  }*/}
-
-        {/*  <MapViewDirections*/}
-        {/*    origin={{*/}
-        {/*      latitude: 19.213567050389614,*/}
-        {/*      longitude: 72.85285072119105,*/}
-        {/*    }}*/}
-        {/*    destination={{ latitude: this.state.mapDirectionLatitude, longitude: this.state.mapDirectionLongitude }}*/}
-        {/*    apikey={"AIzaSyD09ZcG7fHZltsAOsKjxq5Eww4xEIfXZNc"}*/}
-        {/*    strokeWidth={4}*/}
-        {/*    strokeColor={planted_colors.STRONG_RED}*/}
-        {/*  />*/}
-
-        {/*</MapView>*/}
-
-        {/*<GooglePlacesAutocomplete*/}
-        {/*  onPress={(data, details = null) => {*/}
-        {/*    // 'details' is provided when fetchDetails = true*/}
-        {/*    this.setState({*/}
-        {/*      originLatitude: details.geometry.location.lat,*/}
-        {/*      originLongitude: details.geometry.location.lng,*/}
-        {/*    });*/}
+          >
+            <Callout>
+              <Text>You are Here</Text>
+            </Callout>
 
 
-        {/*  }}*/}
-        {/*  placeholder="Enter your Location"*/}
-        {/*  minLength={2}*/}
-        {/*  autoFocus={false}*/}
-        {/*  returnKeyType={"default"}*/}
-        {/*  fetchDetails={true}*/}
-        {/*  renderDescription={row => row.description}*/}
-        {/*  listViewDisplayed="auto" onNotFound={(err) => {*/}
-        {/*  console.log("NOT_FOUND Google PLace", err);*/}
-        {/*}}*/}
-        {/*  onTimeout={() => {*/}
-        {/*    console.log("Time OUT Google PLace");*/}
-        {/*  }}*/}
-        {/*  timeout={5000}*/}
-        {/*  styles={{*/}
-        {/*    textInputContainer: {*/}
-        {/*      backgroundColor: planted_colors.LIGHT_BLUE,*/}
-        {/*      width: "95%",*/}
-        {/*      height: 42,*/}
-        {/*      zIndex: 10,*/}
-        {/*      borderRadius: 10,*/}
-        {/*      marginTop: 10,*/}
-        {/*      marginLeft: 10,*/}
-        {/*      marginRight: 10,*/}
-        {/*      marginBottom: 10,*/}
-        {/*    },*/}
-        {/*    textInput: {*/}
-        {/*      backgroundColor: planted_colors.LIGHT_BLUE,*/}
-        {/*      height: 42,*/}
-        {/*      width: "100%",*/}
-        {/*      color: "black",*/}
-        {/*      fontSize: 16,*/}
-        {/*      borderRadius: 10,*/}
-        {/*    },*/}
-        {/*    predefinedPlacesDescription: {*/}
-        {/*      color: planted_colors.STRONG_BLUE,*/}
-        {/*    },*/}
-        {/*  }}*/}
-        {/*  query={{*/}
-        {/*    key: "AIzaSyD09ZcG7fHZltsAOsKjxq5Eww4xEIfXZNc",*/}
-        {/*    language: "en",*/}
-        {/*  }}*/}
+          </Marker>
 
-        {/*/>*/}
+
+          {
+            this.state.clinicDetails.map((marker, index) => {
+              // console.log(marker)
+              return <Marker
+                key={marker._id}
+                ref={ref => this.state.markers[index] = ref}
+                // onPress={() => this.onMarkerPressed(marker, index)}
+                image={require("../Images/ClinicLocation.png")}
+                coordinate={{
+                  latitude: marker.location.coordinates[1],
+                  longitude: marker.location.coordinates[0],
+                }}
+              >
+                <Callout>
+                  <Text>{marker.clinicName}</Text>
+                </Callout>
+
+              </Marker>;
+            })
+          }
+
+          <MapViewDirections
+            origin={{
+              latitude: 19.213567050389614,
+              longitude: 72.85285072119105,
+            }}
+            destination={{
+              latitude: this.state.mapDirectionLatitude,
+              longitude: this.state.mapDirectionLongitude,
+            }}
+            apikey={"AIzaSyD09ZcG7fHZltsAOsKjxq5Eww4xEIfXZNc"}
+            strokeWidth={4}
+            strokeColor={planted_colors.STRONG_RED}
+          />
+
+        </MapView>
+
+        <GooglePlacesAutocomplete
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            this.setState({
+              originLatitude: details.geometry.location.lat,
+              originLongitude: details.geometry.location.lng,
+            });
+
+
+          }}
+          placeholder="Enter your Location"
+          minLength={2}
+          autoFocus={false}
+          returnKeyType={"default"}
+          fetchDetails={true}
+          renderDescription={row => row.description}
+          listViewDisplayed="auto" onNotFound={(err) => {
+          console.log("NOT_FOUND Google PLace", err);
+        }}
+          onTimeout={() => {
+            console.log("Time OUT Google PLace");
+          }}
+          timeout={5000}
+          styles={{
+            textInputContainer: {
+              backgroundColor: planted_colors.LIGHT_BLUE,
+              width: "95%",
+              height: 42,
+              zIndex: 10,
+              borderRadius: 10,
+              marginTop: 10,
+              marginLeft: 10,
+              marginRight: 10,
+              marginBottom: 10,
+            },
+            textInput: {
+              backgroundColor: planted_colors.LIGHT_BLUE,
+              height: 42,
+              width: "100%",
+              color: "black",
+              fontSize: 16,
+              borderRadius: 10,
+            },
+            predefinedPlacesDescription: {
+              color: planted_colors.STRONG_BLUE,
+            },
+          }}
+          query={{
+            key: "AIzaSyD09ZcG7fHZltsAOsKjxq5Eww4xEIfXZNc",
+            language: "en",
+          }}
+
+        />
         <View style={styles.Carousel_of_clinics}>
           <Carousel
             ref={(c) => {
               this._carousel = c;
             }}
-            data={this.state.coordinates}
+            data={this.state.clinicDetails}
             renderItem={this.renderCarouselItem}
             sliderWidth={Dimensions.get("window").width}
             itemWidth={300}
