@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/VacinationClinic/Signup/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/VacinationClinic/Signup/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/clinicAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/clinicAuth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/clinicController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/clinicController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/clinicCenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/clinicCenter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +65,7 @@
       <workItem from="1615005698516" duration="51000" />
       <workItem from="1615014867510" duration="2742000" />
       <workItem from="1615043012775" duration="1896000" />
-      <workItem from="1615088155662" duration="6688000" />
+      <workItem from="1615088155662" duration="7866000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>

@@ -26,7 +26,10 @@ export const signup = (clinicName, phoneNo, password, address_string, clinic_coo
           "clinicId": phoneNo,
           "clinicPassword": password,
           "clinicAddress": String(address_string),
-          "clinicCoordinates": clinic_coordinates,
+          "clinicCoordinates": {
+            "type":"Point",
+            "coordinates":clinic_coordinates,
+          }
         }),
       },
     );

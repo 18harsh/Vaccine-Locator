@@ -307,14 +307,35 @@ class MyReactNativeForm extends Component {
         </MapView>
 
         <GooglePlacesAutocomplete
-          onPress={(data, details = null) => {
+          onPress={async (data, details = null) => {
             // 'details' is provided when fetchDetails = true
             this.setState({
               originLatitude: details.geometry.location.lat,
               originLongitude: details.geometry.location.lng,
             });
+            const response = await fetch("http://10.0.2.2:4000/clinic/location", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  "latitude": details.geometry.location.lat,
+                  "longitude":  details.geometry.location.lng,
+                }),
+              },
+            );
 
 
+            const resData = await response.json();
+            this.setState({
+              clinicDetails: resData,
+            });
+            this._map.animateToRegion({
+              latitude: details.geometry.location.lat,
+              longitude:  details.geometry.location.lng,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.002,
+            });
           }}
           placeholder="Enter your Location"
           minLength={2}

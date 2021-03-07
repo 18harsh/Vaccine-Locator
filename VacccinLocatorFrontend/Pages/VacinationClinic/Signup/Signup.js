@@ -71,10 +71,10 @@ const MyReactNativeForm = props => {
             }}
             onSubmit={async values => {
               const address_string = addressData.description;
-              const clinic_coordinates = {
-                "latitude": addressDetails.geometry.location.lat,
-                "longitude": addressDetails.geometry.location.lng,
-              };
+              const clinic_coordinates = [
+                addressDetails.geometry.location.lng,
+                addressDetails.geometry.location.lat,
+              ];
 
 
 
