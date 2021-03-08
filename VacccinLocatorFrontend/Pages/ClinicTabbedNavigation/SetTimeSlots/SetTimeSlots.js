@@ -20,6 +20,11 @@ const theme = {
   },
 };
 
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
 
 const MyReactNativeForm = props => {
   const dispatch = useDispatch();
@@ -80,6 +85,9 @@ const MyReactNativeForm = props => {
   const [showStartTimeText, setShowStartTimeText] = useState("");
   const [showEndTimeText, setShowEndTimeText] = useState("");
   const [showDateText, setShowDateText] = useState("");
+  const [count, setCount] = useState("");
+
+  const [countRepeat, setCountRepeat] = useState(0);
 
   const showModeStartTime = (currentMode) => {
     setShowStartTime(true);
@@ -107,7 +115,52 @@ const MyReactNativeForm = props => {
   // };
 
   const showDatePicker = () => {
-    setShowDate(true)
+    setShowDate(true);
+  };
+
+  const addSlot = async () => {
+    var timeSlots = {};
+    var nestedTimeSlot = {};
+
+    nestedTimeSlot[showStartTimeText.toString()] = count.toString();
+    let i=0;
+    while (i < countRepeat) {
+      var date= new Date(showDateText)
+      timeSlots[date.addDays(i).toLocaleDateString()] = nestedTimeSlot;
+      i++
+    }
+
+
+    var timeSlotData = JSON.stringify({
+      "clinicObjectId": "6044df4fb8b7d14f20a42b3a",
+      "timeSlots": timeSlots,
+
+    });
+
+    console.log(timeSlotData);
+    const response = await fetch("http://10.0.2.2:4000/clinic/addtime", {
+        method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+        body: JSON.stringify({
+          "clinicObjectId": "6044df4fb8b7d14f20a42b3a",
+          "timeSlots": {
+            "date": {
+              "date": showDateText.toString(),
+              "time_slots":timeSlots
+
+
+            }
+          },
+
+        }),
+      },
+    );
+
+
+    const resData = await response.json();
+    console.log(resData)
   };
 
   console.log(userDetails);
@@ -208,7 +261,20 @@ const MyReactNativeForm = props => {
         <View style={{
           width: "40%",
         }}>
-          <TextInput theme={theme} label={"Count"} mode={"outlined"} placeholder={"Count"} />
+          <TextInput theme={theme}
+                     label={"Count"}
+                     onChangeText={value => {
+                       setCount(value);
+                     }}
+                     mode={"outlined"}
+                     placeholder={"Count"} />
+          <TextInput theme={theme}
+                     label={"Count"}
+                     onChangeText={value => {
+                       setCountRepeat(value);
+                     }}
+                     mode={"outlined"}
+                     placeholder={"Repeat For Days"} />
         </View>
 
         <View style={{
@@ -216,12 +282,12 @@ const MyReactNativeForm = props => {
           justifyContent: "center",
         }}>
           <Button
-            // onPress={showTimepickerEndTime}
+            onPress={addSlot}
             title="Add Slot" />
         </View>
       </View>
       <View style={{
-        marginTop:20,
+        marginTop: 20,
         backgroundColor: planted_colors.LIGHT_BLUE,
         height: "100%",
       }}>

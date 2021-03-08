@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Booking/Booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Booking/Booking.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/PatientTabbedNavigation/LocationTab/LocationTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/PatientTabbedNavigation/LocationTab/LocationTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/timeController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/timeController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/timeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/timeSlots.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +38,7 @@
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.31" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -64,7 +68,7 @@
       <workItem from="1615014867510" duration="2742000" />
       <workItem from="1615043012775" duration="1896000" />
       <workItem from="1615088155662" duration="10617000" />
-      <workItem from="1615172328087" duration="6275000" />
+      <workItem from="1615172328087" duration="9110000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>

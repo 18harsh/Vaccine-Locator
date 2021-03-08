@@ -5,7 +5,7 @@ const express = require('express')
 const userRouter = require('./src/routers/patient')
 const bookingRouter = require('./src/routers/booking')
 const clinicRouter = require('./src/routers/clinicCenter')
-
+const timeSlotRouter = require('./src/routers/timeSlots')
 const Clinic = require('./src/models/clinicCenter')
 
 
@@ -24,8 +24,8 @@ const port = process.env.PORT
 app.use(express.json())
 app.use(userRouter);
 app.use(clinicRouter);
-app.use(bookingRouter)
-
+app.use(bookingRouter);
+app.use(timeSlotRouter);
 
 app.post('/center', async (req, res) => {
     const clinic = new Clinic(req.body)
