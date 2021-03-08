@@ -73,7 +73,6 @@ const MyReactNativeForm = props => {
             }}
             onSubmit={async values => {
               const jsonData = JSON.stringify(values);
-              console.log(jsonData);
               let action;
 
               action = authActions.signup(
