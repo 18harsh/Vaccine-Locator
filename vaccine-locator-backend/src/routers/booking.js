@@ -5,7 +5,6 @@ const { check, body } = require('express-validator');
 const Patient = require("../models/Patient");
 
 
-router.post("/booking/distance", bookingControllers.getNearestClinics);
 
 
 

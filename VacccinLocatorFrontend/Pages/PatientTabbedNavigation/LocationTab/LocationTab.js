@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, TextInput, Dimensions,BackHandler, Image, StyleSheet, Platform } from "react-native";
 import { DefaultTheme, Button } from "react-native-paper";
-import * as planted_colors from "../Color";
+import * as planted_colors from "../../../Components/Color";
 import Geolocation from "react-native-geolocation-service";
 import { request, PERMISSIONS } from "react-native-permissions";
 import MapView, { Marker, PROVIDER_GOOGLE, Callout } from "react-native-maps";
@@ -10,7 +10,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import MapViewDirections from "react-native-maps-directions";
 import Carousel from "react-native-snap-carousel";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as authActions from "../../store/actions/auth";
+import * as authActions from "../../../store/actions/auth";
 import connect from "react-redux/lib/connect/connect";
 
 
@@ -48,31 +48,31 @@ class MyReactNativeForm extends Component {
         name: "Burger",
         latitude: 19.211685468602834,
         longitude: 72.85160524930659,
-        image: require("../Images/ClinicLocation.png"),
+        image: require("../../../Components/Images/ClinicLocation.png"),
       },
       {
         name: "Pizza",
         latitude: 19.214930631199564,
         longitude: 72.85156032230833,
-        image: require("../Images/ClinicLocation.png"),
+        image: require("../../../Components/Images/ClinicLocation.png"),
       },
       {
         name: "Soup",
         latitude: 19.216324378861028,
         longitude: 72.85081164359455,
-        image: require("../Images/ClinicLocation.png"),
+        image: require("../../../Components/Images/ClinicLocation.png"),
       },
       {
         name: "Sushi",
         latitude: 19.217712327312675,
         longitude: 72.85007135395325,
-        image: require("../Images/ClinicLocation.png"),
+        image: require("../../../Components/Images/ClinicLocation.png"),
       },
       {
         name: "Curry",
         latitude: 19.21590339811463,
         longitude: 72.85285597399229,
-        image: require("../Images/ClinicLocation.png"),
+        image: require("../../../Components/Images/ClinicLocation.png"),
       },
     ],
   };
@@ -163,10 +163,6 @@ class MyReactNativeForm extends Component {
       }
 
     }
-
-    BackHandler.addEventListener('hardwareBackPress', () => true)
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', () => true)
 
 
   }
@@ -268,7 +264,7 @@ class MyReactNativeForm extends Component {
         }}>
 
           <Image style={{ width: "50%", height: 70 }} resizeMode="contain"
-                 source={require("../Images/ClinicLocation.png")} />
+                 source={require("../../../Components/Images/ClinicLocation.png")} />
           <Button mode={"contained"} style={{
             color: planted_colors.STRONG_RED,
             backgroundColor: planted_colors.STRONG_RED,
@@ -307,7 +303,7 @@ class MyReactNativeForm extends Component {
           }}
 
 
-                  image={require("../Images/bluelocation.png")}
+                  image={require("../../../Components/Images/bluelocation.png")}
 
           >
             <Callout>
@@ -325,7 +321,7 @@ class MyReactNativeForm extends Component {
                 key={marker._id}
                 ref={ref => this.state.markers[index] = ref}
                 // onPress={() => this.onMarkerPressed(marker, index)}
-                image={require("../Images/ClinicLocation.png")}
+                image={require("../../../Components/Images/ClinicLocation.png")}
                 coordinate={{
                   latitude: marker.location.coordinates[1],
                   longitude: marker.location.coordinates[0],

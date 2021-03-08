@@ -2,9 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserPage/UserTabNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserPage/UserTabNavigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/Images/bellIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/Images/clock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/Images/locationIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/Images/settingsIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/Images/userIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/PatientToday/PatientsToday.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/PatientTabbedNavigation/AppointmentsTab/AppointmentsTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserHomeScreen/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/PatientTabbedNavigation/LocationTab/LocationTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/UserPage/UserTabNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/PatientTabbedNavigation/UserPage/UserTabNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Components/VaccineTrack/UserHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/PatientTabbedNavigation/VaccineTrack/UserHomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Navigation/NavigationContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Navigation/NavigationContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicTabNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicTabNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/java/com/vacccinlocatorfrontend/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/java/com/vacccinlocatorfrontend/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/booking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/clinicCenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/clinicCenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/booking.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +83,8 @@
       <workItem from="1615005698516" duration="51000" />
       <workItem from="1615014867510" duration="2742000" />
       <workItem from="1615043012775" duration="1896000" />
-      <workItem from="1615088155662" duration="10419000" />
+      <workItem from="1615088155662" duration="10617000" />
+      <workItem from="1615172328087" duration="3215000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>

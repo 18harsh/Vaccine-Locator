@@ -30,6 +30,10 @@ const clinicSchema = new mongoose.Schema({
         },
         formattedAddress: String
     },
+    timeSlots:{
+        type:Object,
+        required: false,
+    },
     Open: {
         type: Boolean,
         default: true,

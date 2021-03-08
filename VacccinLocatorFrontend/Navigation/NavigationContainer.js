@@ -9,7 +9,7 @@ import * as colors from "../Components/Color";
 import VaccinationClinic from "../Pages/VacinationClinic/VaccinationClinic";
 import VaccinationClinicSignUp from "../Pages/VacinationClinic/Signup/Signup";
 import VaccinationClinicLogin from "../Pages/VacinationClinic/Login/Login";
-import UserTabbedNavigation from "../Components/UserPage/UserTabNavigation";
+import UserTabbedNavigation from "../Pages/PatientTabbedNavigation/UserPage/UserTabNavigation";
 import UserClinicPage from "../Pages/UserClinicPage/UserClinicPage";
 import ClinicTabNavigation from "../Pages/ClinicTabbedNavigation/ClinicTabNavigation";
 

@@ -1,16 +1,15 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import * as planted_colors from "../Color";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View, Image, BackHandler } from "react-native";
+import * as planted_colors from "../../../Components/Color";
 import { Button } from "react-native-paper";
 
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import UserHomeScreen from "../UserHomeScreen/UserHomeScreen";
+import LocationTab from "../LocationTab/LocationTab";
 import VaccineTrack from "../VaccineTrack/UserHomeScreen";
+import AppointmentsTab from "../AppointmentsTab/AppointmentsTab";
 
-import EvilIcons from "react-native-vector-icons/EvilIcons";
-import Icon from 'react-native-vector-icons/FontAwesome5';
 const theme = {
   ...DefaultTheme,
   roundness: 4,
@@ -25,6 +24,14 @@ const theme = {
 const UserTabbedNavigation = () => {
   const navigation = useNavigation();
   const Tab = createBottomTabNavigator();
+
+  useEffect(() => {
+
+    BackHandler.addEventListener("hardwareBackPress", () => true);
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", () => true);
+
+  }, []);
   return (
 
     <Tab.Navigator
@@ -32,11 +39,33 @@ const UserTabbedNavigation = () => {
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Location") {
             return (
-              <EvilIcons name="location" size={30} color="#900" />
+
+              <Image style={{
+                width: "80%",
+                height: "100%",
+              }} resizeMode="contain"
+                     source={require("../../../Components/Images/locationIcon.png")} />
+
+
             );
           } else if (route.name === "Settings") {
             return (
-              <EvilIcons name="user" size={30} color="#900" />
+              <Image style={{
+                width: "80%",
+                height: "100%",
+              }} resizeMode="contain"
+                     source={require("../../../Components/Images/settingsIcon.png")} />
+
+
+            );
+          } else if (route.name === "Appointment") {
+            return (
+              <Image style={{
+                width: "80%",
+                height: "100%",
+              }} resizeMode="contain"
+                     source={require("../../../Components/Images/bellIcon.png")} />
+
 
             );
           }
@@ -47,8 +76,8 @@ const UserTabbedNavigation = () => {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen name="Location" component={UserHomeScreen} />
-
+      <Tab.Screen name="Location" component={LocationTab} />
+      <Tab.Screen name="Appointment" component={AppointmentsTab} />
       <Tab.Screen name="Settings" component={VaccineTrack} />
 
     </Tab.Navigator>

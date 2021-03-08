@@ -5,11 +5,13 @@ import { Button } from "react-native-paper";
 
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 import ClinicDetailsScreen from "./ClinicDetails/ClinicDetails";
 import ClinicHomeScreen from "./ClinicHomeScreen/ClinicHomeScreen";
-import EvilIcons from "react-native-vector-icons/EvilIcons";
+
+import PatientsToday from "./PatientToday/PatientsToday";
+import SetTimeSlots from "./SetTimeSlots/SetTimeSlots";
 
 const theme = {
   ...DefaultTheme,
@@ -32,11 +34,41 @@ const UserTabbedNavigation = () => {
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Location") {
             return (
-              <EvilIcons name="location" size={30} color="#900" />
+              <Image style={{
+                width: "80%",
+                height: "100%",
+              }} resizeMode="contain"
+                     source={require("../../Components/Images/locationIcon.png")} />
+
             );
           } else if (route.name === "Details") {
             return (
-              <EvilIcons name="user" size={30} color="#900" />
+              <Image style={{
+                width: "80%",
+                height: "100%",
+              }} resizeMode="contain"
+                     source={require("../../Components/Images/settingsIcon.png")} />
+
+
+            );
+          } else if (route.name === "Time Slots") {
+            return (
+              <Image style={{
+                width: "80%",
+                height: "100%",
+              }} resizeMode="contain"
+                     source={require("../../Components/Images/clock.png")} />
+
+
+            );
+          } else if (route.name === "Patients Today") {
+            return (
+              <Image style={{
+                width: "80%",
+                height: "100%",
+              }} resizeMode="contain"
+                     source={require("../../Components/Images/userIcon.png")} />
+
 
             );
           }
@@ -48,6 +80,10 @@ const UserTabbedNavigation = () => {
       }}
     >
       <Tab.Screen name="Location" component={ClinicHomeScreen} />
+
+      <Tab.Screen name="Time Slots" component={SetTimeSlots} />
+
+      <Tab.Screen name="Patients Today" component={PatientsToday} />
 
       <Tab.Screen name="Details" component={ClinicDetailsScreen} />
     </Tab.Navigator>
