@@ -90,16 +90,24 @@ const MyReactNativeForm = props => {
       </View>
     );
   }
+  const arrayOfHrs=(items) => {
+    let i = 0;
+    Hrs=[]
+    while (i < 24) {
+    Hrs.append({ label: i.toString(), value: i.toString(), icon: null },
+      )
+    }
+    return Hrs;
+  }
   return (
 
     <View style={styles.MainContainer}>
 
+      
       <DropDownPicker
-        items={[
-          { label: "0", value: "0", icon: null },
-          { label: "1", value: "1", icon: null },
-          { label: "2", value: "2", icon: null },
-        ]}
+        items={arrayarrayOfHrs}
+
+      
         defaultValue={country}
         containerStyle={{ height: 40,width:"50%" }}
         style={{ backgroundColor: "#fafafa" }}
