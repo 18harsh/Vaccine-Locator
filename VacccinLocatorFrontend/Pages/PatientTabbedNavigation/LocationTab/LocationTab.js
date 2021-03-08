@@ -80,7 +80,7 @@ class MyReactNativeForm extends Component {
 
   async componentDidMount() {
     const tryLogin = async () => {
-      const userData = await AsyncStorage.getItem("clinicData");
+      const userData = await AsyncStorage.getItem("userData");
       console.log("User Data AsyncStorage", userData);
       if (!userData) {
         this.props.navigation.navigate("UserClinicPage");
@@ -269,7 +269,10 @@ class MyReactNativeForm extends Component {
             color: planted_colors.STRONG_RED,
             backgroundColor: planted_colors.STRONG_RED,
           }} onPress={() => {
-            console.log("This is Clicking");
+            this.props.navigation.navigate('Booking', {
+              itemId: 86,
+              otherParam: 'anything you want here',
+            });
           }}> Book</Button>
           <View>
 

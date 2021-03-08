@@ -12,6 +12,7 @@ import VaccinationClinicLogin from "../Pages/VacinationClinic/Login/Login";
 import UserTabbedNavigation from "../Pages/PatientTabbedNavigation/UserPage/UserTabNavigation";
 import UserClinicPage from "../Pages/UserClinicPage/UserClinicPage";
 import ClinicTabNavigation from "../Pages/ClinicTabbedNavigation/ClinicTabNavigation";
+import Booking from "../Pages/Booking/Booking";
 
 export default class App extends Component {
 
@@ -88,6 +89,14 @@ export default class App extends Component {
             headerTintColor: colors.OFF_WHITE,
           }} />
           <Stack.Screen name="UserTabbedNavigation" component={UserTabbedNavigation} options={{
+            title: "",
+            headerStyle: {
+              backgroundColor: colors.OFF_WHITE,
+            },
+            headerTintColor: colors.OFF_WHITE,
+          }} />
+
+          <Stack.Screen name="Booking" component={Booking} options={{
             title: "",
             headerStyle: {
               backgroundColor: colors.OFF_WHITE,

@@ -68,7 +68,7 @@ const MyReactNativeForm = props => {
               clinicId: "gemhospital@hospital.com",
               phoneNo: "7894561230",
               password: "Reuben@21",
-              
+
             }}
             onSubmit={async values => {
               const address_string = addressData.description;
@@ -77,7 +77,7 @@ const MyReactNativeForm = props => {
                 addressDetails.geometry.location.lat,
               ];
 
-              console.log(clinic)
+
 
               let action;
 

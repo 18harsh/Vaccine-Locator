@@ -9,13 +9,14 @@ import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import DropDownPicker from "react-native-dropdown-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const theme = {
 
   roundness: 4,
   colors: {
     placeholder: "white", text: "red", primary: "red",
-    underlineColor: "black", background: "#003489",
+    underlineColor: "black", background: planted_colors.LIGHT_BLUE,
   },
 };
 
@@ -25,8 +26,6 @@ const MyReactNativeForm = props => {
   const navigation = useNavigation();
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
-
-  const [country, setCountry] = useState('uk');
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -72,6 +71,45 @@ const MyReactNativeForm = props => {
   }, [dispatch]);
 
 
+  const [mode, setMode] = useState("time");
+  const [showStartTime, setShowStartTime] = useState(false);
+  const [showEndTime, setShowEndTime] = useState(false);
+  const [showDate, setShowDate] = useState(false);
+  const [time, setTime] = useState();
+
+  const [showStartTimeText, setShowStartTimeText] = useState("");
+  const [showEndTimeText, setShowEndTimeText] = useState("");
+  const [showDateText, setShowDateText] = useState("");
+
+  const showModeStartTime = (currentMode) => {
+    setShowStartTime(true);
+
+  };
+
+  const showTimepickerStartTime = () => {
+    showModeStartTime("time");
+  };
+
+
+  const showModeEndTime = (currentMode) => {
+    setShowEndTime(true);
+
+  };
+
+  const showTimepickerEndTime = () => {
+    showModeEndTime("time");
+  };
+
+
+  // const showDate = (currentMode) => {
+  //   setShowEndTime(true);
+  //
+  // };
+
+  const showDatePicker = () => {
+    setShowDate(true)
+  };
+
   console.log(userDetails);
   if (loading) {
     return (
@@ -93,22 +131,148 @@ const MyReactNativeForm = props => {
   return (
 
     <View style={styles.MainContainer}>
+      <View style={{
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-around",
 
-      <DropDownPicker
-        items={[
-          { label: "0", value: "0", icon: null },
-          { label: "1", value: "1", icon: null },
-          { label: "2", value: "2", icon: null },
-        ]}
-        defaultValue={country}
-        containerStyle={{ height: 40,width:"50%" }}
-        style={{ backgroundColor: "#fafafa" }}
-        itemStyle={{
-          justifyContent: "flex-start",
-        }}
-        dropDownStyle={{ backgroundColor: "#fafafa" }}
-        onChangeItem={item => setCountry(item.value)}
-      />
+        marginTop: 10,
+      }}>
+
+        <View style={{
+          width: "30%",
+          alignItems: "center",
+        }}>
+          <Text style={{
+            color: planted_colors.STRONG_RED,
+
+
+          }}>{showStartTimeText}</Text>
+        </View>
+
+        <View style={{
+          width: "30%",
+          alignItems: "center",
+
+        }}>
+          <Text style={{
+            color: planted_colors.STRONG_RED,
+
+          }}>{showEndTimeText}</Text>
+        </View>
+        <View style={{
+          width: "30%",
+          alignItems: "center",
+
+        }}>
+          <Text style={{
+            color: planted_colors.STRONG_RED,
+
+          }}>{showDateText}</Text>
+        </View>
+      </View>
+      <View style={{
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-around",
+        marginTop: 10,
+      }}>
+
+        <View style={{
+          width: "30%",
+        }}>
+          <Button onPress={showTimepickerStartTime} title="Start Time" />
+        </View>
+
+        <View style={{
+          width: "30%",
+          justifyContent: "center",
+        }}>
+          <Button onPress={showTimepickerEndTime} title="End Time" />
+        </View>
+        <View style={{
+          width: "30%",
+          justifyContent: "center",
+        }}>
+          <Button onPress={showDatePicker} title="Date" />
+        </View>
+      </View>
+
+      <View style={{
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-around",
+        marginTop: 10,
+      }}>
+
+        <View style={{
+          width: "40%",
+        }}>
+          <TextInput theme={theme} label={"Count"} mode={"outlined"} placeholder={"Count"} />
+        </View>
+
+        <View style={{
+          width: "40%",
+          justifyContent: "center",
+        }}>
+          <Button
+            // onPress={showTimepickerEndTime}
+            title="Add Slot" />
+        </View>
+      </View>
+      <View style={{
+        marginTop:20,
+        backgroundColor: planted_colors.LIGHT_BLUE,
+        height: "100%",
+      }}>
+
+      </View>
+
+
+      {showStartTime && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={new Date()}
+          mode={mode}
+          is24Hour={false}
+          display="clock"
+          onChange={(event, date) => {
+            setShowStartTimeText(date.toLocaleTimeString(undefined, { timeZone: "Asia/Kolkata" }));
+            setShowStartTime(false);
+          }}
+        />
+      )}
+
+      {showEndTime && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={new Date()}
+          style={{ backgroundColor: planted_colors.BLUEISH_GREEN }}
+          mode={mode}
+          is24Hour={false}
+          display="clock"
+          onChange={(event, date) => {
+            setShowEndTimeText(date.toLocaleTimeString(undefined, { timeZone: "Asia/Kolkata" }));
+            setShowEndTime(false);
+          }}
+        />
+      )}
+
+      {showDate && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={new Date()}
+          style={{ backgroundColor: planted_colors.BLUEISH_GREEN }}
+          mode={"date"}
+          is24Hour={false}
+          display="default"
+          onChange={(event, date) => {
+            setShowDateText(date.toLocaleDateString(undefined, { timeZone: "Asia/Kolkata" }));
+            setShowDate(false);
+          }}
+        />
+      )}
+
     </View>
 
   );
@@ -118,8 +282,6 @@ const MyReactNativeForm = props => {
 const styles = StyleSheet.create({
   MainContainer: {
     width: "100%", height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
 
     backgroundColor: planted_colors.LIGHT_BLUE,
   },
