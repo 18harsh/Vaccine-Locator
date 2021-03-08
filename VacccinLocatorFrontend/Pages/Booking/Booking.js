@@ -22,9 +22,9 @@ const theme = {
 
 
 const Booking = ({ route, navigation }) => {
-  const { itemId, otherParam } = route.params;
+  const {  clinicName,  clinicId,  clinicAddress,clinicObjectId} = route.params;
 
-  console.log("THIS itemId otherParam",itemId,otherParam)
+  console.log("THIS itemId otherParam",clinicName,clinicId,clinicAddress,clinicObjectId)
 
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);

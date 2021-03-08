@@ -270,8 +270,10 @@ class MyReactNativeForm extends Component {
             backgroundColor: planted_colors.STRONG_RED,
           }} onPress={() => {
             this.props.navigation.navigate('Booking', {
-              itemId: 86,
-              otherParam: 'anything you want here',
+              clinicName: item.clinicName,
+              clinicId: item.clinicId,
+              clinicAddress:item.clinicAddress,
+              clinicObjectId:item._id
             });
           }}> Book</Button>
           <View>
