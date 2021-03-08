@@ -96,12 +96,12 @@ const MyReactNativeForm = props => {
 
       <DropDownPicker
         items={[
-          { label: "USA", value: "usa", icon: null },
-          { label: "UK", value: "uk", icon: null },
-          { label: "France", value: "france", icon: null },
+          { label: "0", value: "0", icon: null },
+          { label: "1", value: "1", icon: null },
+          { label: "2", value: "2", icon: null },
         ]}
         defaultValue={country}
-        containerStyle={{ height: 40 }}
+        containerStyle={{ height: 40,width:"50%" }}
         style={{ backgroundColor: "#fafafa" }}
         itemStyle={{
           justifyContent: "flex-start",
