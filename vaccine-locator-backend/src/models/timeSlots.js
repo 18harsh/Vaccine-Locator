@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+
 const timeSchema = new mongoose.Schema({
     clinicObjectId: {
         type: Schema.Types.ObjectId,

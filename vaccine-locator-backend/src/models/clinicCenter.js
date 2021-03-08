@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
 
 const clinicSchema = new mongoose.Schema({
     clinicName: {
@@ -37,7 +38,12 @@ const clinicSchema = new mongoose.Schema({
     Open: {
         type: Boolean,
         default: true,
-    }
+    },
+    timeSlotId: {
+        type: Schema.Types.ObjectId,
+        ref: 'TimeSlots',
+        required: false
+    },
 })
 const Clinic = mongoose.model('Clinic', clinicSchema)
 

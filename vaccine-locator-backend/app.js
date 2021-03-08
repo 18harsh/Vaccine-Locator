@@ -1,17 +1,18 @@
-const mongoose = require('mongoose')
-const express = require('express')
+const mongoose = require('mongoose');
+const express = require('express');
 
 
-const userRouter = require('./src/routers/patient')
-const bookingRouter = require('./src/routers/booking')
-const clinicRouter = require('./src/routers/clinicCenter')
-const timeSlotRouter = require('./src/routers/timeSlots')
-const Clinic = require('./src/models/clinicCenter')
+const userRouter = require('./src/routers/patient');
+const bookingRouter = require('./src/routers/booking');
+const clinicRouter = require('./src/routers/clinicCenter');
+const timeSlotRouter = require('./src/routers/timeSlots');
 
 
 const MONGO_DB_URI = "mongodb+srv://reuben:reuben@mongodb.syifj.mongodb.net/vaccine_locator?retryWrites=true&w=majority"
 
-const app = express()
+
+
+const app = express();
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
@@ -26,20 +27,25 @@ app.use(userRouter);
 app.use(clinicRouter);
 app.use(bookingRouter);
 app.use(timeSlotRouter);
+//
+// app.post('/center', async (req, res) => {
+//     const clinic = new Clinic(req.body)
+//     console.log(clinic)
+//     try {
+//         await clinic.save()
+//         res.status(201).send({clinic})
+//     } catch (e) {
+//         res.status(400).send(e)
+//     }
+// })
+//
 
-app.post('/center', async (req, res) => {
-    const clinic = new Clinic(req.body)
-    console.log(clinic)
-    try {
-        await clinic.save()
-        res.status(201).send({clinic})
-    } catch (e) {
-        res.status(400).send(e)
-    }
+mongoose.connect(MONGO_DB_URI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify:false,
+    useCreateIndex:true
 })
-
-
-mongoose.connect(MONGO_DB_URI)
     .then(res => {
         app.listen(4000);
         // app.listen(process.env.PORT || 5000)

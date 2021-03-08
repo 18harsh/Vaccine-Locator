@@ -122,13 +122,10 @@ const MyReactNativeForm = props => {
     var timeSlots = {};
     var nestedTimeSlot = {};
 
-    nestedTimeSlot[showStartTimeText.toString()] = count.toString();
-    let i=0;
-    while (i < countRepeat) {
-      var date= new Date(showDateText)
-      timeSlots[date.addDays(i).toLocaleDateString()] = nestedTimeSlot;
-      i++
-    }
+    nestedTimeSlot[showStartTimeText.toString()] =[0,count];
+
+    timeSlots[showDateText] = nestedTimeSlot;
+
 
 
     var timeSlotData = JSON.stringify({
@@ -260,13 +257,7 @@ const MyReactNativeForm = props => {
                      }}
                      mode={"outlined"}
                      placeholder={"Count"} />
-          <TextInput theme={theme}
-                     label={"Count"}
-                     onChangeText={value => {
-                       setCountRepeat(value);
-                     }}
-                     mode={"outlined"}
-                     placeholder={"Repeat For Days"} />
+
         </View>
 
         <View style={{
