@@ -145,15 +145,7 @@ const MyReactNativeForm = props => {
       },
         body: JSON.stringify({
           "clinicObjectId": "6044df4fb8b7d14f20a42b3a",
-          "timeSlots": {
-            "date": {
-              "date": showDateText.toString(),
-              "time_slots":timeSlots
-
-
-            }
-          },
-
+          "timeSlots": timeSlots
         }),
       },
     );
