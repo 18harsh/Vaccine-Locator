@@ -8,6 +8,8 @@ exports.addTimeSlots = (req, res, next) => {
     // console.log("-------New Line-------")
     const clinicObjectId = req.body.clinicObjectId;
     const timeSlotsFromClinic = req.body.timeSlots;
+
+
     // console.log(timeSlotsFromClinic)
     // console.log(req.body)
     var new_object = {}
@@ -31,6 +33,7 @@ exports.addTimeSlots = (req, res, next) => {
 
             }).catch(err => console.log(err))
         }
+
         timeSlotsModel.findById(clinic.timeSlotId).then(result => {
             // for(var i in timeSlotsFromClinic) {
             //     console.log(i)
@@ -75,5 +78,30 @@ exports.addTimeSlots = (req, res, next) => {
     }).catch(err => console.log(err))
 
     // timeSlotsModel.find
+
+}
+
+
+exports.booking =  (req, res, next) => {
+    // console.log("-------New Line-------")
+    const clinicObjectId = req.body.clinicObjectId;
+    const date = req.body.date;
+    const time_slot = req.body.time_slot;
+
+
+    clinicModel.findById(clinicObjectId).then((clinic) => {
+
+
+        timeSlotsModel.findById(clinic.timeSlotId).then(timeSlots => {
+
+            timeSlots.timeSlots[date][timeSlots] = [1,"9"]
+
+            return timeSlots.timeSlots[date]
+        }).then(result => {
+            console.log("Printed Successfully")
+        })
+        res.send({"message": "time slots already created"})
+    })
+
 
 }

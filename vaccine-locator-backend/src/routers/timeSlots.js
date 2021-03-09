@@ -5,5 +5,6 @@ const timeController = require('../controller/timeController')
 
 router.post('/clinic/addtime',timeController.addTimeSlots)
 
+router.post('/booking/time/slots',timeController.booking)
 
 module.exports = router;
