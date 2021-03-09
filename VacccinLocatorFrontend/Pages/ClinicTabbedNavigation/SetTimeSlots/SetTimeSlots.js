@@ -16,7 +16,7 @@ const theme = {
 
   roundness: 4,
   colors: {
-    placeholder: "white", text: "red", primary: "red",
+    placeholder: "white", text: planted_colors.STRONG_RED, primary: planted_colors.STRONG_RED,
     underlineColor: "black", background: planted_colors.LIGHT_BLUE,
   },
 };
@@ -235,7 +235,7 @@ const MyReactNativeForm = props => {
         <View style={{
           width: "40%",
         }}>
-          <Button onPress={() => setVisibleTime(true)} uppercase={false}
+          <Button theme={theme} onPress={() => setVisibleTime(true)} uppercase={false}
                   mode="outlined">
             Start Time
           </Button>
@@ -245,7 +245,7 @@ const MyReactNativeForm = props => {
           width: "40%",
           justifyContent: "center",
         }}>
-          <Button onPress={() => setOpen(true)} uppercase={false}
+          <Button theme={theme} onPress={() => setOpen(true)} uppercase={false}
                   mode="outlined">
             Date
           </Button>
@@ -279,6 +279,7 @@ const MyReactNativeForm = props => {
           justifyContent: "center",
         }}>
           <Button
+            theme={theme}
             onPress={addSlot}
           >Add Slot</Button>
         </View>

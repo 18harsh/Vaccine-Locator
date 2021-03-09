@@ -11,7 +11,7 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as authActions from "../../store/actions/auth";
 import { List } from "react-native-paper";
-import EvilIcons from "react-native-vector-icons/EvilIcons";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 

@@ -8,7 +8,7 @@ import UserClinicPage from "../UserClinicPage/UserClinicPage";
 
 export default class Homepage extends Component {
   state = {
-    isVisible: false,
+    isVisible: true,
   };
 
   Hide_Splash_Screen = () => {
