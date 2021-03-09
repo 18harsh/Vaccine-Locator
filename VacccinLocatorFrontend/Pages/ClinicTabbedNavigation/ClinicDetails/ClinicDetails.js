@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
-import { TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import * as planted_colors from "../../../Components/Color";
 
 import { useDispatch } from "react-redux";
 import * as authActions from "../../../store/actions/auth";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
-
+import LottieView from 'lottie-react-native';
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -27,8 +27,6 @@ const MyReactNativeForm = props => {
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
 
-
-
   useEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userData");
@@ -38,24 +36,24 @@ const MyReactNativeForm = props => {
         return;
       }
       const transformedData = JSON.parse(userData);
-      const { token, userId, expiryDate,userType } = transformedData;
+      const { token, userId, expiryDate } = transformedData;
       const expirationDate = new Date(expiryDate);
 
-      // const response = await fetch("http://10.0.2.2:4000/patient/single", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       "patientId": userId,
-      //
-      //     }),
-      //   },
-      // );
+      const response = await fetch("http://10.0.2.2:4000/clinic/single", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "clinicObjectId": userId,
+
+          }),
+        },
+      );
 
 
-      // const resData = await response.json();
-      // setUserDetails(resData);
+      const resData = await response.json();
+      setUserDetails(resData);
       if (expirationDate <= new Date() || !token || !userId) {
         navigation.navigate("UserClinicPage");
         return;
@@ -63,7 +61,7 @@ const MyReactNativeForm = props => {
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
-      dispatch(authActions.authenticate(userId, token, expirationTime,userType));
+      dispatch(authActions.authenticate(userId, token, expirationTime));
       setLoading(false);
     };
 
@@ -82,12 +80,7 @@ const MyReactNativeForm = props => {
         justifyContent:"center",
         alignItems:"center"
       }}>
-        <Image style={{
-          width: "50%",
-          resizeMode: "contain",
-        }}
-               source={require("../../../Components/Images/user.png")}
-        />
+        <LottieView source={require('../../../Components/Images/loading.json')} autoPlay loop />
       </View>
     );
   }
@@ -99,71 +92,66 @@ const MyReactNativeForm = props => {
             width: "50%",
             resizeMode: "contain",
           }}
-                 source={require("../../../Components/Images/user.png")}
+                 source={require("../../../Components/Images/clinic.png")}
           />
           <Text style={{
             color: planted_colors.STRONG_RED,
-            fontSize: 15,
-          }}>Patient Details !!!</Text>
+            fontSize: 18,
+          }}>Clinic Details </Text>
         </View>
         <View style={styles.MainContainer2}>
 
-          {/*<View style={{*/}
-          {/*  flexDirection: "row",*/}
-          {/*  width: "100%",*/}
-          {/*  justifyContent: "center",*/}
-          {/*}}>*/}
-        {/*    <TextInput*/}
-        {/*      underlineColorAndroid={"rgba(0,0,0,0)"}*/}
-        {/*      color={planted_colors.STRONG_RED}*/}
-        {/*      mode={"outlined"}*/}
-        {/*      style={styles.input2}*/}
-        {/*      label={"First Name"}*/}
-        {/*      theme={theme}*/}
-        {/*      value={userDetails.firstName}*/}
-        {/*      disabled={true}*/}
-        {/*    />*/}
-        {/*    <TextInput*/}
-        {/*      underlineColorAndroid={"rgba(0,0,0,0)"}*/}
-        {/*      color={planted_colors.STRONG_RED}*/}
-        {/*      mode={"outlined"}*/}
-        {/*      style={styles.input2}*/}
-        {/*      label={"Last Name"}*/}
-        {/*      theme={theme}*/}
-        {/*      value={userDetails.lastName}*/}
-        {/*      disabled={true}*/}
-        {/*    />*/}
-        {/*  </View>*/}
-        {/*  <TextInput*/}
-        {/*    underlineColorAndroid={"rgba(0,0,0,0)"}*/}
-        {/*    color={planted_colors.STRONG_RED}*/}
-        {/*    mode={"outlined"}*/}
-        {/*    style={styles.input}*/}
-        {/*    label={"Email ID"}*/}
-        {/*    theme={theme}*/}
-        {/*    value={userDetails.email}*/}
-        {/*    disabled={true}*/}
-        {/*  />*/}
-        {/*  <TextInput*/}
-        {/*    underlineColorAndroid={"rgba(0,0,0,0)"}*/}
-        {/*    color={planted_colors.STRONG_RED}*/}
-        {/*    mode={"outlined"}*/}
-        {/*    style={styles.input}*/}
-        {/*    label={"Aadhar No"}*/}
-        {/*    theme={theme}*/}
-        {/*    value={userDetails.aadharNo}*/}
-        {/*    disabled={true}*/}
-        {/*  />*/}
-        {/*  <TextInput*/}
-        {/*    underlineColorAndroid={"rgba(0,0,0,0)"}*/}
-        {/*    color={planted_colors.STRONG_RED}*/}
-        {/*    mode={"outlined"}*/}
-        {/*    style={styles.input}*/}
-        {/*    label={"Phone No"}*/}
-        {/*    theme={theme}*/}
-        {/*    value={userDetails.phoneNo.toString()}*/}
-        {/*    disabled={true}*/}
-        {/*  />*/}
+
+            <TextInput
+              underlineColorAndroid={"rgba(0,0,0,0)"}
+              color={planted_colors.STRONG_RED}
+              mode={"outlined"}
+              style={styles.input}
+              label={"Clinic Name"}
+              theme={theme}
+              value={userDetails.clinicName}
+              disabled={true}
+            />
+
+          <TextInput
+            underlineColorAndroid={"rgba(0,0,0,0)"}
+            color={planted_colors.STRONG_RED}
+            mode={"outlined"}
+            style={styles.input}
+            label={"Clinic ID"}
+            theme={theme}
+            value={userDetails.clinicId}
+            disabled={true}
+          />
+
+          <TextInput
+            underlineColorAndroid={"rgba(0,0,0,0)"}
+            color={planted_colors.STRONG_RED}
+            mode={"outlined"}
+            style={{
+              backgroundColor: planted_colors.OFF_WHITE,
+              color: planted_colors.OFF_WHITE,
+              width: "90%",
+
+              margin: 10,
+              fontSize: 16,
+            }}
+            multiline={true}
+            numberOfLines={5}
+            label={"Clinic Address"}
+            theme={theme}
+            value={userDetails.clinicAddress}
+            disabled={true}
+          />
+          <Button style={{
+            backgroundColor:planted_colors.STRONG_BLUE,
+            marginTop:40
+          }} mode={"contained"} onPress={()=>{
+            dispatch(authActions.logout());
+            navigation.navigate("UserClinicPage");
+          }}>
+            Log Out
+          </Button>
 
 
         </View>
@@ -180,19 +168,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: 100,
-    backgroundColor: planted_colors.LIGHT_BLUE,
+    backgroundColor: planted_colors.OFF_WHITE,
   },
   MainContainer2: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    backgroundColor: planted_colors.LIGHT_BLUE,
+    backgroundColor: planted_colors.OFF_WHITE,
 
   },
   input:
     {
-      backgroundColor: planted_colors.LIGHT_BLUE,
+      backgroundColor: planted_colors.OFF_WHITE,
       color: planted_colors.OFF_WHITE,
       width: "90%",
       height: 45,
@@ -205,7 +193,7 @@ const styles = StyleSheet.create({
     },
   input2:
     {
-      backgroundColor: planted_colors.LIGHT_BLUE,
+      backgroundColor: planted_colors.OFF_WHITE,
       color: planted_colors.OFF_WHITE,
       width: "42%",
       height: 45,

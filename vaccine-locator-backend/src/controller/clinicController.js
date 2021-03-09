@@ -99,3 +99,16 @@ exports.getNearestClinics = (req, res, next) => {
             res.send(result)
         })
 };
+
+
+exports.getSingleClinic = (req, res, next) => {
+    const clinicObjectId = req.body.clinicObjectId;
+
+
+    clinicModel
+        .findById(clinicObjectId)
+
+        .then(result => {
+            res.send(result)
+        })
+};
