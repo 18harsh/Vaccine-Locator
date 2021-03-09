@@ -6,6 +6,7 @@ import {
 const initialState = {
   token: null,
   userId: null,
+  userType:null
 };
 
 export default (state = initialState, action) => {
@@ -14,6 +15,7 @@ export default (state = initialState, action) => {
       return {
         token: action.token,
         userId: action.userId,
+        userType:action.userType
       };
     case CLINIC_LOGOUT:
       return initialState;

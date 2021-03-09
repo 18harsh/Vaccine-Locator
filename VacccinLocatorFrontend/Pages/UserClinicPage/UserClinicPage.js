@@ -12,14 +12,16 @@ const UserClinicPage = () => {
 
   useEffect(() => {
     const tryLogin = async () => {
-      const userData = await AsyncStorage.getItem("userData");
+      let userData
+      userData = await AsyncStorage.getItem("userData");
+
       console.log("User Data AsyncStorage",userData);
       if (!userData) {
         navigation.navigate("UserClinicPage");
         return;
       }
       const transformedData = JSON.parse(userData);
-      const { token, userId, expiryDate } = transformedData;
+      const { token, userId, expiryDate,userType } = transformedData;
       const expirationDate = new Date(expiryDate);
 
       if (expirationDate <= new Date() || !token || !userId) {
@@ -28,9 +30,12 @@ const UserClinicPage = () => {
       }
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
-
+      if(userType === 'clinic'){
+        navigation.navigate("ClinicTabbedNavigation");
+        return
+      }
       navigation.navigate("UserTabbedNavigation");
-      dispatch(authActions.authenticate(userId, token, expirationTime));
+      dispatch(authActions.authenticate(userId, token, expirationTime,userType));
     };
 
     tryLogin();

@@ -34,14 +34,14 @@ const MyReactNativeForm = props => {
 
   useEffect(() => {
     const tryLogin = async () => {
-      const userData = await AsyncStorage.getItem("clinicData");
+      const userData = await AsyncStorage.getItem("userData");
       console.log("User Data AsyncStorage", userData);
       if (!userData) {
         navigation.navigate("UserClinicPage");
         return;
       }
       const transformedData = JSON.parse(userData);
-      const { token, userId, expiryDate } = transformedData;
+      const { token, userId, expiryDate,userType } = transformedData;
       const expirationDate = new Date(expiryDate);
 
       // const response = await fetch("http://10.0.2.2:4000/patient/single", {
@@ -66,7 +66,7 @@ const MyReactNativeForm = props => {
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
-      dispatch(authActions.authenticate(userId, token, expirationTime));
+      dispatch(authActions.authenticate(userId, token, expirationTime,userType));
       setLoading(false);
     };
 
@@ -142,7 +142,7 @@ const MyReactNativeForm = props => {
       },
         body: JSON.stringify({
           "clinicObjectId": "6044df4fb8b7d14f20a42b3a",
-          "timeSlots": timeSlots
+          "timeSlots": timeSlots,
         }),
       },
     );

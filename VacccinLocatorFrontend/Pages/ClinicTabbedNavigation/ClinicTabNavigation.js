@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import React, { Component, useEffect } from "react";
+import { StyleSheet, Text, View, Image, BackHandler } from "react-native";
 import * as planted_colors from "../../Components/Color";
 import { Button } from "react-native-paper";
 
@@ -27,6 +27,16 @@ const theme = {
 const UserTabbedNavigation = () => {
   const navigation = useNavigation();
   const Tab = createBottomTabNavigator();
+
+
+  useEffect(() => {
+
+    BackHandler.addEventListener("hardwareBackPress", () => true);
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", () => true);
+
+  }, []);
+  
   return (
 
     <Tab.Navigator

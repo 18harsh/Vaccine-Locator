@@ -27,16 +27,18 @@ const MyReactNativeForm = props => {
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
 
+
+
   useEffect(() => {
     const tryLogin = async () => {
-      const userData = await AsyncStorage.getItem("clinicData");
+      const userData = await AsyncStorage.getItem("userData");
       console.log("User Data AsyncStorage", userData);
       if (!userData) {
         navigation.navigate("UserClinicPage");
         return;
       }
       const transformedData = JSON.parse(userData);
-      const { token, userId, expiryDate } = transformedData;
+      const { token, userId, expiryDate,userType } = transformedData;
       const expirationDate = new Date(expiryDate);
 
       // const response = await fetch("http://10.0.2.2:4000/patient/single", {
@@ -61,7 +63,7 @@ const MyReactNativeForm = props => {
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
-      dispatch(authActions.authenticate(userId, token, expirationTime));
+      dispatch(authActions.authenticate(userId, token, expirationTime,userType));
       setLoading(false);
     };
 

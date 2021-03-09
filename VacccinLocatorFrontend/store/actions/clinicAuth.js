@@ -7,10 +7,10 @@ export const CLINIC_LOGOUT = "CLINIC_LOGOUT";
 
 let timer;
 
-export const authenticate = (userId, token, expiryTime) => {
+export const authenticate = (userId, token, expiryTime,userType) => {
   return dispatch => {
     dispatch(setLogoutTimer(expiryTime));
-    dispatch({ type: CLINIC_AUTHENTICATE, userId: userId, token: token });
+    dispatch({ type: CLINIC_AUTHENTICATE, userId: userId, token: token,userType:userType });
   };
 };
 
@@ -84,12 +84,13 @@ export const login = (email, password) => {
         resData.token,
         resData.userId,
         parseInt(3600) * 1000,
+        "clinic"
       ),
     );
     const expirationDate = new Date(
       new Date().getTime() + parseInt(3600) * 1000,
     );
-    saveDataToStorage(  resData.token, resData.userId, expirationDate);
+    saveDataToStorage(  resData.token, resData.userId, expirationDate,"clinic");
 
 
     return resData;
@@ -99,7 +100,7 @@ export const login = (email, password) => {
 
 export const logout = () => {
   clearLogoutTimer();
-  AsyncStorage.removeItem("clinicData");
+  AsyncStorage.removeItem("userData");
   return { type: CLINIC_LOGOUT };
 };
 
@@ -117,13 +118,14 @@ const setLogoutTimer = expirationTime => {
   };
 };
 
-const saveDataToStorage = (token, userId, expirationDate) => {
+const saveDataToStorage = (token, userId, expirationDate,userType) => {
   AsyncStorage.setItem(
-    "clinicData",
+    "userData",
     JSON.stringify({
       token: token,
       userId: userId,
       expiryDate: expirationDate.toISOString(),
+      userType:userType
     }),
   );
 };
