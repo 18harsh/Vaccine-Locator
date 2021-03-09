@@ -122,19 +122,7 @@ const MyReactNativeForm = props => {
     var timeSlots = {};
     var nestedTimeSlot = {};
 
-    nestedTimeSlot[showStartTimeText.toString()] =[0,count];
 
-    timeSlots[showDateText] = nestedTimeSlot;
-
-
-
-    var timeSlotData = JSON.stringify({
-      "clinicObjectId": "6044df4fb8b7d14f20a42b3a",
-      "timeSlots": timeSlots,
-
-    });
-
-    console.log(timeSlotData);
     const response = await fetch("http://10.0.2.2:4000/clinic/addtime", {
         method: "POST",
       headers: {
@@ -142,7 +130,11 @@ const MyReactNativeForm = props => {
       },
         body: JSON.stringify({
           "clinicObjectId": "6044df4fb8b7d14f20a42b3a",
-          "timeSlots": timeSlots,
+          "allottedTo":"603ef473d3617825b03b7e35",
+          "eventDate":showDateText,
+          "start_time":showStartTimeText,
+          "end_time":setShowEndTimeText,
+          "count":20
         }),
       },
     );

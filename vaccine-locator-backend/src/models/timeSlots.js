@@ -7,12 +7,18 @@ const timeSchema = new mongoose.Schema({
         ref: 'Clinics',
         required: true
     },
-    timeSlots:{
+    eventDate: [{
+        eventDate: {
+            type:String
+        },
+        eventTiming: [{
+            startTime: {type: String, required: true},
+            allottedTo: [{type: String}],
+            allotmentLimit:[{type:Number}]
+        }],
 
-        type:Object,
-        required: false,
+    }],
 
-    }
 })
 const TimeSlots = mongoose.model('TimeSlots', timeSchema)
 

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/timeController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/timeController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/timeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/timeSlots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/timeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/timeSlots.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +78,7 @@
       <workItem from="1615172328087" duration="15625000" />
       <workItem from="1615223460172" duration="5856000" />
       <workItem from="1615258520987" duration="6287000" />
-      <workItem from="1615277912120" duration="9816000" />
+      <workItem from="1615277912120" duration="24279000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>
@@ -128,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615264654035</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="updated code">
+      <created>1615291432013</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615291432013</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +161,7 @@
     <MESSAGE value="Updated Code with MongoDB GeoJSON" />
     <MESSAGE value="Updated Time Slot Management with Backend" />
     <MESSAGE value="Updated Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Commit" />
+    <MESSAGE value="updated code" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated code" />
   </component>
 </project>
