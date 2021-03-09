@@ -25,7 +25,7 @@ Date.prototype.addDays = function(days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
-}
+};
 
 const MyReactNativeForm = props => {
 
@@ -33,6 +33,7 @@ const MyReactNativeForm = props => {
   const navigation = useNavigation();
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
+  const [getUserId, setUserId] = useState("");
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -43,9 +44,9 @@ const MyReactNativeForm = props => {
         return;
       }
       const transformedData = JSON.parse(userData);
-      const { token, userId, expiryDate,userType } = transformedData;
+      const { token, userId, expiryDate, userType } = transformedData;
       const expirationDate = new Date(expiryDate);
-
+      setUserId(userId);
       // const response = await fetch("http://10.0.2.2:4000/patient/single", {
       //     method: "POST",
       //     headers: {
@@ -68,7 +69,7 @@ const MyReactNativeForm = props => {
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
-      dispatch(authActions.authenticate(userId, token, expirationTime,userType));
+      dispatch(authActions.authenticate(userId, token, expirationTime, userType));
       setLoading(false);
     };
 
@@ -87,7 +88,7 @@ const MyReactNativeForm = props => {
   const [date, setDate] = React.useState(new Date);
   const [open, setOpen] = React.useState(false);
 
-  const [visibleTime, setVisibleTime] = React.useState(false)
+  const [visibleTime, setVisibleTime] = React.useState(false);
 
   const [showStartTimeText, setShowStartTimeText] = useState("");
   const [showDateText, setShowDateText] = useState("");
@@ -106,12 +107,12 @@ const MyReactNativeForm = props => {
       setOpen(false);
       setDate(params.date);
     },
-    [setOpen, setDate]
+    [setOpen, setDate],
   );
 
   const onDismissTime = React.useCallback(() => {
-    setVisibleTime(false)
-  }, [setVisibleTime])
+    setVisibleTime(false);
+  }, [setVisibleTime]);
 
 
   const onConfirmTime = React.useCallback(
@@ -120,16 +121,16 @@ const MyReactNativeForm = props => {
       var d = new Date();
       d.setHours(hours);
       d.setMinutes(minutes);
-      setShowStartTimeText(d.toLocaleTimeString())
+      setShowStartTimeText(d.toLocaleTimeString());
 
       console.log({ hours, minutes });
     },
-    [setVisibleTime]
+    [setVisibleTime],
   );
 
   const getSlots = async () => {
 
-
+    console.log("getSlots", getUserId);
 
     const response = await fetch("http://10.0.2.2:4000/get/slots", {
         method: "POST",
@@ -137,7 +138,7 @@ const MyReactNativeForm = props => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "clinicObjectId": "6044df4fb8b7d14f20a42b3a",
+          "clinicObjectId": getUserId,
 
         }),
       },
@@ -145,48 +146,48 @@ const MyReactNativeForm = props => {
 
 
     const resData = await response.json();
-    setSlotDetails(resData)
-    console.log(resData)
+    setSlotDetails(resData);
+    console.log(resData);
   };
 
   const addSlot = async () => {
     var timeSlots = {};
     var nestedTimeSlot = {};
-    console.log(count)
+    console.log(count);
 
-    const response = await fetch("http://10.0.2.2:4000/clinic/addtime", {
+    const response = await fetch("http://10.0.2.2:4000/clinic/add/time", {
         method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          "clinicObjectId": "6044df4fb8b7d14f20a42b3a",
-          "eventDate":showDateText,
-          "start_time":showStartTimeText,
-          "count":count
+          "clinicObjectId": getUserId,
+          "eventDate": showDateText,
+          "start_time": showStartTimeText,
+          "count": count,
         }),
       },
     );
 
 
     const resData = await response.json();
-    setShowStartTimeText("")
-    setShowDateText("")
-    setCount("")
-    getSlots()
-    console.log(resData)
+    // setShowStartTimeText("")
+    // setShowDateText("")
+    // setCount("")
+    getSlots();
+    console.log(resData);
   };
 
   console.log(userDetails);
   if (loading) {
     return (
       <View style={{
-        flex:1,
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"center"
+        flex: 1,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}>
-        <LottieView source={require('../../../Components/Images/loading.json')} autoPlay loop />
+        <LottieView source={require("../../../Components/Images/loading.json")} autoPlay loop />
       </View>
     );
   }
@@ -234,9 +235,9 @@ const MyReactNativeForm = props => {
         <View style={{
           width: "40%",
         }}>
-          <Button onPress={()=> setVisibleTime(true)} uppercase={false}
+          <Button onPress={() => setVisibleTime(true)} uppercase={false}
                   mode="outlined">
-           Start Time
+            Start Time
           </Button>
         </View>
 
@@ -265,7 +266,7 @@ const MyReactNativeForm = props => {
           <TextInput theme={theme}
                      label={"Count"}
                      onChangeText={value => {
-                       console.log(value)
+                       console.log(value);
                        setCount(value);
                      }}
                      mode={"outlined"}
@@ -283,35 +284,35 @@ const MyReactNativeForm = props => {
         </View>
       </View>
       <ScrollView keyboardShouldPersistTaps={"handled"}>
-      <View style={{
-        marginTop: 20,
-        backgroundColor: planted_colors.LIGHT_BLUE,
-        height: "100%",
-        alignItems:"center"
-      }}>
-        {slotDetails.map((i,j)=>{
-          return <Card style={{
-            width:"90%",
-            marginTop:10,
-            backgroundColor:planted_colors.BLUEISH_GREEN
-          }}>
+        <View style={{
+          marginTop: 20,
+          backgroundColor: planted_colors.LIGHT_BLUE,
+          height: "100%",
+          alignItems: "center",
+        }}>
+          {slotDetails.map((i, j) => {
+            return <Card style={{
+              width: "90%",
+              marginTop: 10,
+              backgroundColor: planted_colors.BLUEISH_GREEN,
+            }}>
 
-            <Card.Content>
-              <Title>Date: {i.eventDate}</Title>
-              {i.eventTiming.map((i,j)=> {
-                return <Paragraph> Start Time : {i.startTime}, Count: {i.allotmentLimit}</Paragraph>
-              }) }
+              <Card.Content>
+                <Title>Date: {i.eventDate}</Title>
+                {i.eventTiming.map((i, j) => {
+                  return <Paragraph> Start Time : {i.startTime}, Capacity: {i.allotmentLimit}</Paragraph>;
+                })}
 
-            </Card.Content>
-
-
-          </Card>
-        })
-
-        }
+              </Card.Content>
 
 
-      </View>
+            </Card>;
+          })
+
+          }
+
+
+        </View>
       </ScrollView>
 
       <DatePickerModal
@@ -321,8 +322,8 @@ const MyReactNativeForm = props => {
         onDismiss={onDismissSingle}
         date={new Date()}
         onConfirm={onConfirmSingle}
-        onChange={(date)=>{
-          setShowDateText(date.date.toLocaleString())
+        onChange={(date) => {
+          setShowDateText(date.date.toLocaleString());
         }} // same props as onConfirm but triggered without confirmed by user
         saveLabel="Save" // optional
         label="Select date" // optional
@@ -340,7 +341,7 @@ const MyReactNativeForm = props => {
         cancelLabel="Cancel" // optional, default: 'Cancel'
         confirmLabel="Ok" // optional, default: 'Ok'
         // animationType="fade" // optional, default is 'none'
-        locale={'en'} // optional, default is automically detected by your system
+        locale={"en"} // optional, default is automically detected by your system
       />
 
     </View>

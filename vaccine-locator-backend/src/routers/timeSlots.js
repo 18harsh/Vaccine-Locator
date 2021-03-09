@@ -3,7 +3,7 @@ const router = new express.Router()
 const timeController = require('../controller/timeController')
 
 
-router.post('/clinic/addtime',timeController.addTimeSlots)
+router.post('/clinic/add/time',timeController.addTimeSlots)
 
 router.post('/get/slots',timeController.fetchSlotsForClinic)
 

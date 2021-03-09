@@ -12,7 +12,7 @@ exports.addTimeSlots = (req, res, next) => {
     const received_count = req.body.count;
 
 
-    // console.log(timeSlotsFromClinic)
+    console.log(req.body)
 
     var new_object = {}
     clinicModel.findById(clinicObjectId).then((clinic) => {
@@ -83,9 +83,12 @@ exports.addTimeSlots = (req, res, next) => {
 }
 
 exports.fetchSlotsForClinic = (req, res, next) => {
-    const clinciObjectId = "6044df4fb8b7d14f20a42b3a"
+    const clinciObjectId = req.body.clinicObjectId;
 
     clinicModel.findById(clinciObjectId).then((clinic) => {
+        if (!clinic.timeSlotId) {
+            res.send({"message":"No Slots"})
+        }
         timeSlotsModel.findById(clinic.timeSlotId).then(result =>{
             res.send(result.eventDate)
         })
