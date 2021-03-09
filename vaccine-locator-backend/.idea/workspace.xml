@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicDetails/ClinicDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicDetails/ClinicDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicHomeScreen/ClinicHomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/ClinicHomeScreen/ClinicHomeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/clinicController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/clinicController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/timeController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/timeController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/timeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/timeSlots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/clinicCenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/clinicCenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/timeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/timeSlots.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +85,7 @@
       <workItem from="1615172328087" duration="15625000" />
       <workItem from="1615223460172" duration="5856000" />
       <workItem from="1615258520987" duration="6287000" />
-      <workItem from="1615277912120" duration="24279000" />
+      <workItem from="1615277912120" duration="30411000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>
@@ -136,7 +143,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615291432013</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="updated Time Slot Booking">
+      <created>1615305978273</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615305978273</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +176,7 @@
     <MESSAGE value="Updated Time Slot Management with Backend" />
     <MESSAGE value="Updated Commit" />
     <MESSAGE value="updated code" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated code" />
+    <MESSAGE value="updated Time Slot Booking" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated Time Slot Booking" />
   </component>
 </project>
