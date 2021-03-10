@@ -1,5 +1,6 @@
 const Patient = require("../models/Patient");
 const {validationResult} = require('express-validator');
+const ClinicModel = require('../models/clinicCenter');
 
 exports.signUp = async (req, res) => {
     firstName = req.body.Fname;
@@ -66,5 +67,26 @@ exports.getSinglePatient = async (req, res) => {
         });
     }
     return res.status(200).send(patient);
+
+}
+
+
+exports.getTimeSlots = async (req, res) => {
+
+    patientObjectId = req.body.patientObjectId;
+
+    Patient.findById(patientObjectId).then(patientDetails => {
+        // console.log(patientDetails.appointmentsBooked)
+        let details = []
+        if (patientDetails.appointmentsBooked) {
+            return patientDetails.appointmentsBooked
+
+            }
+
+        return {"message": "No Bookings Yet"}
+    }).then(appointment=>{
+        res.send(appointment)
+    })
+
 
 }

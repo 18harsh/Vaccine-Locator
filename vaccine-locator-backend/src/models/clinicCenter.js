@@ -31,10 +31,6 @@ const clinicSchema = new mongoose.Schema({
         },
         formattedAddress: String
     },
-    timeSlots:{
-        type:Object,
-        required: false,
-    },
     Open: {
         type: Boolean,
         default: true,
@@ -44,6 +40,10 @@ const clinicSchema = new mongoose.Schema({
         ref: 'TimeSlots',
         required: false
     },
+    patientId:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Patient',
+    }]
 })
 const Clinic = mongoose.model('Clinic', clinicSchema)
 

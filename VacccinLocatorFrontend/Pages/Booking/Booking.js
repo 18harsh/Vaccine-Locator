@@ -162,6 +162,9 @@ const Booking = ({ route, navigation }) => {
                   if(resData.message === "time slots already created"){
                     Alert.alert("Slot Booked Successfully")
                     navigation.navigate("UserTabbedNavigation")
+                  } else if (resData.message === "Bookings are Full"){
+                    Alert.alert(resData.message)
+                    navigation.navigate("UserTabbedNavigation")
                   }
 
                 }}>

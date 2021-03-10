@@ -65,38 +65,35 @@ const patientSchema = new mongoose.Schema({
             required: true
         }
     }],
-    appointmentsBooked:[{
-        timeSlotId: {
-            type: Schema.Types.ObjectId,
-            ref: 'TimeSlots',
-            required: false,
+    appointmentsBooked: [{
+        clinicName: {
+            type: String
         },
-        eventDate: [{
-            eventDate: {
-                type:Schema.Types.ObjectId,
-            },
-            eventTiming: [{
-                type:Schema.Types.ObjectId,
-            }],
+        clinicAddress: {
+            type: String
+        },
+        eventDate: {
+            type: Date
+        },
 
-        }],
-
+        startTime: {type: Date, required: true},
 
 
-    }]
+    }],
+
 })
 
 patientSchema.methods.generateAuthToken = async function () {
     const patient = this
     console.log(patient)
-    const token = jwt.sign({_id:patient.id.toString()},'thisismyproject')
-    patient.tokens = patient.tokens.concat({ token })
+    const token = jwt.sign({_id: patient.id.toString()}, 'thisismyproject')
+    patient.tokens = patient.tokens.concat({token})
     await patient.save()
     return token
 }
 
-patientSchema.statics.findByCredentials = async (Email,Password) => {
-    const patient = await Patient.findOne({email:Email})
+patientSchema.statics.findByCredentials = async (Email, Password) => {
+    const patient = await Patient.findOne({email: Email})
     // console.log(patient)
     if (patient === null) {
         throw new Error('Unable to login')

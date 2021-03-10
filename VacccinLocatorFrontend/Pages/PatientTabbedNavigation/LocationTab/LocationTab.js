@@ -302,74 +302,74 @@ class MyReactNativeForm extends Component {
     return (
       <View style={styles.container}>
 
-        {/*<MapView*/}
-        {/*  provider={PROVIDER_GOOGLE}*/}
-        {/*  // remove if not using Google Maps*/}
-        {/*  ref={map => this._map = map}*/}
-        {/*  // onPress={() => this.onMarkerPressed(marker, index)}*/}
-        {/*  style={styles.map}*/}
-        {/*  loadingEnabled={true}*/}
-        {/*  region={{*/}
-        {/*    latitude: parseFloat(this.state.latitude),*/}
-        {/*    longitude: parseFloat(this.state.longitude),*/}
-        {/*    latitudeDelta: 0.05,*/}
-        {/*    longitudeDelta: 0.005,*/}
-        {/*  }}*/}
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          // remove if not using Google Maps
+          ref={map => this._map = map}
+          // onPress={() => this.onMarkerPressed(marker, index)}
+          style={styles.map}
+          loadingEnabled={true}
+          region={{
+            latitude: parseFloat(this.state.latitude),
+            longitude: parseFloat(this.state.longitude),
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.005,
+          }}
 
-        {/*>*/}
-        {/*  <Marker coordinate={{*/}
-        {/*    latitude: parseFloat(this.state.originLatitude),*/}
-        {/*    longitude: parseFloat(this.state.originLongitude),*/}
-        {/*  }}*/}
-
-
-        {/*          image={require("../../../Components/Images/bluelocation.png")}*/}
-
-        {/*  >*/}
-        {/*    <Callout>*/}
-        {/*      <Text>You are Here</Text>*/}
-        {/*    </Callout>*/}
+        >
+          <Marker coordinate={{
+            latitude: parseFloat(this.state.originLatitude),
+            longitude: parseFloat(this.state.originLongitude),
+          }}
 
 
-        {/*  </Marker>*/}
+                  image={require("../../../Components/Images/bluelocation.png")}
+
+          >
+            <Callout>
+              <Text>You are Here</Text>
+            </Callout>
 
 
-        {/*  {*/}
-        {/*    this.state.clinicDetails.map((marker, index) => {*/}
-        {/*      // console.log(marker)*/}
-        {/*      return <Marker*/}
-        {/*        key={marker._id}*/}
-        {/*        ref={ref => this.state.markers[index] = ref}*/}
-        {/*        // onPress={() => this.onMarkerPressed(marker, index)}*/}
-        {/*        image={require("../../../Components/Images/ClinicLocation.png")}*/}
-        {/*        coordinate={{*/}
-        {/*          latitude: marker.location.coordinates[1],*/}
-        {/*          longitude: marker.location.coordinates[0],*/}
-        {/*        }}*/}
-        {/*      >*/}
-        {/*        <Callout>*/}
-        {/*          <Text>{marker.clinicName}</Text>*/}
-        {/*        </Callout>*/}
+          </Marker>
 
-        {/*      </Marker>;*/}
-        {/*    })*/}
-        {/*  }*/}
 
-        {/*  <MapViewDirections*/}
-        {/*    origin={{*/}
-        {/*      latitude: 19.213567050389614,*/}
-        {/*      longitude: 72.85285072119105,*/}
-        {/*    }}*/}
-        {/*    destination={{*/}
-        {/*      latitude: this.state.mapDirectionLatitude,*/}
-        {/*      longitude: this.state.mapDirectionLongitude,*/}
-        {/*    }}*/}
-        {/*    apikey={"AIzaSyD09ZcG7fHZltsAOsKjxq5Eww4xEIfXZNc"}*/}
-        {/*    strokeWidth={4}*/}
-        {/*    strokeColor={planted_colors.STRONG_RED}*/}
-        {/*  />*/}
+          {
+            this.state.clinicDetails.map((marker, index) => {
+              // console.log(marker)
+              return <Marker
+                key={marker._id}
+                ref={ref => this.state.markers[index] = ref}
+                // onPress={() => this.onMarkerPressed(marker, index)}
+                image={require("../../../Components/Images/ClinicLocation.png")}
+                coordinate={{
+                  latitude: marker.location.coordinates[1],
+                  longitude: marker.location.coordinates[0],
+                }}
+              >
+                <Callout>
+                  <Text>{marker.clinicName}</Text>
+                </Callout>
 
-        {/*</MapView>*/}
+              </Marker>;
+            })
+          }
+
+          <MapViewDirections
+            origin={{
+              latitude: 19.213567050389614,
+              longitude: 72.85285072119105,
+            }}
+            destination={{
+              latitude: this.state.mapDirectionLatitude,
+              longitude: this.state.mapDirectionLongitude,
+            }}
+            apikey={"AIzaSyD09ZcG7fHZltsAOsKjxq5Eww4xEIfXZNc"}
+            strokeWidth={4}
+            strokeColor={planted_colors.STRONG_RED}
+          />
+
+        </MapView>
 
         <GooglePlacesAutocomplete
           onPress={async (data, details = null) => {

@@ -45,6 +45,9 @@ exports.booking = (req, res, next) => {
 
 
             }).then(Limit => {
+                if (Limit === 0) {
+                    res.send({"message":"Bookings are Full"})
+                }
                 timeSlotsModel.findOneAndUpdate({_id: clinic.timeSlotId},
                     {
                         $push: {
@@ -94,29 +97,31 @@ exports.booking = (req, res, next) => {
                     patientModel.findById(patientObjectId).then(patient => {
 
                         patient.appointmentsBooked.push({
-                            timeSlotId: response.timeSlotId,
-                            eventDate: {
-                                eventDate: response.eventDateId,
-                                eventTiming: response.eventTimingSlotId
-                            }
+                            clinicName: clinic.clinicName,
+                            clinicAddress: clinic.clinicAddress,
+                            eventDate: date,
+                            startTime: time_slot
+
                         })
-                        return patient.save()
+                    return patient.save()
 
-                    }).then(patientResponse => {
+                }).then(patientResponse => {
 
-                        return patientResponse
+                    return patientResponse
 
-                    })
-                    return response
                 })
-                return Limit
+                return response
             })
+            return Limit
+        })
 
-
-        }).then(result => {
-        console.log("Printed Successfully")
-    })
-    res.send({"message": "time slots already created"})
+    clinic.patientId.push(patientObjectId)
+    return clinic.save()
+}).
+then(result => {
+    console.log("Printed Successfully")
+})
+res.send({"message": "time slots already created"})
 
 
 }

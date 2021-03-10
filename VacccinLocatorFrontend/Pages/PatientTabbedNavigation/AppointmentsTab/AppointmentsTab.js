@@ -27,6 +27,7 @@ const MyReactNativeForm = props => {
   const navigation = useNavigation();
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
+  const [getAppointment, setAppointment] = useState(true);
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -51,10 +52,24 @@ const MyReactNativeForm = props => {
           }),
         },
       );
-
-
       const resData = await response.json();
       setUserDetails(resData);
+
+      const responseApp = await fetch("http://10.0.2.2:4000/patient/time/slots", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "patientObjectId": userId,
+
+          }),
+        },
+      );
+      const appointment = await responseApp.json();
+      setAppointment(appointment)
+
+
       if (expirationDate <= new Date() || !token || !userId) {
         navigation.navigate("UserClinicPage");
         return;
@@ -89,28 +104,49 @@ const MyReactNativeForm = props => {
   const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
   return (
-    <ScrollView keyboardShouldPersistTaps={"handled"}>
+
+
       <View style={styles.MainContainer}>
-        <Card style={{
+        <View style={{
+
+        }}>
+          <Text style={{
+              marginTop:10,
+              color:planted_colors.STRONG_RED,
+              fontSize:20
+          }}> Bookings</Text>
+        </View>
+        <ScrollView keyboardShouldPersistTaps={"handled"}>
+          <View>
+
+
+        {getAppointment.map((i,j)=>{
+        return  <Card style={{
           width:"90%",
           marginTop:30,
           backgroundColor:planted_colors.BLUEISH_GREEN
         }}>
 
           <Card.Content>
-            <Title>Omkar Hospital</Title>
-            <Paragraph>Omkar Hospital, Mahavir Nagar, Panchsheel Garden, Siddhivinayak Nagar, Kandivali West, Mumbai, Maharashtra, India</Paragraph>
+            <Title>{i.clinicName}</Title>
+            <Paragraph>{i.clinicAddress}</Paragraph>
           </Card.Content>
           <Card.Content>
             <Title style={{
-             color:planted_colors.STRONG_RED
-            }} >Time Slot</Title>
+              color:planted_colors.STRONG_RED
+            }} >Time Slot: {new Date(i.startTime).toLocaleTimeString()}</Title>
+            <Title style={{
+              color:planted_colors.STRONG_RED
+            }} >Date: {new Date(i.eventDate).toLocaleDateString()}</Title>
           </Card.Content>
 
         </Card>
+        })}
 
+          </View>
+        </ScrollView>
       </View>
-    </ScrollView>
+
   );
 };
 
