@@ -120,7 +120,7 @@ render(){
           marginTop:10,
           color:planted_colors.STRONG_RED,
           fontSize:20
-        }}> Bookings</Text>
+        }}> Appointments Made</Text>
       </View>
       <ScrollView keyboardShouldPersistTaps={"handled"}>
         <View>

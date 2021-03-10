@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image,Alert } from "react-native";
+import { Text, View, StyleSheet, Image, Alert } from "react-native";
 import { Button, Card, Paragraph, TextInput, Title, TouchableRipple } from "react-native-paper";
 import * as planted_colors from "../../Components/Color";
 
@@ -12,17 +12,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as authActions from "../../store/actions/auth";
 import { List } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
-
 
 
 const theme = {
 
   roundness: 4,
   colors: {
-    placeholder: "white", text: planted_colors.BLUEISH_GREEN, primary: planted_colors.BLUEISH_GREEN,
-    underlineColor: "black", background: planted_colors.LIGHT_BLUE,
+    placeholder: "white", text: planted_colors.STRONG_RED, primary: planted_colors.STRONG_RED,
+    underlineColor: "black", background: planted_colors.STRONG_RED,
   },
 };
 
@@ -124,22 +123,47 @@ const Booking = ({ route, navigation }) => {
   return (
 
     <View style={styles.MainContainer}>
-      <Text>{clinicName}</Text>
-      <Text>{clinicAddress}</Text>
-      <List.Section title="Booking Slots" style={{
+      <View style={{
+        width: "90%",
+        height: "10%",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 10,
+      }}>
+        <Text style={{
+          fontSize: 18,
+          color: planted_colors.STRONG_RED,
+          marginTop: 10,
+          marginBottom: 10,
+        }}>{clinicName}</Text>
+        <Text style={{
+          fontSize: 15,
+          color: planted_colors.STRONG_RED,
+
+        }}>{clinicAddress}</Text>
+      </View>
+      <ScrollView keyboardShouldPersistTaps={"handled"} style={{
+        width:"100%"
+      }}>
+      <List.Section color={planted_colors.STRONG_RED} title="Booking Slots" style={{
         width: "100%",
       }}>
         {slotDetails.map((i, j) => {
           return <List.Accordion theme={theme}
                                  title={new Date(i.eventDate).toLocaleDateString()}
-                                 left={props => <EvilIcons {...props} icon="folder" />}>
+
+          >
             {i.eventTiming.map((k, j) => {
               return <View style={{
                 flexDirection: "row",
                 marginTop: 20,
               }
               }>
-                <TouchableRipple onPress={async () => {
+                <TouchableRipple style={{
+                backgroundColor:planted_colors.STRONG_YELLOW,
+                  borderRadius:10,
+                  marginLeft: 30
+                }} onPress={async () => {
                   console.log(k._id, j);
                   const response2 = await fetch("http://10.0.2.2:4000/booking/time/slots", {
                       method: "POST",
@@ -147,24 +171,24 @@ const Booking = ({ route, navigation }) => {
                         "Content-Type": "application/json",
                       },
                       body: JSON.stringify({
-                        "clinicObjectId":clinicObjectId,
-                        "patientObjectId":userDetails._id,
-                        "date":i.eventDate,
-                        "timeSlotId":k._id,
-                        "start_time":k.startTime,
-                        "end_time":k.endTime
+                        "clinicObjectId": clinicObjectId,
+                        "patientObjectId": userDetails._id,
+                        "date": i.eventDate,
+                        "timeSlotId": k._id,
+                        "start_time": k.startTime,
+                        "end_time": k.endTime,
                       }),
                     },
                   );
 
 
                   const resData = await response2.json();
-                  console.log(resData)
-                  if(resData.message === "time slots already created"){
-                    Alert.alert("Slot Booked Successfully")
-                    navigation.navigate("UserTabbedNavigation")
-                  } else if (resData.message === "Bookings are Full"){
-                    Alert.alert("Bookings are Full, Try another Slot Timing")
+                  console.log(resData);
+                  if (resData.message === "time slots already created") {
+                    Alert.alert("Slot Booked Successfully");
+                    navigation.navigate("UserTabbedNavigation");
+                  } else if (resData.message === "Bookings are Full") {
+                    Alert.alert("Bookings are Full, Try another Slot Timing");
 
                   }
 
@@ -172,23 +196,33 @@ const Booking = ({ route, navigation }) => {
                   <View style={{
                     flexDirection: "row",
                     margin: 10,
-                    width:"100%",
-                    height:25,
-
+                    width: "100%",
+                    height: 25,
 
 
                   }}>
+                    <View>
 
-                      <Text theme={theme2} style={{ color: planted_colors.STRONG_RED }}>
+                      <Text theme={theme2} style={{
+                        color: planted_colors.STRONG_RED,
+                        fontSize:18,
+                        marginLeft:5
+
+                      }}>
                         {new Date(k.startTime).toLocaleTimeString()} - {new Date(k.endTime).toLocaleTimeString()}
                       </Text>
 
-
-                      <Text theme={theme2} style={{ color: planted_colors.STRONG_RED,
-                      marginLeft: 20
-                      }}>
-                        Book Slot</Text>
-
+                    </View>
+                    <View >
+                      <Text theme={theme2} style={{
+                        color: planted_colors.STRONG_RED,
+                        backgroundColor: planted_colors.STRONG_YELLOW,
+                        marginLeft: 20,
+                        fontSize:15
+                      }} >
+                        BOOK SLOT
+                      </Text>
+                    </View>
                   </View>
                 </TouchableRipple>
 
@@ -202,7 +236,7 @@ const Booking = ({ route, navigation }) => {
         }
 
       </List.Section>
-
+      </ScrollView>
     </View>
 
   );
