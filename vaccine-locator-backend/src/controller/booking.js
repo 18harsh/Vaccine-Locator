@@ -1,5 +1,6 @@
 const clinicModel = require('../models/clinicCenter');
 const timeSlotsModel = require('../models/timeSlots');
+const patientModel = require('../models/Patient');
 const mongoose = require('mongoose');
 
 exports.booking = (req, res, next) => {
@@ -14,62 +15,105 @@ exports.booking = (req, res, next) => {
     clinicModel.findById(clinicObjectId)
         .then((clinic) => {
 
-        timeSlotsModel.findById(clinic.timeSlotId)
-            .then(result=>{
+            timeSlotsModel.findById(clinic.timeSlotId)
+                .then(result => {
 
-                // console.log(result);
-            let i;
-            let arrayOfEventDate = [];
-            for (i = 0; i < result.eventDate.length; i++) {
-                // console.log(result.eventDate[i])
-                arrayOfEventDate.push(String(result.eventDate[i].eventDate.toISOString()));
-            }
-            // console.log(arrayOfEventDate,new Date(date).toISOString())
-            if (arrayOfEventDate.includes(new Date(date).toISOString())) {
-
-               return result.eventDate[arrayOfEventDate.indexOf(new Date(date).toISOString())].eventTiming
-
-            }
-
-
-        }).then(dataForAllotment => {
-
-            let i;
-            let arrayOfAllotment = [];
-            for (i = 0; i < dataForAllotment.length; i++) {
-                // console.log(result.eventDate[i])
-                if(dataForAllotment[i]._id.toString() === timeSlotId){
-                    return dataForAllotment[i].allotmentLimit[0]
-                }
-            }
-
-
-        }).then(Limit=>{
-            timeSlotsModel.findOneAndUpdate({_id:clinic.timeSlotId},
-                {
-                    $push : {
-                        'eventDate.$[comment].eventTiming.$[reply].allottedTo' : patientObjectId,
-
-                    },
-                    $set:{
-                        'eventDate.$[comment].eventTiming.$[reply].allotmentLimit' : Limit-1,
+                    let i;
+                    let arrayOfEventDate = [];
+                    for (i = 0; i < result.eventDate.length; i++) {
+                        // console.log(result.eventDate[i])
+                        arrayOfEventDate.push(String(result.eventDate[i].eventDate.toISOString()));
                     }
-                }, {
-                    arrayFilters : [{ 'comment.eventDate' : date}, { 'reply.startTime' : time_slot}],
-                    new          : true
+                    // console.log(arrayOfEventDate,new Date(date).toISOString())
+                    if (arrayOfEventDate.includes(new Date(date).toISOString())) {
+
+                        return result.eventDate[arrayOfEventDate.indexOf(new Date(date).toISOString())].eventTiming
+
+                    }
+
+
+                }).then(dataForAllotment => {
+
+                let i;
+                let arrayOfAllotment = [];
+                for (i = 0; i < dataForAllotment.length; i++) {
+                    // console.log(result.eventDate[i])
+                    if (dataForAllotment[i]._id.toString() === timeSlotId) {
+                        return dataForAllotment[i].allotmentLimit[0]
+                    }
                 }
-            ).then(result => {
-                console.log(result)
-
-            }).then(response => {
-                    res.send(response)
-                }
-            )
-        })
 
 
+            }).then(Limit => {
+                timeSlotsModel.findOneAndUpdate({_id: clinic.timeSlotId},
+                    {
+                        $push: {
+                            'eventDate.$[comment].eventTiming.$[reply].allottedTo': patientObjectId,
 
-    }).then(result => {
+                        },
+                        $set: {
+                            'eventDate.$[comment].eventTiming.$[reply].allotmentLimit': Limit - 1,
+                        }
+                    }, {
+                        arrayFilters: [{'comment.eventDate': date}, {'reply.startTime': time_slot}],
+                        new: true
+                    }
+                ).then(result => {
+                    // console.log(result)
+                    let i;
+                    let arrayOfEventDate = [];
+                    for (i = 0; i < result.eventDate.length; i++) {
+                        // console.log(result.eventDate[i])
+                        arrayOfEventDate.push(String(result.eventDate[i].eventDate.toISOString()));
+                    }
+                    // console.log(arrayOfEventDate,new Date(date).toISOString())
+                    if (arrayOfEventDate.includes(new Date(date).toISOString())) {
+
+                        return {
+                            eventDateId: result.eventDate[arrayOfEventDate.indexOf(new Date(date).toISOString())]._id,
+                            eventTiming: result.eventDate[arrayOfEventDate.indexOf(new Date(date).toISOString())].eventTiming
+                        }
+
+                    }
+                }).then(dataForAllotment => {
+
+                    // console.log("dataForAllotment",dataForAllotment)
+                    let i;
+                    let arrayOfAllotment = [];
+                    for (i = 0; i < dataForAllotment.eventTiming.length; i++) {
+                        // console.log(result.eventDate[i])
+                        if (dataForAllotment.eventTiming[i]._id.toString() === timeSlotId) {
+                            return {
+                                eventDateId: dataForAllotment.eventDateId, eventTimingSlotId: timeSlotId, timeSlotId:
+                                clinic.timeSlotId
+                            }
+                        }
+                    }
+
+                }).then(response => {
+                    patientModel.findById(patientObjectId).then(patient => {
+
+                        patient.appointmentsBooked.push({
+                            timeSlotId: response.timeSlotId,
+                            eventDate: {
+                                eventDate: response.eventDateId,
+                                eventTiming: response.eventTimingSlotId
+                            }
+                        })
+                        return patient.save()
+
+                    }).then(patientResponse => {
+
+                        return patientResponse
+
+                    })
+                    return response
+                })
+                return Limit
+            })
+
+
+        }).then(result => {
         console.log("Printed Successfully")
     })
     res.send({"message": "time slots already created"})

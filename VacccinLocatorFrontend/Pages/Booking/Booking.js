@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image,Alert } from "react-native";
 import { Button, Card, Paragraph, TextInput, Title, TouchableRipple } from "react-native-paper";
 import * as planted_colors from "../../Components/Color";
 
@@ -14,6 +14,7 @@ import { List } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
+
 
 
 const theme = {
@@ -138,8 +139,31 @@ const Booking = ({ route, navigation }) => {
                 marginTop: 20,
               }
               }>
-                <TouchableRipple onPress={() => {
+                <TouchableRipple onPress={async () => {
                   console.log(k._id, j);
+                  const response2 = await fetch("http://10.0.2.2:4000/booking/time/slots", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        "clinicObjectId":clinicObjectId,
+                        "patientObjectId":userDetails._id,
+                        "date":i.eventDate,
+                        "timeSlotId":k._id,
+                        "time_slot":k.startTime
+                      }),
+                    },
+                  );
+
+
+                  const resData = await response2.json();
+                  console.log(resData)
+                  if(resData.message === "time slots already created"){
+                    Alert.alert("Slot Booked Successfully")
+                    navigation.navigate("UserTabbedNavigation")
+                  }
+
                 }}>
                   <View style={{
                     flexDirection: "row",
