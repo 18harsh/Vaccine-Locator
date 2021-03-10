@@ -393,13 +393,13 @@ const MyReactNativeForm = props => {
           width: "40%",
         }}>
           <TextInput theme={theme}
-                     label={"Count"}
+                     label={"Capacity"}
                      onChangeText={value => {
                        console.log(value);
                        setCount(value);
                      }}
                      mode={"outlined"}
-                     placeholder={"Count"} />
+                     placeholder={"Capacity"} />
 
         </View>
 

@@ -151,7 +151,8 @@ const Booking = ({ route, navigation }) => {
                         "patientObjectId":userDetails._id,
                         "date":i.eventDate,
                         "timeSlotId":k._id,
-                        "time_slot":k.startTime
+                        "start_time":k.startTime,
+                        "end_time":k.endTime
                       }),
                     },
                   );

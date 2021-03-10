@@ -9,7 +9,8 @@ exports.booking = (req, res, next) => {
     const patientObjectId = req.body.patientObjectId;
     const timeSlotId = req.body.timeSlotId;
     const date = req.body.date;
-    const time_slot = req.body.time_slot;
+    const time_slot = req.body.start_time;
+    const end_time = req.body.end_time;
 
 
     clinicModel.findById(clinicObjectId)
@@ -58,7 +59,7 @@ exports.booking = (req, res, next) => {
                             'eventDate.$[comment].eventTiming.$[reply].allotmentLimit': Limit - 1,
                         }
                     }, {
-                        arrayFilters: [{'comment.eventDate': date}, {'reply.startTime': time_slot}],
+                        arrayFilters: [{'comment.eventDate': date}, {'reply._id': timeSlotId}],
                         new: true
                     }
                 ).then(result => {
@@ -96,11 +97,14 @@ exports.booking = (req, res, next) => {
                 }).then(response => {
                     patientModel.findById(patientObjectId).then(patient => {
 
+                        console.log(clinic.location.coordinates)
                         patient.appointmentsBooked.push({
                             clinicName: clinic.clinicName,
                             clinicAddress: clinic.clinicAddress,
                             eventDate: date,
-                            startTime: time_slot
+                            startTime: time_slot,
+                            endTime:end_time,
+                            coordinates: clinic.location.coordinates
 
                         })
 
@@ -109,7 +113,8 @@ exports.booking = (req, res, next) => {
                             patientName: String(patient.firstName + " "+ patient.lastName),
                             patientPhoneNo:patient.phoneNo,
                             eventTiming:{
-                                startTime:time_slot
+                                startTime:time_slot,
+                                endTime:end_time,
                             }
                         })
                         clinic.save()

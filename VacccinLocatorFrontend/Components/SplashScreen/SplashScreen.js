@@ -16,7 +16,7 @@ export default class SplashScreen extends Component {
             marginTop: 300,
             color: planted_colors.STRONG_RED,
             fontSize: 20,
-          }}>Vaccine For You</Text>
+          }}>The Vaccinator</Text>
         </View>
       </View>);
 

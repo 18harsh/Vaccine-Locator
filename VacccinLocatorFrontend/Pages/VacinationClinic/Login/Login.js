@@ -44,7 +44,7 @@ const MyReactNativeForm = props => {
           <Formik
 
             initialValues={{
-              clinicId: "pheonixhospital@hospital.com",
+              clinicId: "loungehospital@hospital.com",
               password: "Reuben@21",
             }}
             onSubmit={async values => {

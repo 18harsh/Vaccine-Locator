@@ -154,8 +154,8 @@ class MyReactNativeForm extends Component {
           region={{
             latitude: parseFloat(this.state.userDetails.location.coordinates[1]),
             longitude: parseFloat(this.state.userDetails.location.coordinates[0]),
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.05,
+            latitudeDelta: 0.009,
+            longitudeDelta: 0.009,
           }}
 
         >

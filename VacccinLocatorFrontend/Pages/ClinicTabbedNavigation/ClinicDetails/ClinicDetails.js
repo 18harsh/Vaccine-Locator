@@ -97,7 +97,7 @@ const MyReactNativeForm = props => {
           <Text style={{
             color: planted_colors.STRONG_RED,
             fontSize: 18,
-          }}>Clinic Details </Text>
+          }}>Center Details </Text>
         </View>
         <View style={styles.MainContainer2}>
 
@@ -107,7 +107,7 @@ const MyReactNativeForm = props => {
               color={planted_colors.STRONG_RED}
               mode={"outlined"}
               style={styles.input}
-              label={"Clinic Name"}
+              label={"Center Name"}
               theme={theme}
               value={userDetails.clinicName}
               disabled={true}
@@ -118,7 +118,7 @@ const MyReactNativeForm = props => {
             color={planted_colors.STRONG_RED}
             mode={"outlined"}
             style={styles.input}
-            label={"Clinic ID"}
+            label={"Center ID"}
             theme={theme}
             value={userDetails.clinicId}
             disabled={true}
@@ -138,7 +138,7 @@ const MyReactNativeForm = props => {
             }}
             multiline={true}
             numberOfLines={5}
-            label={"Clinic Address"}
+            label={"Center Address"}
             theme={theme}
             value={userDetails.clinicAddress}
             disabled={true}

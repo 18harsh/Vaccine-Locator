@@ -64,8 +64,8 @@ const MyReactNativeForm = props => {
           <Formik
             validationSchema={loginValidationSchema}
             initialValues={{
-              clinicName: "GEM Hospital",
-              clinicId: "gemhospital@hospital.com",
+              clinicName: "Lounge Hospital",
+              clinicId: "loungehospital@hospital.com",
               phoneNo: "7894561230",
               password: "Reuben@21",
 

@@ -122,10 +122,10 @@ exports.getPatientsForClinic = (req, res, next) => {
 
         .then(result => {
 
-           if(result.patientId) {
-               res.send(result.patientId)
-           }
-           res.send({"message":"No Patients Yet"})
+            if (result.patientId) {
+                res.send(result.patientId)
+            }
+            res.send({"message": "No Patients Yet"})
 
         })
 };

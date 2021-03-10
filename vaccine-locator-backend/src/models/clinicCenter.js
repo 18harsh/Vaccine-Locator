@@ -52,6 +52,7 @@ const clinicSchema = new mongoose.Schema({
         },
         eventTiming: [{
             startTime: {type: Date, required: true},
+            endTime: {type: Date, required: true},
         }],
     }]
 })

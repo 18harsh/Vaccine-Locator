@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Component } from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 import {  TextInput } from "react-native-paper";
 import * as planted_colors from "../../../Components/Color";
@@ -11,6 +11,7 @@ import LottieView from 'lottie-react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import connect from "react-redux/lib/connect/connect";
 
 const theme = {
 
@@ -22,39 +23,41 @@ const theme = {
 };
 
 
-const MyReactNativeForm = props => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const [userDetails, setUserDetails] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [getAppointment, setAppointment] = useState(true);
+class MyReactNativeForm extends Component{
+  state={
+    userDetails:"",
+    loading:true,
+    getAppointment:"",
+  }
+  // const dispatch = useDispatch();
+  // const navigation = useNavigation();
+  // const [userDetails, setUserDetails] = useState({});
+  // const [loading, setLoading] = useState(true);
+  // const [getAppointment, setAppointment] = useState(true);
 
-  useEffect(() => {
+  componentDidMount(){
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userData");
       console.log("User Data AsyncStorage", userData);
       if (!userData) {
-        navigation.navigate("UserClinicPage");
+        this.props.navigation.navigate("UserClinicPage");
         return;
       }
       const transformedData = JSON.parse(userData);
-      const { token, userId, expiryDate } = transformedData;
+      const { token, userId, expiryDate, userType } = transformedData;
       const expirationDate = new Date(expiryDate);
 
-      const response = await fetch("http://10.0.2.2:4000/patient/single", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            "patientId": userId,
-
-          }),
-        },
-      );
-      const resData = await response.json();
-      setUserDetails(resData);
-
+      // const response = await fetch("http://10.0.2.2:4000/patient/single", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       "patientId": userId,
+      //
+      //     }),
+      //   },
+      // );
       const responseApp = await fetch("http://10.0.2.2:4000/clinic/patients", {
           method: "POST",
           headers: {
@@ -67,28 +70,33 @@ const MyReactNativeForm = props => {
         },
       );
       const appointment = await responseApp.json();
-      setAppointment(appointment)
+      this.setState({
+        getAppointment:appointment
+      })
 
-
+      // const resData = await response.json();
+      // setUserDetails(resData);
       if (expirationDate <= new Date() || !token || !userId) {
-        navigation.navigate("UserClinicPage");
+        this.props.navigation.navigate("UserClinicPage");
         return;
       }
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
+      this.props.dispatchingSession(userId, token, expirationTime, userType);
 
-      dispatch(authActions.authenticate(userId, token, expirationTime));
-      setLoading(false);
+      this.setState({
+        loading: false,
+      });
+      // setLoading(false);
     };
 
     tryLogin();
+  }
 
 
-  }, [dispatch]);
 
-
-  console.log(userDetails);
-  if (loading) {
+render(){
+  if (this.state.loading) {
     return (
       <View style={{
         flex:1,
@@ -100,8 +108,6 @@ const MyReactNativeForm = props => {
       </View>
     );
   }
-
-  const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
   return (
 
@@ -120,7 +126,7 @@ const MyReactNativeForm = props => {
         <View>
 
 
-          {getAppointment.map((i,j)=>{
+          {this.state.getAppointment.map((i,j)=>{
             return  <Card style={{
               width:350,
               marginTop:30,
@@ -128,16 +134,29 @@ const MyReactNativeForm = props => {
             }}>
 
               <Card.Content>
+
                 <Title style={{
-                  color:planted_colors.STRONG_RED
-                }} >Date: {new Date(i.eventDate).toLocaleDateString()}</Title>
-                <Paragraph>Patient Name: {i.patientName}</Paragraph>
-                <Paragraph>Patient Phone No.: {i.patientPhoneNo}</Paragraph>
+                  color:planted_colors.OFF_WHITE,
+                  fontSize:18
+                }} >Patient Details</Title>
+                <Title style={{
+                  color:planted_colors.OFF_WHITE,
+                  fontSize:15
+                }} >Name: {i.patientName}</Title>
+                <Paragraph style={{
+                  color:planted_colors.OFF_WHITE,
+                  fontSize:15
+                }} >Phone No.:- {i.patientPhoneNo}</Paragraph>
               </Card.Content>
               <Card.Content>
                 <Title style={{
-                  color:planted_colors.STRONG_RED
-                }} >Time Slot: {new Date(i.eventTiming[0].startTime).toLocaleTimeString()}</Title>
+                  color:planted_colors.STRONG_RED,
+                  fontSize:16
+                }} >Date: {new Date(i.eventDate).toLocaleDateString()}</Title>
+                <Title style={{
+                  color:planted_colors.STRONG_RED,
+                  fontSize:16
+                }} >Time Slot: {new Date(i.eventTiming[0].startTime).toLocaleTimeString()} - {new Date(i.eventTiming[0].endTime).toLocaleTimeString()}</Title>
 
               </Card.Content>
 
@@ -150,6 +169,14 @@ const MyReactNativeForm = props => {
 
   );
 };
+
+
+}
+
+
+
+
+
 
 
 const styles = StyleSheet.create({
@@ -210,8 +237,14 @@ const styles = StyleSheet.create({
     },
 
 });
+const mapDispatchToProps = dispatch => {
+  return {
+    // dispatching plain actions
+    dispatchingSession: (userId, token, expirationTime, userType) => dispatch(authActions.authenticate(userId, token, expirationTime, userType)),
+  };
+};
 
-export default MyReactNativeForm;
+export default connect(null, mapDispatchToProps)(MyReactNativeForm);
 
 
 
