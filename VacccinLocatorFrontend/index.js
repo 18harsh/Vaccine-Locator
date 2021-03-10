@@ -42,4 +42,11 @@ if (isHermesEnabled || isAndroid) {
     Intl.DateTimeFormat.__setDefaultTimeZone(RNLocalize.getTimeZone());
   }
 }
+
+import {YellowBox} from 'react-native';
+
+YellowBox.ignoreWarnings(['Warning: ...']);
+
+console.disableYellowBox = true;
+
 AppRegistry.registerComponent(appName, () => App);

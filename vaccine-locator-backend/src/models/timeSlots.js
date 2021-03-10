@@ -9,10 +9,11 @@ const timeSchema = new mongoose.Schema({
     },
     eventDate: [{
         eventDate: {
-            type:String
+            type:Date
         },
         eventTiming: [{
-            startTime: {type: String, required: true},
+            startTime: {type: Date, required: true},
+            endTime: {type: Date, required: true},
             allottedTo: [{type: String}],
             allotmentLimit:[{type:Number}]
         }],

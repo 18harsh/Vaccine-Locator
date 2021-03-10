@@ -13,6 +13,7 @@ import * as authActions from "../../store/actions/auth";
 import { List } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
 
 
 const theme = {

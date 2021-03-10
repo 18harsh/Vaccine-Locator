@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Schema = mongoose.Schema;
 
 const patientSchema = new mongoose.Schema({
     firstName: {
@@ -63,6 +64,25 @@ const patientSchema = new mongoose.Schema({
             type: String,
             required: true
         }
+    }],
+    appointmentsBooked:[{
+        timeSlotId: {
+            type: Schema.Types.ObjectId,
+            ref: 'TimeSlots',
+            required: false,
+        },
+        eventDate: [{
+            eventDate: {
+                type:Schema.Types.ObjectId,
+            },
+            eventTiming: [{
+                type:Schema.Types.ObjectId,
+            }],
+
+        }],
+
+
+
     }]
 })
 
@@ -81,7 +101,7 @@ patientSchema.statics.findByCredentials = async (Email,Password) => {
     if (patient === null) {
         throw new Error('Unable to login')
     }
-    
+
     const isMatch = await bcrypt.compare(Password, patient.password)
     if (!isMatch) {
         throw new Error('Unable to login')

@@ -90,13 +90,16 @@ const MyReactNativeForm = props => {
 
   const [visibleTime, setVisibleTime] = React.useState(false);
 
-  const [showStartTimeText, setShowStartTimeText] = useState("");
+  const [visibleEndTime, setVisibleEndTime] = React.useState(false);
+
+  const [showStartTimeText, setShowStartTimeText] = useState(null);
+  const [showEndTimeText, setShowEndTimeText] = useState(null);
   const [showDateText, setShowDateText] = useState("");
   const [count, setCount] = useState(0);
 
   const [slotDetails, setSlotDetails] = useState([]);
 
-  const [countRepeat, setCountRepeat] = useState(0);
+
 
   const onDismissSingle = React.useCallback(() => {
     setOpen(false);
@@ -121,13 +124,30 @@ const MyReactNativeForm = props => {
       var d = new Date();
       d.setHours(hours);
       d.setMinutes(minutes);
-      setShowStartTimeText(d.toLocaleTimeString());
+      setShowStartTimeText(d.toISOString());
 
       console.log({ hours, minutes });
     },
     [setVisibleTime],
   );
 
+  const onDismissEndTime = React.useCallback(() => {
+    setVisibleEndTime(false);
+  }, [setVisibleEndTime]);
+
+
+  const onConfirmEndTime = React.useCallback(
+    ({ hours, minutes }) => {
+      setVisibleEndTime(false);
+      var d = new Date();
+      d.setHours(hours);
+      d.setMinutes(minutes);
+      setShowEndTimeText(d.toISOString());
+
+      console.log({ hours, minutes });
+    },
+    [setVisibleTime],
+  );
   const getSlots = async () => {
 
     console.log("getSlots", getUserId);
@@ -153,7 +173,18 @@ const MyReactNativeForm = props => {
   const addSlot = async () => {
     var timeSlots = {};
     var nestedTimeSlot = {};
-    console.log(count);
+    console.log(JSON.stringify({
+            "clinicObjectId": getUserId,
+            "eventDate": showDateText,
+            "startTime": showStartTimeText,
+            "endTime":showDateText,
+            "count": count,
+          }));
+    let new_event_date = new Date(showDateText)
+
+    let new_end_date = new Date(showDateText)
+
+    let new_start_date = new Date(showDateText)
 
     const response = await fetch("http://10.0.2.2:4000/clinic/add/time", {
         method: "POST",
@@ -163,7 +194,8 @@ const MyReactNativeForm = props => {
         body: JSON.stringify({
           "clinicObjectId": getUserId,
           "eventDate": showDateText,
-          "start_time": showStartTimeText,
+          "startTime": showStartTimeText,
+          "endTime":showDateText,
           "count": count,
         }),
       },
@@ -179,6 +211,61 @@ const MyReactNativeForm = props => {
   };
 
   console.log(userDetails);
+  const slotDetailManagement=()=>{
+    if(slotDetails) {
+     return <View style={{
+        marginTop: 20,
+        backgroundColor: planted_colors.LIGHT_BLUE,
+        height: "100%",
+        alignItems: "center",
+      }}>
+        {slotDetails && slotDetails.map((i, j) => {
+          return <Card style={{
+            width: "90%",
+            marginTop: 10,
+            backgroundColor: planted_colors.BLUEISH_GREEN,
+          }}>
+
+            <Card.Content>
+              <Title>Date: {new Date(i.eventDate).toLocaleDateString()}</Title>
+              {i.eventTiming.map((i, j) => {
+                return <View view={{
+                backgroundColor:planted_colors.STRONG_YELLOW,
+                  width:"100%",
+                  height:"100%"
+                }}>
+                  <Paragraph>Start Time : {new Date(i.startTime).toLocaleTimeString()}</Paragraph>
+                  <Paragraph>End Time : {new Date(i.endTime).toLocaleTimeString()}</Paragraph>
+                  <Paragraph>Capacity: {i.allotmentLimit}</Paragraph>
+                </View>;
+              })}
+
+            </Card.Content>
+
+
+          </Card>;
+        })
+
+        }
+
+
+      </View>
+    }
+    return <Card style={{
+      width: "90%",
+      marginTop: 10,
+      backgroundColor: planted_colors.BLUEISH_GREEN,
+    }}>
+
+      <Card.Content>
+        <Title>No Slots Created Yet</Title>
+
+
+      </Card.Content>
+
+
+    </Card>;
+  }
   if (loading) {
     return (
       <View style={{
@@ -203,7 +290,7 @@ const MyReactNativeForm = props => {
       }}>
 
         <View style={{
-          width: "40%",
+          width: "30%",
           alignItems: "center",
         }}>
           <Text style={{
@@ -212,9 +299,19 @@ const MyReactNativeForm = props => {
 
           }}>{showStartTimeText}</Text>
         </View>
+        <View style={{
+          width: "30%",
+          alignItems: "center",
+        }}>
+          <Text style={{
+            color: planted_colors.STRONG_RED,
+
+
+          }}>{showEndTimeText}</Text>
+        </View>
 
         <View style={{
-          width: "40%",
+          width: "30%",
           alignItems: "center",
 
         }}>
@@ -233,7 +330,7 @@ const MyReactNativeForm = props => {
       }}>
 
         <View style={{
-          width: "40%",
+          width: "30%",
         }}>
           <Button theme={theme} onPress={() => setVisibleTime(true)} uppercase={false}
                   mode="outlined">
@@ -242,7 +339,16 @@ const MyReactNativeForm = props => {
         </View>
 
         <View style={{
-          width: "40%",
+          width: "30%",
+        }}>
+          <Button theme={theme} onPress={() => setVisibleEndTime(true)} uppercase={false}
+                  mode="outlined">
+            End Time
+          </Button>
+        </View>
+
+        <View style={{
+          width: "30%",
           justifyContent: "center",
         }}>
           <Button theme={theme} onPress={() => setOpen(true)} uppercase={false}
@@ -285,35 +391,7 @@ const MyReactNativeForm = props => {
         </View>
       </View>
       <ScrollView keyboardShouldPersistTaps={"handled"}>
-        <View style={{
-          marginTop: 20,
-          backgroundColor: planted_colors.LIGHT_BLUE,
-          height: "100%",
-          alignItems: "center",
-        }}>
-          {slotDetails.map((i, j) => {
-            return <Card style={{
-              width: "90%",
-              marginTop: 10,
-              backgroundColor: planted_colors.BLUEISH_GREEN,
-            }}>
-
-              <Card.Content>
-                <Title>Date: {i.eventDate}</Title>
-                {i.eventTiming.map((i, j) => {
-                  return <Paragraph> Start Time : {i.startTime}, Capacity: {i.allotmentLimit}</Paragraph>;
-                })}
-
-              </Card.Content>
-
-
-            </Card>;
-          })
-
-          }
-
-
-        </View>
+        {slotDetailManagement()}
       </ScrollView>
 
       <DatePickerModal
@@ -324,7 +402,7 @@ const MyReactNativeForm = props => {
         date={new Date()}
         onConfirm={onConfirmSingle}
         onChange={(date) => {
-          setShowDateText(date.date.toLocaleString());
+          setShowDateText(date.date.toISOString());
         }} // same props as onConfirm but triggered without confirmed by user
         saveLabel="Save" // optional
         label="Select date" // optional
@@ -336,8 +414,22 @@ const MyReactNativeForm = props => {
         onDismiss={onDismissTime}
         onConfirm={onConfirmTime}
 
-        hours={12} // default: current hours
-        minutes={14} // default: current minutes
+        hours={9} // default: current hours
+        minutes={0} // default: current minutes
+        label="Select time" // optional, default 'Select time'
+        cancelLabel="Cancel" // optional, default: 'Cancel'
+        confirmLabel="Ok" // optional, default: 'Ok'
+        // animationType="fade" // optional, default is 'none'
+        locale={"en"} // optional, default is automically detected by your system
+      />
+
+      <TimePickerModal
+        visible={visibleEndTime}
+        onDismiss={onDismissEndTime}
+        onConfirm={onConfirmEndTime}
+
+        hours={10} // default: current hours
+        minutes={0} // default: current minutes
         label="Select time" // optional, default 'Select time'
         cancelLabel="Cancel" // optional, default: 'Cancel'
         confirmLabel="Ok" // optional, default: 'Ok'

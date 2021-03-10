@@ -50,7 +50,7 @@ const Authentication = () => {
           marginBottom: 10,
           fontSize: 15,
           color: planted_colors.STRONG_RED,
-        }} mode="contained" onPress={() => navigation.navigate("PatientLogin")}>
+        }} mode="contained" onPress={() => navigation.navigate("VaccinationClinicLogin")}>
           Added your clinic, Log In</Text>
       </View>
 

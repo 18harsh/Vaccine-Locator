@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Patient/Patient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Booking/Booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Booking/Booking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/VacinationClinic/VaccinationClinic.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/VacinationClinic/VaccinationClinic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/booking.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/timeController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/timeController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Patient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/timeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/timeSlots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/booking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/timeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/timeSlots.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +86,9 @@
       <workItem from="1615223460172" duration="5856000" />
       <workItem from="1615258520987" duration="6287000" />
       <workItem from="1615277912120" duration="31692000" />
-      <workItem from="1615344529570" duration="1053000" />
+      <workItem from="1615344529570" duration="1055000" />
+      <workItem from="1615359498310" duration="1775000" />
+      <workItem from="1615369731805" duration="3936000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>
