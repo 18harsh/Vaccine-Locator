@@ -177,14 +177,20 @@ const MyReactNativeForm = props => {
             "clinicObjectId": getUserId,
             "eventDate": showDateText,
             "startTime": showStartTimeText,
-            "endTime":showDateText,
+            "endTime":showEndTimeText,
             "count": count,
           }));
     let new_event_date = new Date(showDateText)
 
     let new_end_date = new Date(showDateText)
+    let showStartTimeTextFor = new Date(showEndTimeText)
+    new_end_date.setHours(showStartTimeTextFor.getHours())
+    new_end_date.setMinutes(showStartTimeTextFor.getMinutes())
 
     let new_start_date = new Date(showDateText)
+    let showEndTimeTextFor = new Date(showStartTimeText)
+    new_start_date.setHours(showEndTimeTextFor.getHours())
+    new_start_date.setMinutes(showEndTimeTextFor.getMinutes())
 
     const response = await fetch("http://10.0.2.2:4000/clinic/add/time", {
         method: "POST",
@@ -194,8 +200,8 @@ const MyReactNativeForm = props => {
         body: JSON.stringify({
           "clinicObjectId": getUserId,
           "eventDate": showDateText,
-          "startTime": showStartTimeText,
-          "endTime":showDateText,
+          "startTime": new_start_date,
+          "endTime":new_end_date,
           "count": count,
         }),
       },

@@ -53,9 +53,9 @@ exports.addTimeSlots = (req, res, next) => {
             let arrayOfEventDate = [];
             for (i = 0; i < result.eventDate.length; i++) {
                 // console.log(result.eventDate[i])
-                arrayOfEventDate.push(String(result.eventDate[i].eventDate));
+                arrayOfEventDate.push(String(result.eventDate[i].eventDate.toISOString()));
             }
-            // console.log(arrayOfEventDate)
+            console.log(arrayOfEventDate,eventDate)
             if (arrayOfEventDate.includes(eventDate)) {
 
                 result.eventDate[arrayOfEventDate.indexOf(eventDate)].eventTiming.push({

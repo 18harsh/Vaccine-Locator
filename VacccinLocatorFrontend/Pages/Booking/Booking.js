@@ -130,18 +130,41 @@ const Booking = ({ route, navigation }) => {
       }}>
         {slotDetails.map((i, j) => {
           return <List.Accordion theme={theme}
-            title={i.eventDate}
-            left={props => <EvilIcons {...props} icon="folder" />} >
+                                 title={new Date(i.eventDate).toLocaleDateString()}
+                                 left={props => <EvilIcons {...props} icon="folder" />}>
             {i.eventTiming.map((k, j) => {
               return <View style={{
-                  flexDirection: "row",
-                  marginTop: 20,
-                }
-                }>
+                flexDirection: "row",
+                marginTop: 20,
+              }
+              }>
+                <TouchableRipple onPress={() => {
+                  console.log(k._id, j);
+                }}>
+                  <View style={{
+                    flexDirection: "row",
+                    margin: 10,
+                    width:"100%",
+                    height:25,
 
-                  <Button theme={theme2} style={{ color: planted_colors.STRONG_RED }}> {k.startTime}         Book Slot</Button>
 
-                </View>
+
+                  }}>
+
+                      <Text theme={theme2} style={{ color: planted_colors.STRONG_RED }}>
+                        {new Date(k.startTime).toLocaleTimeString()} - {new Date(k.endTime).toLocaleTimeString()}
+                      </Text>
+
+
+                      <Text theme={theme2} style={{ color: planted_colors.STRONG_RED,
+                      marginLeft: 20
+                      }}>
+                        Book Slot</Text>
+
+                  </View>
+                </TouchableRipple>
+
+              </View>;
 
 
             })}
