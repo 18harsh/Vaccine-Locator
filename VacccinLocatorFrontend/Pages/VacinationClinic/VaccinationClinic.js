@@ -3,9 +3,10 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import * as planted_colors from "../../Components/Color";
 import { Button, DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { useNavigation } from '@react-navigation/native';
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 const theme = {
   ...DefaultTheme,
   roundness: 4,
@@ -34,15 +35,23 @@ const Authentication = () => {
       </View>
       <View style={styles.SplashScreen_ChildView2}>
         <Button theme={theme} style={styles.Button_css} mode="contained"
-                onPress={() => navigation.navigate('VaccinationClinicSignUp')}> Add Your Clinic</Button>
+                onPress={() => navigation.navigate('VaccinationClinicSignUp')}>
+          <Text style={{
+            marginTop: 10,
+            marginBottom: 10,
+            fontSize: 18,
+            color: planted_colors.OFF_WHITE,
+          }} mode="contained" onPress={() => navigation.navigate('VaccinationClinicSignUp')}>
+            Add your Clinic </Text>   <FontAwesome5 size={18} color={planted_colors.OFF_WHITE} name="clinic-medical"/>
+        </Button>
 
         <Text style={{
-          marginTop: 10,
+          marginTop: 50,
           marginBottom: 10,
           fontSize: 15,
-          color: planted_colors.STRONG_RED
-        }} mode="contained" onPress={() => navigation.navigate('VaccinationClinicLogin')}>
-          Added Clinic, Login with Clinic ID</Text>
+          color: planted_colors.STRONG_RED,
+        }} mode="contained" onPress={() => navigation.navigate("PatientLogin")}>
+          Added your clinic, Log In</Text>
       </View>
 
     </View>

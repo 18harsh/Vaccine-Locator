@@ -106,6 +106,7 @@ exports.fetchSlotsForClinic = (req, res, next) => {
 exports.booking = (req, res, next) => {
     // console.log("-------New Line-------")
     const clinicObjectId = req.body.clinicObjectId;
+    const patientObjectId = req.body.patientObjectId;
     const date = req.body.date;
     const time_slot = req.body.time_slot;
 

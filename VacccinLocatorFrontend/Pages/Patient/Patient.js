@@ -5,14 +5,14 @@ import { Button } from "react-native-paper";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
 import { useNavigation } from "@react-navigation/native";
-
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 const theme = {
-  ...DefaultTheme,
+
   roundness: 4,
   colors: {
-    ...DefaultTheme.colors,
-    primary: planted_colors.BLUEISH_GREEN,
-    accent: planted_colors.OFF_WHITE,
+    placeholder: "white", text: planted_colors.BLUEISH_GREEN, primary: planted_colors.BLUEISH_GREEN,
+    underlineColor: "black", background: planted_colors.LIGHT_BLUE,
   },
 };
 
@@ -33,10 +33,18 @@ const Patient = () => {
       </View>
       <View style={styles.SplashScreen_ChildView2}>
         <Button theme={theme} style={styles.Button_css} mode="contained"
-                onPress={() => navigation.navigate("PatientSignUp")}> Sign Up</Button>
+                onPress={() => navigation.navigate("PatientSignUp")}>
+          <Text style={{
+            marginTop: 10,
+            marginBottom: 10,
+            fontSize: 18,
+            color: planted_colors.OFF_WHITE,
+          }} mode="contained" onPress={() => navigation.navigate("PatientLogin")}>
+            Sign Up </Text>   <FontAwesome size={18} color={planted_colors.OFF_WHITE} name="plus-square"/>
+        </Button>
 
         <Text style={{
-          marginTop: 10,
+          marginTop: 50,
           marginBottom: 10,
           fontSize: 15,
           color: planted_colors.STRONG_RED,
@@ -82,6 +90,8 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 50,
     paddingTop: 6,
+    fontSize:18,
+    color:planted_colors.OFF_WHITE
 
   },
 });
