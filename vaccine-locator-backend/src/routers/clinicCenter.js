@@ -18,6 +18,8 @@ router.post('/login/clinic',clinicController.loginClinic)
 
 router.post('/clinic/single',clinicController.getSingleClinic)
 
+router.post("/clinic/patients", clinicController.getPatientsForClinic);
+
 router.post("/clinic/location", clinicController.getNearestClinics);
 
 module.exports = router;

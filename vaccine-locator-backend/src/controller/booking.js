@@ -103,7 +103,18 @@ exports.booking = (req, res, next) => {
                             startTime: time_slot
 
                         })
-                    return patient.save()
+
+                        clinic.patientId.push({
+                            eventDate: date,
+                            patientName: String(patient.firstName + " "+ patient.lastName),
+                            patientPhoneNo:patient.phoneNo,
+                            eventTiming:{
+                                startTime:time_slot
+                            }
+                        })
+                        clinic.save()
+
+                        return patient.save()
 
                 }).then(patientResponse => {
 
@@ -115,8 +126,7 @@ exports.booking = (req, res, next) => {
             return Limit
         })
 
-    clinic.patientId.push(patientObjectId)
-    return clinic.save()
+
 }).
 then(result => {
     console.log("Printed Successfully")

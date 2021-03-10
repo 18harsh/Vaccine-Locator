@@ -41,8 +41,18 @@ const clinicSchema = new mongoose.Schema({
         required: false
     },
     patientId:[{
-        type: Schema.Types.ObjectId,
-        ref: 'Patient',
+        eventDate: {
+            type:Date
+        },
+        patientName: {
+            type: String,
+        },
+        patientPhoneNo: {
+            type: Number,
+        },
+        eventTiming: [{
+            startTime: {type: Date, required: true},
+        }],
     }]
 })
 const Clinic = mongoose.model('Clinic', clinicSchema)

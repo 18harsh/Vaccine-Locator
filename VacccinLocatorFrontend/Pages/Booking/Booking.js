@@ -163,8 +163,8 @@ const Booking = ({ route, navigation }) => {
                     Alert.alert("Slot Booked Successfully")
                     navigation.navigate("UserTabbedNavigation")
                   } else if (resData.message === "Bookings are Full"){
-                    Alert.alert(resData.message)
-                    navigation.navigate("UserTabbedNavigation")
+                    Alert.alert("Bookings are Full, Try another Slot Timing")
+
                   }
 
                 }}>

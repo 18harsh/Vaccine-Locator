@@ -112,3 +112,20 @@ exports.getSingleClinic = (req, res, next) => {
             res.send(result)
         })
 };
+
+exports.getPatientsForClinic = (req, res, next) => {
+    const clinicObjectId = req.body.clinicObjectId;
+
+
+    clinicModel
+        .findById(clinicObjectId)
+
+        .then(result => {
+
+           if(result.patientId) {
+               res.send(result.patientId)
+           }
+           res.send({"message":"No Patients Yet"})
+
+        })
+};
