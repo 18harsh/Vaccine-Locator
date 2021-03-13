@@ -2,18 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="Updated Code with Appointment Slot">
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Booking/Booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Booking/Booking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/ClinicTabbedNavigation/SetTimeSlots/SetTimeSlots.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/clinicAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/store/actions/clinicAuth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vaccine-locator-frontend/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +86,8 @@
       <workItem from="1615344529570" duration="1055000" />
       <workItem from="1615359498310" duration="1775000" />
       <workItem from="1615369731805" duration="25890000" />
+      <workItem from="1615431669594" duration="3809000" />
+      <workItem from="1615604262975" duration="2119000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>

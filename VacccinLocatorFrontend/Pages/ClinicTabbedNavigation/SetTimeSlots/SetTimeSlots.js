@@ -114,7 +114,7 @@ const MyReactNativeForm = props => {
   const [showDateText, setShowDateText] = useState("");
   const [count, setCount] = useState(0);
 
-  const [slotDetails, setSlotDetails] = useState([]);
+  const [slotDetails, setSlotDetails] = useState(null);
 
 
 
@@ -233,7 +233,7 @@ const MyReactNativeForm = props => {
     console.log(resData);
   };
 
-  console.log(userDetails);
+  console.log("The Slots Created",slotDetails);
   const slotDetailManagement=()=>{
     if(slotDetails) {
      return <View style={{
@@ -273,21 +273,23 @@ const MyReactNativeForm = props => {
 
 
       </View>
+    } else {
+      return <Card style={{
+        width: "90%",
+        marginTop: 10,
+        backgroundColor: planted_colors.BLUEISH_GREEN,
+      }}>
+
+        <Card.Content>
+          <Title>No Slots Created Yet</Title>
+
+
+        </Card.Content>
+
+
+      </Card>;
     }
-    return <Card style={{
-      width: "90%",
-      marginTop: 10,
-      backgroundColor: planted_colors.BLUEISH_GREEN,
-    }}>
 
-      <Card.Content>
-        <Title>No Slots Created Yet</Title>
-
-
-      </Card.Content>
-
-
-    </Card>;
   }
   if (loading) {
     return (

@@ -100,7 +100,7 @@ export const login = (email, password) => {
 
 export const logout = () => {
   clearLogoutTimer();
-  AsyncStorage.removeItem("userData");
+  AsyncStorage.removeItem('userData');
   return { type: CLINIC_LOGOUT };
 };
 
