@@ -11,11 +11,11 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as authActions from "../../store/actions/auth";
 
-import { TouchableOpacity} from 'react-native';
-import {Agenda} from 'react-native-calendars';
-import {ExpandableCalendar, Timeline, CalendarProvider} from 'react-native-calendars';
-import moment from 'moment';
-import { Avatar} from 'react-native-paper';
+import { TouchableOpacity } from "react-native";
+import { Agenda } from "react-native-calendars";
+import { ExpandableCalendar, Timeline, CalendarProvider } from "react-native-calendars";
+import moment from "moment";
+import { Avatar } from "react-native-paper";
 import connect from "react-redux/lib/connect/connect";
 
 const theme = {
@@ -37,80 +37,82 @@ const theme2 = {
 };
 
 
-
 const EVENTS = [
   {
-    start: '2017-09-06 22:30:00',
-    end: '2017-09-06 23:30:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-    color: '#e6add8'
+    start: "2017-09-06 22:30:00",
+    end: "2017-09-06 23:30:00",
+    title: "Dr. Mariana Joseph",
+    summary: "3412 Piedmont Rd NE, GA 3032",
+    color: "#e6add8",
   },
   {
-    start: '2017-09-07 00:30:00',
-    end: '2017-09-07 01:30:00',
-    title: 'Visit Grand Mother',
-    summary: 'Visit Grand Mother and bring some fruits.',
-    color: '#ade6d8'
+    start: "2017-09-07 00:30:00",
+    end: "2017-09-07 01:30:00",
+    title: "Visit Grand Mother",
+    summary: "Visit Grand Mother and bring some fruits.",
+    color: "#ade6d8",
   },
   {
-    start: '2017-09-07 02:30:00',
-    end: '2017-09-07 03:20:00',
-    title: 'Meeting with Prof. Behjet Zuhaira',
-    summary: 'Meeting with Prof. Behjet at 130 in her office.',
-    color: '#e6add8'
+    start: "2017-09-07 02:30:00",
+    end: "2017-09-07 03:20:00",
+    title: "Meeting with Prof. Behjet Zuhaira",
+    summary: "Meeting with Prof. Behjet at 130 in her office.",
+    color: "#e6add8",
   },
   {
-    start: '2017-09-07 04:10:00',
-    end: '2017-09-07 04:40:00',
-    title: 'Tea Time with Dr. Hasan',
-    summary: 'Tea Time with Dr. Hasan, Talk about Project'
+    start: "2017-09-07 04:10:00",
+    end: "2017-09-07 04:40:00",
+    title: "Tea Time with Dr. Hasan",
+    summary: "Tea Time with Dr. Hasan, Talk about Project",
   },
   {
-    start: '2017-09-07 01:05:00',
-    end: '2017-09-07 01:35:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032'
+    start: "2017-09-07 01:05:00",
+    end: "2017-09-07 01:35:00",
+    title: "Dr. Mariana Joseph",
+    summary: "3412 Piedmont Rd NE, GA 3032",
   },
   {
-    start: '2017-09-07 14:30:00',
-    end: '2017-09-07 16:30:00',
-    title: 'Meeting Some Friends in ARMED',
-    summary: 'Arsalan, Hasnaat, Talha, Waleed, Bilal',
-    color: '#d8ade6'
+    start: "2017-09-07 14:30:00",
+    end: "2017-09-07 16:30:00",
+    title: "Meeting Some Friends in ARMED",
+    summary: "Arsalan, Hasnaat, Talha, Waleed, Bilal",
+    color: "#d8ade6",
   },
   {
-    start: '2017-09-08 01:40:00',
-    end: '2017-09-08 02:25:00',
-    title: 'Meet Sir Khurram Iqbal',
-    summary: 'Computer Science Dept. Comsats Islamabad',
-    color: '#e6bcad'
+    start: "2017-09-08 01:40:00",
+    end: "2017-09-08 02:25:00",
+    title: "Meet Sir Khurram Iqbal",
+    summary: "Computer Science Dept. Comsats Islamabad",
+    color: "#e6bcad",
   },
   {
-    start: '2017-09-08 04:10:00',
-    end: '2017-09-08 04:40:00',
-    title: 'Tea Time with Colleagues',
-    summary: 'WeRplay'
+    start: "2017-09-08 04:10:00",
+    end: "2017-09-08 04:40:00",
+    title: "Tea Time with Colleagues",
+    summary: "WeRplay",
   },
   {
-    start: '2017-09-08 00:45:00',
-    end: '2017-09-08 01:45:00',
-    title: 'Lets Play Apex Legends',
-    summary: 'with Boys at Work'
+    start: "2017-09-08 00:45:00",
+    end: "2017-09-08 01:45:00",
+    title: "Lets Play Apex Legends",
+    summary: "with Boys at Work",
   },
   {
-    start: '2017-09-08 11:30:00',
-    end: '2017-09-08 12:30:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032'
+    start: "2017-09-08 11:30:00",
+    end: "2017-09-08 12:30:00",
+    title: "Dr. Mariana Joseph",
+    summary: "3412 Piedmont Rd NE, GA 3032",
   },
   {
-    start: '2017-09-10 12:10:00',
-    end: '2017-09-10 13:45:00',
-    title: 'Merge Request to React Native Calendards',
-    summary: 'Merge Timeline Calendar to React Native Calendars'
-  }
+    start: "2017-09-10 12:10:00",
+    end: "2017-09-10 13:45:00",
+    title: "Merge Request to React Native Calendards",
+    summary: "Merge Timeline Calendar to React Native Calendars",
+  },
 ];
+
+// const EVENTS = [{"_id": "6048be8b1b2ae90af0bd00a8", "end": "2021-03-11 12:03:00", "eventDate": "2021-03-10T18:30:00.000Z", "start": "2021-03-11 11:03:00", "summary": "Book Slot", "title": "Capacity:20"}, {"_id": "6048be8b1b2ae90af0bd00a8", "end": "2021-03-11 12:03:00", "eventDate": "2021-03-10T18:30:00.000Z", "start": "2021-03-11 11:03:00", "summary": "Book Slot", "title": "Capacity:20"}, {"_id": "6048be8b1b2ae90af0bd00a8", "end": "2021-03-11 12:03:00", "eventDate": "2021-03-10T18:30:00.000Z", "start": "2021-03-11 11:03:00", "summary": "Book Slot", "title": "Capacity:20"}, {"_id": "6048bea31b2ae90af0bd00aa", "end": "2021-03-12 10:03:00", "eventDate": "2021-03-11T18:30:00.000Z", "start": "2021-03-12 09:03:00", "summary": "Book Slot", "title": "Capacity:17"}, {"_id": "6049b33cfe526117189744fd", "end": "2021-03-15 10:03:00", "eventDate": "2021-03-14T18:30:00.000Z", "start": "2021-03-15 09:03:00", "summary": "Book Slot", "title": "Capacity:19"}]
+
 
 class MyReactNativeForm extends Component {
 
@@ -118,16 +120,16 @@ class MyReactNativeForm extends Component {
     originLatitude: 19.213567050389614,
     originLongitude: 72.85285072119105,
     userDetails: {},
-    loading:true,
-    slotDetails:{},
-    eventDetails:[],
-    currentDate:'2021-03-11'
+    loading: true,
+    slotDetails: {},
+    eventDetails: [],
+    currentDate: "2021-03-12",
   };
 
 
   async componentDidMount() {
     const { clinicName, clinicId, clinicAddress, clinicObjectId } = this.props.route.params;
-    console.log(clinicObjectId)
+    console.log(clinicObjectId);
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userData");
       console.log("User Data AsyncStorage", userData);
@@ -169,35 +171,36 @@ class MyReactNativeForm extends Component {
 
       this.setState({
         slotDetails: resData1,
-        userDetails: resData2
-      })
+        userDetails: resData2,
+      });
 
-      console.log("This State")
+      console.log("This State");
 
-        var array = []
-        // EVENTS.filter(event => console.log(moment(event.start)))
-        const new_Object = this.state.slotDetails.map((i,j)=>{
-          var obj2 = {}
-
-          i.eventTiming.map((k,j)=>{
-            obj2['start'] = k.startTime
-            obj2['end'] = k.endTime
-            obj2['title'] = `Capacity Left:${k.allotmentLimit}`
-            obj2['summary'] = "Book Slot"
-            obj2['eventDate'] =i.eventDate
-            obj2['_id'] = i._id
-            // console.log(k)
-            array.push(obj2)
-          })
-          // console.log(obj2)
-          // obj[String(new Date(i.eventDate).getFullYear()+"-"+new Date(i.eventDate).getMonth()+"-"+new Date(i.eventDate).getDate())] = [obj2]
-        })
-        this.setState({
-          eventDetails:array
-        })
-        // console.log(obj)
+      var array = [];
+      // EVENTS.filter(event => console.log(moment(event.start)))
+      const new_Object = this.state.slotDetails.map((i, j) => {
 
 
+        i.eventTiming.map((k, j) => {
+          console.log();
+          var obj2 = {};
+          obj2["start"] = moment(new Date(k.startTime)).format("YYYY-MM-DD HH:MM:SS");
+          obj2["end"] = moment(new Date(k.endTime)).format("YYYY-MM-DD HH:MM:SS");
+          obj2["title"] = `Capacity:${k.allotmentLimit}`;
+          obj2["summary"] = "Book Slot";
+          obj2["eventDate"] = i.eventDate;
+          obj2["_id"] = i._id;
+          // console.log(k)
+          array.push(obj2);
+        });
+
+        // obj[String(new Date(i.eventDate).getFullYear()+"-"+new Date(i.eventDate).getMonth()+"-"+new Date(i.eventDate).getDate())] = [obj2]
+      });
+      console.log(array);
+      this.setState({
+        eventDetails: array,
+      });
+      // console.log(obj)
 
 
       if (expirationDate <= new Date() || !token || !userId) {
@@ -221,35 +224,35 @@ class MyReactNativeForm extends Component {
   }
 
   getTheme = () => {
-    const themeColor = '#0059ff';
-    const lightThemeColor = '#e6efff';
-    const disabledColor = '#a6acb1';
-    const black = '#20303c';
-    const white = '#ffffff';
+    const themeColor = "#0059ff";
+    const lightThemeColor = "#e6efff";
+    const disabledColor = "#a6acb1";
+    const black = "#20303c";
+    const white = "#ffffff";
 
     return {
       // arrows
       arrowColor: black,
-      arrowStyle: {padding: 0},
+      arrowStyle: { padding: 0 },
       // month
       monthTextColor: black,
       textMonthFontSize: 16,
-      textMonthFontFamily: 'HelveticaNeue',
-      textMonthFontWeight: 'bold',
+      textMonthFontFamily: "HelveticaNeue",
+      textMonthFontWeight: "bold",
       // day names
       textSectionTitleColor: black,
       textDayHeaderFontSize: 12,
-      textDayHeaderFontFamily: 'HelveticaNeue',
-      textDayHeaderFontWeight: 'normal',
+      textDayHeaderFontFamily: "HelveticaNeue",
+      textDayHeaderFontWeight: "normal",
       // today
       todayBackgroundColor: lightThemeColor,
       todayTextColor: themeColor,
       // dates
       dayTextColor: themeColor,
       textDayFontSize: 18,
-      textDayFontFamily: 'HelveticaNeue',
-      textDayFontWeight: '500',
-      textDayStyle: {marginTop: Platform.OS === 'android' ? 2 : 4},
+      textDayFontFamily: "HelveticaNeue",
+      textDayFontWeight: "500",
+      textDayStyle: { marginTop: Platform.OS === "android" ? 2 : 4 },
       // selected date
       selectedDayBackgroundColor: themeColor,
       selectedDayTextColor: white,
@@ -259,25 +262,23 @@ class MyReactNativeForm extends Component {
       dotColor: themeColor,
       selectedDotColor: white,
       disabledDotColor: disabledColor,
-      dotStyle: {marginTop: -2}
+      dotStyle: { marginTop: -2 },
     };
   };
-
 
 
   onDateChanged = date => {
     // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
     // fetch and set data for date + week ahead
     this.setState({
-      currentDate:date
-    })
+      currentDate: date,
+    });
 
   };
 
   onMonthChange = (/* month, updateSource */) => {
     // console.warn('ExpandableCalendarScreen onMonthChange: ', month, updateSource);
   };
-
 
 
   render() {
@@ -299,7 +300,7 @@ class MyReactNativeForm extends Component {
       date={this.state.currentDate}
       onDateChanged={this.onDateChanged}
       onMonthChange={this.onMonthChange}
-      theme={{todayButtonTextColor: '#0059ff'}}
+      theme={{ todayButtonTextColor: "#0059ff" }}
       showTodayButton
       disabledOpacity={0.6}
       // todayBottomMargin={16}
@@ -316,14 +317,14 @@ class MyReactNativeForm extends Component {
         theme={this.getTheme()}
         // leftArrowImageSource={require('../img/previous.png')}
         // rightArrowImageSource={require('../img/next.png')}
-        calendarStyle={styles.calendar}
+        // calendarStyle={styles.calendar}
         // headerStyle={styles.calendar} // for horizontal only
-        disableWeekScroll
+        // disableWeekScroll
       />
       <Timeline
-        format24h={false}
+        format24h={true}
         eventTapped={async e => {
-          console.log(e._id)
+          console.log(e._id);
           console.log(JSON.stringify({
             "clinicObjectId": clinicObjectId,
             "patientObjectId": this.state.userDetails._id,
@@ -331,37 +332,37 @@ class MyReactNativeForm extends Component {
             "timeSlotId": e._id,
             "start_time": e.start,
             "end_time": e.end,
-          }))
-          // const response2 = await fetch("http://10.0.2.2:4000/booking/time/slots", {
-          //     method: "POST",
-          //     headers: {
-          //       "Content-Type": "application/json",
-          //     },
-          //     body: JSON.stringify({
-          //       "clinicObjectId": clinicObjectId,
-          //       "patientObjectId": userDetails._id,
-          //       "date": i.eventDate,
-          //       "timeSlotId": k._id,
-          //       "start_time": k.startTime,
-          //       "end_time": k.endTime,
-          //     }),
-          //   },
-          // );
+          }));
+          const response2 = await fetch("http://10.0.2.2:4000/booking/time/slots", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                "clinicObjectId": clinicObjectId,
+                "patientObjectId": this.state.userDetails._id,
+                "date": e.eventDate,
+                "timeSlotId": e._id,
+                "start_time": e.start,
+                "end_time": e.end,
+              }),
+            },
+          );
 
 
-          // const resData = await response2.json();
-          // console.log(resData);
-          // if (resData.message === "time slots already created") {
-          //   Alert.alert("Slot Booked Successfully");
-          //   navigation.navigate("UserTabbedNavigation");
-          // } else if (resData.message === "Bookings are Full") {
-          //   Alert.alert("Bookings are Full, Try another Slot Timing");
-          //
-          // }
+          const resData = await response2.json();
+          console.log(resData);
+          if (resData.message === "time slots already created") {
+            Alert.alert("Slot Booked Successfully");
+            this.props.navigation.navigate("UserTabbedNavigation");
+          } else if (resData.message === "Bookings are Full") {
+            Alert.alert("Bookings are Full, Try another Slot Timing");
+
+          }
 
         }}
-        events={this.state.eventDetails.filter(event => moment(event.start).isSame(this.state.currentDate, 'day'))}
-        scrollToFirst={true}
+        events={this.state.eventDetails.filter(event => moment(event.start).isSame(this.state.currentDate, "day"))}
+        // scrollToFirst={true}
         // start={8}
         // end={18}
       />
@@ -378,48 +379,48 @@ class MyReactNativeForm extends Component {
 const styles = StyleSheet.create({
   calendar: {
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
   },
   section: {
-    backgroundColor: '#f0f4f7',
-    color: '#79838a'
+    backgroundColor: "#f0f4f7",
+    color: "#79838a",
   },
   item: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderBottomWidth: 1,
-    borderBottomColor: '#e8ecf0',
-    flexDirection: 'row'
+    borderBottomColor: "#e8ecf0",
+    flexDirection: "row",
   },
   itemHourText: {
-    color: 'black'
+    color: "black",
   },
   itemDurationText: {
-    color: 'grey',
+    color: "grey",
     fontSize: 12,
     marginTop: 4,
-    marginLeft: 4
+    marginLeft: 4,
   },
   itemTitleText: {
-    color: 'black',
+    color: "black",
     marginLeft: 16,
-    fontWeight: 'bold',
-    fontSize: 16
+    fontWeight: "bold",
+    fontSize: 16,
   },
   itemButtonContainer: {
     flex: 1,
-    alignItems: 'flex-end'
+    alignItems: "flex-end",
   },
   emptyItem: {
     paddingLeft: 20,
     height: 52,
-    justifyContent: 'center',
+    justifyContent: "center",
     borderBottomWidth: 1,
-    borderBottomColor: '#e8ecf0'
+    borderBottomColor: "#e8ecf0",
   },
   emptyItemText: {
-    color: '#79838a',
-    fontSize: 14
+    color: "#79838a",
+    fontSize: 14,
   },
   MainContainer: {
     width: "100%",
