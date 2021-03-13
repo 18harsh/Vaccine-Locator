@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Component } from "react";
 import { Text, View, StyleSheet, Image, Alert } from "react-native";
 import { Button, Card, Paragraph, TextInput, Title, TouchableRipple } from "react-native-paper";
 import * as planted_colors from "../../Components/Color";
@@ -16,6 +16,7 @@ import {Agenda} from 'react-native-calendars';
 import {ExpandableCalendar, Timeline, CalendarProvider} from 'react-native-calendars';
 import moment from 'moment';
 import { Avatar} from 'react-native-paper';
+import connect from "react-redux/lib/connect/connect";
 
 const theme = {
 
@@ -35,10 +36,7 @@ const theme2 = {
   },
 };
 
-const timeToString = (time) => {
-  const date = new Date(time);
-  return date.toISOString().split('T')[0];
-};
+
 
 const EVENTS = [
   {
@@ -114,25 +112,27 @@ const EVENTS = [
   }
 ];
 
-const Booking = ({ route, navigation }) => {
-  const { clinicName, clinicId, clinicAddress, clinicObjectId } = route.params;
+class MyReactNativeForm extends Component {
 
-  console.log("THIS itemId otherParam", clinicName, clinicId, clinicAddress, clinicObjectId);
+  state = {
+    originLatitude: 19.213567050389614,
+    originLongitude: 72.85285072119105,
+    userDetails: {},
+    loading:true,
+    slotDetails:{},
+    eventDetails:[],
+    currentDate:'2021-03-11'
+  };
 
-  const [userDetails, setUserDetails] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [slotDetails, setSlotDetails] = useState([]);
-  const [eventDetails, setEventDetails] = useState([]);
-  const [currentDate, setCurrentDate] = useState('2021-03-11');
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
+  async componentDidMount() {
+    const { clinicName, clinicId, clinicAddress, clinicObjectId } = this.props.route.params;
+    console.log(clinicObjectId)
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userData");
-      // console.log("User Data AsyncStorage", userData);
+      console.log("User Data AsyncStorage", userData);
       if (!userData) {
-        navigation.navigate("UserClinicPage");
+        this.props.navigation.navigate("UserClinicPage");
         return;
       }
       const transformedData = JSON.parse(userData);
@@ -150,6 +150,7 @@ const Booking = ({ route, navigation }) => {
           }),
         },
       );
+      const resData2 = await response1.json();
 
       const response2 = await fetch("http://10.0.2.2:4000/get/slots", {
           method: "POST",
@@ -165,69 +166,61 @@ const Booking = ({ route, navigation }) => {
 
 
       const resData1 = await response2.json();
-      setSlotDetails(resData1);
 
-      console.log(slotDetails)
+      this.setState({
+        slotDetails: resData1,
+        userDetails: resData2
+      })
 
-      const resData2 = await response1.json();
-      setUserDetails(resData2);
-      if (expirationDate <= new Date() || !token || !userId) {
-        navigation.navigate("UserClinicPage");
-        return;
-      }
+      console.log("This State")
 
-      const expirationTime = expirationDate.getTime() - new Date().getTime();
-
-      dispatch(authActions.authenticate(userId, token, expirationTime, userType));
-
-      const toSetSlotsDynamically = () =>{
         var array = []
         // EVENTS.filter(event => console.log(moment(event.start)))
-        const new_Object = slotDetails.map((i,j)=>{
+        const new_Object = this.state.slotDetails.map((i,j)=>{
           var obj2 = {}
 
           i.eventTiming.map((k,j)=>{
             obj2['start'] = k.startTime
             obj2['end'] = k.endTime
+            obj2['title'] = `Capacity Left:${k.allotmentLimit}`
+            obj2['summary'] = "Book Slot"
+            obj2['eventDate'] =i.eventDate
+            obj2['_id'] = i._id
+            // console.log(k)
             array.push(obj2)
           })
-          console.log(obj2)
+          // console.log(obj2)
           // obj[String(new Date(i.eventDate).getFullYear()+"-"+new Date(i.eventDate).getMonth()+"-"+new Date(i.eventDate).getDate())] = [obj2]
         })
-        setEventDetails(array);
+        this.setState({
+          eventDetails:array
+        })
         // console.log(obj)
+
+
+
+
+      if (expirationDate <= new Date() || !token || !userId) {
+        this.props.navigation.navigate("UserClinicPage");
+        return;
       }
-      toSetSlotsDynamically();
+
+      const expirationTime = expirationDate.getTime() - new Date().getTime();
+      this.props.dispatchingSession(userId, token, expirationTime, userType);
 
 
-      setLoading(false);
+      this.setState({
+        loading: false,
+      });
+      // setLoading(false);
     };
 
     tryLogin();
 
 
-  }, [dispatch]);
-
-
-
-  if (loading) {
-    return (
-      <View style={{
-        flex: 1,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-        <LottieView source={require("../../Components/Images/loading.json")} autoPlay loop />
-      </View>
-    );
   }
 
-
-
-  // console.log(items);
-
-  const getTheme = () => {
+  getTheme = () => {
     const themeColor = '#0059ff';
     const lightThemeColor = '#e6efff';
     const disabledColor = '#a6acb1';
@@ -272,23 +265,40 @@ const Booking = ({ route, navigation }) => {
 
 
 
-  const onDateChanged = date => {
+  onDateChanged = date => {
     // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
     // fetch and set data for date + week ahead
-    setCurrentDate(date);
+    this.setState({
+      currentDate:date
+    })
+
   };
 
-  const onMonthChange = (/* month, updateSource */) => {
+  onMonthChange = (/* month, updateSource */) => {
     // console.warn('ExpandableCalendarScreen onMonthChange: ', month, updateSource);
   };
 
 
-  return (
-    <CalendarProvider
+
+  render() {
+    const { clinicName, clinicId, clinicAddress, clinicObjectId } = this.props.route.params;
+    if (this.state.loading) {
+      return (
+        <View style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+          <LottieView source={require("../../Components/Images/loading.json")} autoPlay loop />
+        </View>
+      );
+    }
+    return (<CalendarProvider
       // date={ITEMS[0].title}
-      date={currentDate}
-      onDateChanged={onDateChanged}
-      onMonthChange={onMonthChange}
+      date={this.state.currentDate}
+      onDateChanged={this.onDateChanged}
+      onMonthChange={this.onMonthChange}
       theme={{todayButtonTextColor: '#0059ff'}}
       showTodayButton
       disabledOpacity={0.6}
@@ -303,23 +313,65 @@ const Booking = ({ route, navigation }) => {
         firstDay={1}
         // markedDates={this.getMarkedDates()} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
         // markedDates={() => {}} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
-        theme={getTheme()}
+        theme={this.getTheme()}
         // leftArrowImageSource={require('../img/previous.png')}
         // rightArrowImageSource={require('../img/next.png')}
-        // calendarStyle={styles.calendar}
+        calendarStyle={styles.calendar}
         // headerStyle={styles.calendar} // for horizontal only
         disableWeekScroll
       />
       <Timeline
-        format24h={true}
-        eventTapped={e => e}
-        events={eventDetails.filter(event => moment(event.start).isSame(currentDate, 'day'))}
-        // scrollToFirst={true}
-        // start={0}
-        // end={24}
+        format24h={false}
+        eventTapped={async e => {
+          console.log(e._id)
+          console.log(JSON.stringify({
+            "clinicObjectId": clinicObjectId,
+            "patientObjectId": this.state.userDetails._id,
+            "date": e.eventDate,
+            "timeSlotId": e._id,
+            "start_time": e.start,
+            "end_time": e.end,
+          }))
+          // const response2 = await fetch("http://10.0.2.2:4000/booking/time/slots", {
+          //     method: "POST",
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //     },
+          //     body: JSON.stringify({
+          //       "clinicObjectId": clinicObjectId,
+          //       "patientObjectId": userDetails._id,
+          //       "date": i.eventDate,
+          //       "timeSlotId": k._id,
+          //       "start_time": k.startTime,
+          //       "end_time": k.endTime,
+          //     }),
+          //   },
+          // );
+
+
+          // const resData = await response2.json();
+          // console.log(resData);
+          // if (resData.message === "time slots already created") {
+          //   Alert.alert("Slot Booked Successfully");
+          //   navigation.navigate("UserTabbedNavigation");
+          // } else if (resData.message === "Bookings are Full") {
+          //   Alert.alert("Bookings are Full, Try another Slot Timing");
+          //
+          // }
+
+        }}
+        events={this.state.eventDetails.filter(event => moment(event.start).isSame(this.state.currentDate, 'day'))}
+        scrollToFirst={true}
+        // start={8}
+        // end={18}
       />
-    </CalendarProvider>
-  );
+    </CalendarProvider>);
+  }
+
+
+  // console.log("THIS itemId otherParam", clinicName, clinicId, clinicAddress, clinicObjectId);
+
+
 };
 
 
@@ -427,7 +479,14 @@ const styles = StyleSheet.create({
 
 });
 
-export default Booking;
+const mapDispatchToProps = dispatch => {
+  return {
+    // dispatching plain actions
+    dispatchingSession: (userId, token, expirationTime, userType) => dispatch(authActions.authenticate(userId, token, expirationTime, userType)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(MyReactNativeForm);
 
 
 
