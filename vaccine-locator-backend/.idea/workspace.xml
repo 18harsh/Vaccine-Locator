@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="Updated Code with Appointment Slot">
-      <change beforePath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Booking/Booking.js" beforeDir="false" afterPath="$PROJECT_DIR$/../VacccinLocatorFrontend/Pages/Booking/Booking.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +81,9 @@
       <workItem from="1615369731805" duration="25890000" />
       <workItem from="1615431669594" duration="3809000" />
       <workItem from="1615604262975" duration="2120000" />
-      <workItem from="1615618789971" duration="2611000" />
+      <workItem from="1615618789971" duration="2613000" />
+      <workItem from="1615709430281" duration="593000" />
+      <workItem from="1615724333395" duration="591000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>
