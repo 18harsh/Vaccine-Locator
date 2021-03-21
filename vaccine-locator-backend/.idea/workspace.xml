@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4d1e3239-16e2-400d-a43b-0def9548a557" name="Default Changelist" comment="Updated Code with Appointment Slot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/timeController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/timeController.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +86,12 @@
       <workItem from="1615618789971" duration="2613000" />
       <workItem from="1615709430281" duration="593000" />
       <workItem from="1615724333395" duration="591000" />
+      <workItem from="1615744597445" duration="117000" />
+      <workItem from="1616086561346" duration="594000" />
+      <workItem from="1616228526831" duration="1853000" />
+      <workItem from="1616307564080" duration="38000" />
+      <workItem from="1616311416844" duration="50000" />
+      <workItem from="1616328454792" duration="2728000" />
     </task>
     <task id="LOCAL-00001" summary="Updated Code">
       <created>1614879382940</created>
