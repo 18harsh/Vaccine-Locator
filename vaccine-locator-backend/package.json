@@ -22,7 +22,7 @@
     "sharp": "^0.25.4",
     "util": "^0.12.3",
     "validate-phone-number-node-js": "0.0.1",
-    "validator": "^13.1.1"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
