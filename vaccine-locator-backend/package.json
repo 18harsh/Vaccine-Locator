@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "google-distance-matrix": "^1.1.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.15",
     "sharp": "^0.25.4",
